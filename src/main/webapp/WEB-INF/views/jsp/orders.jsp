@@ -11,7 +11,7 @@
 </head>
 	<body>
 		<c:if test="${ sessionScope.user == null }">
-			<c:redirect url="login.jsp"></c:redirect>
+			<c:redirect url="login"></c:redirect>
 		</c:if>
 		<jsp:include page="header.jsp"></jsp:include>
 	

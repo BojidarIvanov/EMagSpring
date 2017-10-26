@@ -3,6 +3,7 @@ package com.emag.controller;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.TreeSet;
@@ -36,6 +37,84 @@ public class MyController {
 	@Autowired
 	ServletContext application;
 
+	@RequestMapping(value = "/registerPage", method = RequestMethod.GET)
+	public String register() {
+		return "register";
+	}
+
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	public String registerIndeed(HttpServletRequest request, HttpServletResponse response) {
+
+		String name = request.getParameter("name");
+		String email = request.getParameter("email");
+		String dob = request.getParameter("DOB");
+		String password = request.getParameter("pass");
+		String password2 = request.getParameter("pass2");
+		String phone = request.getParameter("phone");
+		String address = request.getParameter("address");
+		System.out.println(password);
+		System.out.println(password2);
+
+		if (!password.equals(password2)) {
+			request.setAttribute("error", "passwords missmatch");
+			return "redirect:registerPage";
+		}
+
+		try {
+			PasswordUtil.checkPasswordStrength(password2);
+		} catch (Exception e2) {
+			request.setAttribute("error", "password is too short");
+			return "redirect:registerPage";
+		}
+
+		try {
+
+			if (Integer.parseInt(dob) < 1900 || Integer.parseInt(dob) > 2018) {
+				request.setAttribute("error", "Please provide adequate date of birth");
+				return "redirect:registerPage";
+			}
+		} catch (NumberFormatException e) {
+			request.setAttribute("error", " Please enter correct year of birth.");
+			return "redirect:registerPage";
+		}
+
+		try {
+			UserPojo customer = null;
+			try {
+				String pass = PasswordUtil.hashPassword(password);
+				System.out.println(pass);
+				customer = new UserPojo(name, email, phone, LocalDate.of(Integer.parseInt(dob), 1, 1),
+						pass, address, false);
+			} catch (NumberFormatException e1) {
+				e1.printStackTrace();
+			} catch (NoSuchAlgorithmException e1) {
+				e1.printStackTrace();
+			}
+			if (!UserDAO.getInstance().userExists(customer)) {
+				try {
+					UserDAO.getInstance().addUser(customer);
+				} catch (NoSuchAlgorithmException e) {
+					e.printStackTrace();
+				}
+				request.getSession().setAttribute("user", customer);
+				request.getSession().setAttribute("newUser", customer);
+				return "forward:main";
+			} else {
+				request.setAttribute("error", "user already registered");
+				return "redirect:registerPage";
+
+			}
+		} catch (SQLException e) {
+			request.setAttribute("error", "database problem : " + e.getMessage());
+			return "redirect:loginPage";
+		}
+	}
+
+	@RequestMapping(value = "/about", method = RequestMethod.GET)
+	public String aboutUs() {
+		return "about";
+	}
+
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public String welcomePage() {
 		return "index";
@@ -51,7 +130,7 @@ public class MyController {
 		return "contact";
 	}
 
-	@RequestMapping(value = "/loginPage", method = RequestMethod.GET)
+	@RequestMapping(value = "/loginPage")
 	public String loginPage() {
 		return "login";
 	}
@@ -114,11 +193,11 @@ public class MyController {
 				return "forward:main";
 			} else {
 				request.setAttribute("error", "user does not exist");
-				return "forward:login";
+				return "forward:loginPage";
 			}
 		} catch (SQLException e) {
 			request.setAttribute("error", "database problem : " + e.getMessage() + e.getErrorCode());
-			return "forward:login";
+			return "forward:loginPage";
 		}
 	}
 
@@ -152,7 +231,7 @@ public class MyController {
 					}
 				}
 				return 0;
-			}	
+			}
 		});
 
 		set.addAll(u.getOrders());

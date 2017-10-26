@@ -12,7 +12,7 @@
   <body>
     <center><h3>Final Confirmation</h3></center>
     <div align="center">
-      <form action = "shop.jsp" method = "post">
+      <form action = "admin/shop" method = "post">
 	<table class = "products" border = "1" cellpadding = "5">
           <tr>
 	    <th>Qty</th>

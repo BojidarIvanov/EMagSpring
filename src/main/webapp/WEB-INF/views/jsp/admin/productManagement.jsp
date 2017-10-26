@@ -6,13 +6,13 @@
 <html>
 <head>
 <title>The products in stock</title>
-<link rel="stylesheet" href="/adm/style.css" type="text/css"></link>
+<link rel="stylesheet" href="style.css" type="text/css"></link>
 </head>
 <body>
 
 	<c:if
 		test="${sessionScope.user == null || sessionScope.user.isAdmin == false}">
-		<c:redirect url="../login"></c:redirect>
+		<c:redirect url="login"></c:redirect>
 	</c:if>
 
 	<center>

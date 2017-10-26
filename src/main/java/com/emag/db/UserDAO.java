@@ -48,16 +48,14 @@ public class UserDAO {
 			ps.setString(3, user.getPhone());
 			java.sql.Date date = convertToDatabaseColumn(user.getDateOfBirth());
 			ps.setDate(4, date);
-			System.out.println(user.getPassword());
-			String hashedPassword = PasswordUtil.hashPassword(user.getPassword());
-			ps.setString(5, hashedPassword);
+			ps.setString(5, user.getPassword());
 			ps.setString(6, user.getAddress());
 			ps.setBoolean(7, user.getIsAdmin());
 			ps.executeUpdate();
 			ResultSet rs = ps.getGeneratedKeys();
 			rs.next();
 			users.put(user.getEmail(), new UserPojo(rs.getInt(1), user.getName(), user.getEmail(), user.getPhone(),
-					user.getDateOfBirth(), hashedPassword, user.getAddress(), user.getIsAdmin()));
+					user.getDateOfBirth(), user.getPassword(), user.getAddress(), user.getIsAdmin()));
 			rs.close();
 			ps.close();
 			return true;
@@ -100,6 +98,7 @@ public class UserDAO {
 	}
 
 	public boolean userExistsEmailAndPassword(UserPojo user) {
+	
 		if (user.getPassword().equals(users.get(user.getEmail()).getPassword())) {
 			return true;
 		}

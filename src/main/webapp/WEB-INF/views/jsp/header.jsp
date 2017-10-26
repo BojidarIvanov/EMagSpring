@@ -4,19 +4,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<link href="css/css/bootstrap.css" rel='stylesheet' type='text/css' />
+
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <!--  <script src="js/jquery.min.js"></script> -->
 <!-- Custom Theme files -->
-<link rel="stylesheet" type="text/css" href="css/scss/style.scss">
+<link rel="stylesheet" type="text/css" href="css/css/style.scss">
 <!-- Custom Theme files -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords"
 	content="Eshop Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
-<script type="application/x-javascript">
-	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
+
+
 </script>
 <!--webfont-->
 <!-- for bootstrap working -->
@@ -24,7 +24,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- //for bootstrap working -->
 <!-- cart -->
 
-	
+
 </script>
 <!-- cart -->
 
@@ -34,7 +34,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <link rel="stylesheet" type="text/css" href="css/styles.css">
 
 </head>
-<a href="index"> <img src="img/emag.jpg">
+<!-- <a href="index"> <img src="img/emag.jpg"> -->
 </a>
 <body>
 	<div class="header">
@@ -44,9 +44,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<form class="navi" action="index">
 			<input type="submit" value="Products on sale">
 		</form>
-		<form class="navi" action="orders">
-			<input type="submit" value="View My orders">
-		</form>
+		<c:if test="${sessionScope.user != null}">
+			<form class="navi" action="orders">
+				<input type="submit" value="View My orders">
+			</form>
+		</c:if>
 		<c:if test="${sessionScope.user == null}">
 			<form class="navi" action="loginPage" method="get">
 				<input type="submit" value="Go To Login Page">
@@ -77,7 +79,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		</c:if>
 
 
-		<h3 class="welcome">Welcome, ${ sessionScope.user.name }</h3>
+		<h3 class="welcome">Welcome, ${sessionScope.user.name }</h3>
 	</div>
 </body>
 </html>

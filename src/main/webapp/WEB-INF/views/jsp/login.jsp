@@ -4,6 +4,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Emag final project</title>
 </head>
@@ -20,26 +22,26 @@
 </c:if>
 
 <c:if test="${ sessionScope.user != null }">
-	<c:redirect url="main.jsp"></c:redirect>
+	<c:redirect url="main"></c:redirect>
 	<h1 style="color: black">You are already logged in.</h1>
 
 </c:if>
-
+  <div class="container">
+ 
 <form action="login" method="post">
-	<fieldset>
-	<label><span>Email:</span> <input type="text" name="user"></label> <br>
-	<label><span>Password:</span><input type="password" name="pass"></label>
-	<br>
-	<label><input type="submit" value="Login"> </label>
-	<br>
-		</fieldset>
-		<br>
-</form>
 
+	<label><span>Email:</span> <input type="text" name="user" placeholder="Enter email"  size="35" style="width:193px"></label> <br>
+	<label><span>Password:</span><input type="password" placeholder="Enter Password"  name="pass" style="width:193px" ></label>
+	<br><br>		
+	<label><input type="submit" value="Login"> </label>
+	
+
+</form>
+</div>
 Don`t have an account yet? Please register
-<a href="register.jsp">here</a>
+<a href="registerPage">here</a>
 <br>
-<a href="index.jsp" title="Go to Home Page">Home</a>
+<a href="index" title="Go to Home Page">Home</a>
 <jsp:include page="footer.jsp"></jsp:include>
 
 </body>

@@ -61,7 +61,7 @@ public class PasswordUtil {
 	 */
 	public static void main(String[] args) {
 		try {
-			System.out.println("Hash for 'sesame':\n" + hashPassword("sesame"));
+			System.out.println("Hash for 'sesame':\n" + hashPassword("5555555555"));
 			System.out.println("Random salt:\n" + getSalt());
 			/*
 			 * System.out.println("Salted hash for 'sesame':\n" +

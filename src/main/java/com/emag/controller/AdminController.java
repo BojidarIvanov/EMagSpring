@@ -61,6 +61,11 @@ public class AdminController {
 	public String goodResult() {
 		return "/admin/goodResult";
 	}
+	
+	@RequestMapping(value = "/admin/badResult", method = RequestMethod.GET)
+	public String badResult() {
+		return "/admin/badResult";
+	}
 
 	@RequestMapping(value = "/dataVerifier", method = RequestMethod.POST)
 	public void verifyUserInputsAndUpdateDB(HttpServletRequest req, HttpServletResponse res) {
@@ -93,7 +98,7 @@ public class AdminController {
 
 		}
 		BigDecimal priceBD = convertPrice(price);
-/*
+
 		if (productName.length() < MinLength) {
 			sendResponse(req, res, "A product's name must be at least " + MinLength + " characters.", true);
 		}
@@ -116,7 +121,7 @@ public class AdminController {
 		if (!availability.matches("^-?\\d+$") && Integer.parseInt(availability) >= 0) {
 			sendResponse(req, res, "Availability must be an integer and should not contain any special characters.",
 					true);
-		}*/
+		}
 
 		// Capitalize product name
 		productName = capitalizeParts(productName);

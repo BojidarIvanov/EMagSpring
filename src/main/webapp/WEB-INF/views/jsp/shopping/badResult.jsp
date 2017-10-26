@@ -7,7 +7,7 @@
 <body>
   <div class  = "badResult">
     <center>${result}</center>
-    <center><a href = "${pageContext.request.contextPath}/shop.jsp">Continue shopping</a></center>                
+    <center><a href = "${pageContext.request.contextPath}/shop">Continue shopping</a></center>                
   </div>
 </body>
 </html>
