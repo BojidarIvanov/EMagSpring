@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.TreeSet;
+import java.util.TreeMap;
 
 import com.emag.model.ProductPojo;
 
@@ -16,7 +16,7 @@ import com.emag.model.ProductPojo;
 public class ProductDAO {
 
 	private static ProductDAO instance;
-	private static final TreeSet<ProductPojo> products = new TreeSet<>();
+	private static final TreeMap<Integer,ProductPojo> products = new TreeMap<>();
 
 	private ProductDAO() {
 	}
@@ -46,14 +46,14 @@ public class ProductDAO {
 		ps.executeUpdate();
 		ResultSet rs = ps.getGeneratedKeys();
 		rs.next();
-		products.add(new ProductPojo(rs.getInt(1), name, priceBD.toString(), description, categoryId,
+		products.put(rs.getInt(1),new ProductPojo(rs.getInt(1), name, priceBD.toString(), description, categoryId,
 				CategoryDAO.getInstance().getAllCategories().get(categoryId),
 				BrandDAO.getInstance().getAllBrands().get(brandId), imageUrl));
 		rs.close();
 		ps.close();
 	}
 
-	public TreeSet<ProductPojo> getAllProducts() throws SQLException {
+	public TreeMap<Integer, ProductPojo> getAllProducts() throws SQLException {
 
 		if (!products.isEmpty()) {
 			return products;
@@ -62,7 +62,7 @@ public class ProductDAO {
 			PreparedStatement ps = conn.prepareStatement("SELECT * FROM products");
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				products.add(new ProductPojo(rs.getInt("product_id"), rs.getString("name"),
+				products.put(rs.getInt("product_id"),new ProductPojo(rs.getInt("product_id"), rs.getString("name"),
 						rs.getBigDecimal("price").toString(), rs.getString("description"),
 						rs.getInt("available_products"),
 						CategoryDAO.getInstance().getAllCategories().get(rs.getInt("category_id")),

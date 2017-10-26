@@ -3,6 +3,7 @@ package com.emag.controller;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
@@ -210,11 +211,11 @@ public class AdminController {
 
 	private boolean productNameInUse(String productName, HttpServletRequest req, HttpServletResponse resp) {
 		boolean flag = false;
-		TreeSet<ProductPojo> products = null;
+		TreeMap<Integer, ProductPojo> products = null;
 		try {
 			products = ProductDAO.getInstance().getAllProducts();
 
-			for (ProductPojo product : products) {
+			for (ProductPojo product : products.values()) {
 				if (product.getName().equals(productName)) {
 					flag = true;
 					break;

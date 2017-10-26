@@ -6,7 +6,7 @@
 <html>
 <head>
 <title>The products in stock</title>
-<link rel="stylesheet" href="style.css" type="text/css"></link>
+<link rel="stylesheet" href="/WEB-INF/views/jsp/admin/style.css" type="text/css"></link>
 </head>
 <body>
 

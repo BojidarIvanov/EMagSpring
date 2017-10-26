@@ -12,7 +12,7 @@
   <body>
     <center><h3>Final Confirmation</h3></center>
     <div align="center">
-      <form action = "admin/shop" method = "post">
+      <form action = "/shop" method = "post">
 	<table class = "products" border = "1" cellpadding = "5">
           <tr>
 	    <th>Qty</th>
@@ -41,7 +41,7 @@
 	<input type = "hidden" value = "${items.size()}" name = "rowCount"/>
 	<p>
 	  <div class = "total">
-	    <span>Total:  </span><fmt:formatNumber type = 'currency' value = "${total}"/>
+	    <span>Total:  </span><fmt:setLocale value = "en_US"/> type = 'currency' value = "${total}"/>
 	    <p><span>A email confirmation of your order will be sent.</span></p>
 	  </div>
 	  <p><input type = "submit" value = " Place order "/></p>

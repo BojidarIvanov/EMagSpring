@@ -96,7 +96,7 @@ public class OrderDAO {
 				orderedProducts.close();
 			}
 			con.setAutoCommit(true);
-		}
+		}	
 	}
 
 	// no need to create separate Pojo for ordered_product table it's being

@@ -34,7 +34,7 @@
 			<th>Quantity</th>
 			<th>Price</th>
 		</tr>
-		<c:forEach items="${applicationScope.products}" var="product">
+		<c:forEach items="${applicationScope.products.values()}" var="product">
 			<tr>
 				<td class="cent">${ product.productID }</td>
 				<td class="cent"><c:out value="${ product.name }"></c:out></td>

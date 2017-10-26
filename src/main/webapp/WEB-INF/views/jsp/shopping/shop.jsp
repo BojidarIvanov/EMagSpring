@@ -28,7 +28,8 @@
 		<p>
 			<a href="${pageContext.request.contextPath}/index">Back</a>
 		</p>
-		<form action="handleOrder" method="post">
+		<form action="${pageContext.request.contextPath}/shopping/handleOrder"
+			method="post">
 			<table class="products" border="1" cellpadding="5">
 				<tr>
 					<th>Buy</th>
@@ -45,11 +46,11 @@
 						<td><input type="number" name="num-${ind}" min="0"
 							max="${item.available_products}" step="1" value="0" size="3" /></td>
 						<td><input type="text" name="id-${ind}"
-							value="${item.product_id}" size="4" readonly /></td>
+							value="${item.product_id}" size="10" readonly /></td>
 						<td><input style="text-align: center;" name="prod-${ind}"
 							type="text" value="${item.name}" readonly /></td>
 						<td><input style="text-align: center;" name="cat-${ind}"
-							type="text" value="${item.available_products}" readonly /></td>
+							type="text" value="${item.category_id}" readonly /></td>
 						<td><input type="text" name="price-${ind}"
 							value="${item.price}" size="7" readonly /></td>
 					</tr>

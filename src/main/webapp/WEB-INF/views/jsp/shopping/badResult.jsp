@@ -1,7 +1,7 @@
 <!DOCTYPE html>					  
 <html>
 <head>
-<title>SkiEtc</title>
+<title>Emag issues</title>
 <link rel = "stylesheet" href = "style.css" type = "text/css"></link>
 </head>
 <body>

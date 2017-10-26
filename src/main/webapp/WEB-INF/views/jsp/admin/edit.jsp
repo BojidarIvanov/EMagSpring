@@ -15,7 +15,7 @@
 
 	<c:if
 		test="${sessionScope.user == null || sessionScope.user.isAdmin == false}">
-		<c:redirect url="../login.jsp"></c:redirect>
+		<c:redirect url="login"></c:redirect>
 	</c:if>
 
 	<%

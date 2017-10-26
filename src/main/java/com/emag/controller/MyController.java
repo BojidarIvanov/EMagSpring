@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 import javax.servlet.ServletContext;
@@ -141,7 +142,7 @@ public class MyController {
 		return "index";
 	}
 
-	@RequestMapping(value = "/main", method = RequestMethod.POST)
+	@RequestMapping(value = "/main")
 	public String main() {
 		return "main";
 	}
@@ -180,12 +181,12 @@ public class MyController {
 						application.setAttribute("categories", categories);
 					}
 					if (application.getAttribute("products") == null) {
-						TreeSet<ProductPojo> products = ProductDAO.getInstance().getAllProducts();
+						TreeMap<Integer, ProductPojo> products = ProductDAO.getInstance().getAllProducts();
 						// System.out.println(products);
 						application.setAttribute("products", products);
 					}
 					if (application.getAttribute("users") == null) {
-						TreeSet<ProductPojo> users = ProductDAO.getInstance().getAllProducts();
+						TreeMap<Integer, ProductPojo> users = ProductDAO.getInstance().getAllProducts();
 						application.setAttribute("users", users);
 					}
 
