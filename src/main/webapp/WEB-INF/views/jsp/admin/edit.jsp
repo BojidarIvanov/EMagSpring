@@ -1,6 +1,6 @@
 <%@ page import="com.emag.model.ProductPojo"%>
 <%@ page import="com.emag.model.CategoryPojo"%>
-<%@ page import="java.util.TreeSet"%>
+<%@ page import="java.util.TreeMap"%>
 <%@ page import="java.util.Iterator"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
@@ -8,28 +8,22 @@
 <html>
 <head>
 <title>Create new user</title>
-<link rel="stylesheet" href="style.css" type="text/css"></link>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/css/styless.css" type="text/css"></link>
 </head>
 <body>
 
 
 	<c:if
 		test="${sessionScope.user == null || sessionScope.user.isAdmin == false}">
-		<c:redirect url="../login.jsp"></c:redirect>
+		<c:redirect url="login"></c:redirect>
 	</c:if>
 
 	<%
 		ProductPojo p = null;
 		String productName = "";
-		TreeSet<ProductPojo> prod = (TreeSet) application.getAttribute("products");
-		Iterator<ProductPojo> itr = prod.iterator();
-		while (itr.hasNext()) {
-			p = itr.next();
-			if (p.getProductID() == Integer.parseInt(request.getParameter("id"))) {
-				productName = p.getName();
-				break;
-			}
-		}
+		TreeMap<Integer, ProductPojo> prod = (TreeMap<Integer, ProductPojo>) application.getAttribute("products");
+		p = prod.get(Integer.parseInt(request.getParameter("id")));
+		productName = p.getName();
 	%>
 
 	<div>

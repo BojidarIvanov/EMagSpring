@@ -9,7 +9,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="style.css" type="text/css"></link>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/css/styless.css" type="text/css"></link>
 
 </head>
 <body>
@@ -34,7 +34,7 @@
 			<th>Quantity</th>
 			<th>Price</th>
 		</tr>
-		<c:forEach items="${applicationScope.products}" var="product">
+		<c:forEach items="${applicationScope.products.values()}" var="product">
 			<tr>
 				<td class="cent">${ product.productID }</td>
 				<td class="cent"><c:out value="${ product.name }"></c:out></td>

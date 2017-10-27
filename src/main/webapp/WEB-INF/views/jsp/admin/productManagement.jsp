@@ -6,13 +6,13 @@
 <html>
 <head>
 <title>The products in stock</title>
-<link rel="stylesheet" href="/adm/style.css" type="text/css"></link>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/css/styless.css" type="text/css"></link>
 </head>
 <body>
 
 	<c:if
 		test="${sessionScope.user == null || sessionScope.user.isAdmin == false}">
-		<c:redirect url="../login"></c:redirect>
+		<c:redirect url="login"></c:redirect>
 	</c:if>
 
 	<center>
@@ -33,7 +33,10 @@
 				<th>Category</th>
 				<th>Price</th>
 			</tr>
-			<c:forEach var="item" items="${products}">
+			<c:forEach var="item" items="${products.values()}">
+        <c:if test="${ item.quantity > 0}">
+		
+	
 				<tr>
 					<td class="rght"><c:out value="${item.productID}" /></td>
 					<td class="cent"><c:out value="${item.name}" /></td>
@@ -46,6 +49,8 @@
 
 					<td><a href="${item.imageURL}">Display Image</a></td>
 				</tr>
+
+</c:if>
 
 			</c:forEach>
 		</table>

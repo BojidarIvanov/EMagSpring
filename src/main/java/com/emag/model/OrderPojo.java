@@ -45,6 +45,16 @@ public class OrderPojo {
 		this.totalPrice = totalPrice;
 		this.status = status;
 	}
+	
+	public OrderPojo(LocalDateTime date, int userId,
+			String shippingAddress, String billingAddress, BigDecimal totalPrice, int status) {
+		this(date,userId);
+		this.orderId = orderId;
+		this.shippingAddress = shippingAddress;
+		this.billingAddress = billingAddress;
+		this.totalPrice = totalPrice;
+		this.status = status;
+	}
 
 
 	public void setOrderId(int id) {

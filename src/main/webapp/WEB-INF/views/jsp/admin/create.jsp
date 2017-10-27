@@ -6,12 +6,12 @@
 <html>
 <head>
 <title>Create new product</title>
-<link rel="stylesheet" href="style.css" type="text/css"></link>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/css/styless.css" type="text/css"></link>
 </head>
 <body>
 	<c:if
 		test="${ sessionScope.user == null || sessionScope.user.isAdmin == false}">
-		<c:redirect url="../login.jsp"></c:redirect>
+		<c:redirect url="login"></c:redirect>
 	</c:if>
 
 	<div>

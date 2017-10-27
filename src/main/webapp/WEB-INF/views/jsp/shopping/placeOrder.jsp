@@ -7,12 +7,12 @@
 <html>
   <head>
     <title>Final Confirmation</title>
-    <link rel = "stylesheet" href = "style.css" type = "text/css"></link>
+    <link rel = "stylesheet" href = href="${pageContext.request.contextPath}/css/css/styless.css" type = "text/css"></link>
   </head>
   <body>
     <center><h3>Final Confirmation</h3></center>
     <div align="center">
-      <form action = "shop.jsp" method = "post">
+      <form action = "/shop" method = "post">
 	<table class = "products" border = "1" cellpadding = "5">
           <tr>
 	    <th>Qty</th>
@@ -41,11 +41,14 @@
 	<input type = "hidden" value = "${items.size()}" name = "rowCount"/>
 	<p>
 	  <div class = "total">
-	    <span>Total:  </span><fmt:formatNumber type = 'currency' value = "${total}"/>
-	    <p><span>A email confirmation of your order will be sent.</span></p>
+	    <span>Total:  </span><fmt:setLocale value = "en_US"/> type = 'currency' value = "${total}"/>
+	    <p><span>An email confirmation of your order will be sent.</span></p>
 	  </div>
-	  <p><input type = "submit" value = " Place order "/></p>
+	  <p><input type = "submit" value = " Press to send an email with order details. "/></p>
       </form>
+      <center>
+			<a href="${pageContext.request.contextPath}/shopping/shop">Back</a>
+		</center>
     </div>
   </body>
 </html>

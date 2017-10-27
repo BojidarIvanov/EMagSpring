@@ -1,9 +1,15 @@
 Manifest-Version: 1.0
 Implementation-Title: EmagSpring
 Implementation-Version: 0.0.1-SNAPSHOT
+<<<<<<< HEAD
 Built-By: Bozhidar
 Implementation-Vendor-Id: com.emag
 Build-Jdk: 1.8.0_144
+=======
+Built-By: Ivan
+Implementation-Vendor-Id: com.emag
+Build-Jdk: 1.8.0_141
+>>>>>>> 678e32db35847c27cc0228dff6bd64606e18568c
 Created-By: Maven Integration for Eclipse
 Implementation-Vendor: Pivotal Software, Inc.
 
