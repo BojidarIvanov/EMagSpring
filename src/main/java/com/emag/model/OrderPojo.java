@@ -104,7 +104,7 @@ public class OrderPojo {
 	}
 
 	public  Map<ProductPojo, Integer> getCollection() {
-		return Collections.unmodifiableMap(currentOrderProducts);
+		return currentOrderProducts;
 	}
 	
 	public void setHistoryForOrderedProducts(HashMap<String, Integer> products) {

@@ -1,4 +1,4 @@
-package com.emag.db;
+	package com.emag.db;
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
@@ -99,7 +99,7 @@ public class UserDAO {
 
 	public boolean userExistsEmailAndPassword(UserPojo user) {
 	
-		if (user.getPassword().equals(users.get(user.getEmail()).getPassword())) {
+		if (users.get(user.getEmail()) != null && user.getPassword().equals(users.get(user.getEmail()).getPassword())) {
 			return true;
 		}
 		return false;

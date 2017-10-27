@@ -10,7 +10,7 @@
     <link rel = "stylesheet"  href="${pageContext.request.contextPath}/css/css/styless.css" type = "text/css"></link>
   </head>
   <body>
-    <center><h3>Final Confirmation</h3></center>
+    <center><h3>Confirmation send by email</h3></center>
     <div align="center">
       <form action = "${pageContext.request.contextPath}/shopping/shop" method = "post">
 	<table class = "products" border = "1" cellpadding = "5">
@@ -41,7 +41,7 @@
 	<input type = "hidden" value = "${items.size()}" name = "rowCount"/>
 	<p>
 	  <div class = "total">
-	   <span>Total: $  </span><fmt:setLocale value = "en_US"/> ${total} 
+	    <span>Total: $  </span><fmt:setLocale value = "en_US"/> ${total}
 	    
 	    	    <p><span>An email confirmation of your order will be sent.</span></p>
 	  </div>

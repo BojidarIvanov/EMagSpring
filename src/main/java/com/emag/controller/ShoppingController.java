@@ -86,7 +86,7 @@ public class ShoppingController {
 				}
 				ind++;
 			}
-			if (total.equals(0)) {
+			if (total.compareTo(BigDecimal.ZERO)  <= 0) {
 				sendErrorResponse(req, res, "No items chosen during shopping.");
 			}
 		} catch (NumberFormatException e) {
@@ -114,7 +114,7 @@ public class ShoppingController {
 		try {
 			HttpSession session = req.getSession();
 			session.setAttribute("result", msg);
-			res.sendRedirect("admin/badResult");
+			res.sendRedirect("badResult");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -125,8 +125,8 @@ public class ShoppingController {
 		try {
 			total = BigDecimal.ZERO;
 			List<LineItem> lineItems = getConfirmationInputs(req, res);
-			saveToDB(lineItems, req, this.total);
 			sendResponseCo(req, res, lineItems, this.total);
+			saveToDB(lineItems, req, this.total);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -195,6 +195,11 @@ public class ShoppingController {
 	@RequestMapping(value = "shopping/placeOrder", method = RequestMethod.POST)
 	public String placeOrder(HttpServletRequest req, HttpServletResponse res) {
 		return "shopping/placeOrder";
+	}
+	
+	@RequestMapping(value = "shopping/badResult")
+	public String shoppingBadResult(HttpServletRequest req, HttpServletResponse res) {
+		return "shopping/badResult";
 	}
 
 }
