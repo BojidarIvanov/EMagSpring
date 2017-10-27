@@ -102,6 +102,10 @@ public class OrderPojo {
 	public LocalDateTime getDate() {
 		return date;
 	}
+	
+	public int getUserId() {
+		return userId;
+	}
 
 	public  Map<ProductPojo, Integer> getCollection() {
 		return currentOrderProducts;

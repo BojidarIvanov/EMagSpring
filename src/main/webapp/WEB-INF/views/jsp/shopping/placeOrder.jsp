@@ -22,6 +22,7 @@
 	    <th>Price</th>
           </tr>
 	  <c:set var = 'ind' value = '1'/>
+	    <c:set var = 'category' value = "${categories}"/>
           <c:forEach var = "item" items = "${items}"> 
             <tr>
 	      <td><input type = "number"   name ="num-${ind}" min ="0" max ="99" step ="1"

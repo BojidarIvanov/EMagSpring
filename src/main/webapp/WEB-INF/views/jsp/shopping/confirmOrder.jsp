@@ -24,7 +24,7 @@
 					<th>Qty</th>
 					<th>Id</th>
 					<th>Product name</th>
-					<th>Category</th>
+					<th>Available products</th>
 					<th>Price</th>
 				</tr>
 				<c:set var='ind' value='1' />

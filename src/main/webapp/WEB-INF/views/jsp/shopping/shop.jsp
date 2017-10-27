@@ -50,7 +50,7 @@
 						<td><input style="text-align: center;" name="prod-${ind}"
 							type="text" value="${item.name}" readonly /></td>
 						<td><input style="text-align: center;" name="cat-${ind}"
-							type="text" value="${item.category_id}" readonly /></td>
+							type="text" value="${item.available_products}" readonly /></td>
 						<td><input type="text" name="price-${ind}"
 							value="${item.price}" size="7" readonly /></td>
 					</tr>
