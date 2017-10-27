@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.emag.db.OrderDAO;
 import com.emag.db.ProductDAO;
+import com.emag.model.CategoryPojo;
 import com.emag.model.LineItem;
 import com.emag.model.OrderPojo;
 import com.emag.model.ProductPojo;
@@ -80,6 +81,13 @@ public class ShoppingController {
 					String product = req.getParameter("prod-" + ind);
 					String category = req.getParameter("cat-" + ind);
 					BigDecimal price = new BigDecimal(req.getParameter("price-" + ind).trim());
+					// tried to get name for the category - had some issues
+					// we'll try later
+					// int cat = Integer.parseInt(category);
+					// Map<Integer, CategoryPojo> categories = (Map<Integer,
+					// CategoryPojo>) application
+					// .getAttribute("categories");
+
 					lineItems.add(new LineItem(qty, id, product, category, price));
 					if (qty > 0) {
 						BigDecimal subtotal = price.multiply(new BigDecimal(qty));
@@ -180,13 +188,14 @@ public class ShoppingController {
 
 		try {
 			OrderDAO.getInstance().addOrder(order);
-			// if no exception is thrown it's save to empty current collection of orders
+			// if no exception is thrown it's save to empty current collection
+			// of orders
 			order.getCollection().clear();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			sendErrorResponse(req, res, "SQL exception friend - BIG TIME!!!\n\n" + e.toString());
 		}
-		
+
 		System.out.println(lineItems);
 	}
 

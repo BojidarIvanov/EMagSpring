@@ -24,7 +24,7 @@
 					<th>Qty</th>
 					<th>Id</th>
 					<th>Product name</th>
-					<th>Available products</th>
+					<th>Availability</th>
 					<th>Price</th>
 				</tr>
 				<c:set var='ind' value='1' />
@@ -62,9 +62,6 @@
 				<h4> No items were chosen, nothing to confirm. </h4>
 			</p>
 				</c:if>
-				
-				
-				
 		</form>
 		<center>
 			<a href="${pageContext.request.contextPath}/shopping/shop">Back</a>
