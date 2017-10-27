@@ -11,7 +11,7 @@
 		<center>${result}</center>
 
 		<center>
-			<a href="${pageContext.request.contextPath}/shop">Back</a>
+			<a href="${pageContext.request.contextPath}/shopping/shop">Back</a>
 	</div>
 </body>
 </html>
