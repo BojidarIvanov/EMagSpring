@@ -5,8 +5,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<!--  <script src="js/jquery.min.js"></script> -->
 <!-- Custom Theme files -->
 <link rel="stylesheet" type="text/css" href="css/css/style.scss">
 <!-- Custom Theme files -->
@@ -16,18 +14,6 @@
 	content="Eshop Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
 
-
-</script>
-<!--webfont-->
-<!-- for bootstrap working -->
-
-<!-- //for bootstrap working -->
-<!-- cart -->
-
-
-</script>
-<!-- cart -->
-
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>EMAG</title>
@@ -35,7 +21,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 </head>
 <!-- <a href="index"> <img src="img/emag.jpg"> -->
-</a>
+
 <body>
 	<div class="header">
 		<form class="navi" action="about">

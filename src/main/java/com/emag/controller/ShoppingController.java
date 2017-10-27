@@ -170,6 +170,8 @@ public class ShoppingController {
 			order.getCollection().put(products.get(lineItems.get(0).getId()), lineItems.get(0).getQty());
 		}
 		
+		System.out.println(order);
+		
 		try {
 			OrderDAO.getInstance().addOrder(order);
 		} catch (SQLException e) {
