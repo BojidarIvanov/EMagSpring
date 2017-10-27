@@ -5,7 +5,7 @@
 <html>
 <head>
 <title>Create new user</title>
-<link rel="stylesheet" href="style.css" type="text/css"></link>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/css/styless.css" type="text/css"></link>
 </head>
 <body>
 	<sql:setDataSource var="myDS" driver="com.mysql.jdbc.Driver"

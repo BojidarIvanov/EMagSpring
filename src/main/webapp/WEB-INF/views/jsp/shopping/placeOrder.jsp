@@ -7,12 +7,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Final Confirmation</title>
+<title>Option to send e-mail with order details</title>
 <link rel="stylesheet" href="style.css" type="text/css"></link>
 </head>
 <body>
 	<center>
-		<h3>Final Confirmation</h3>
+		<h3>Send email with order details.</h3>
 	</center>
 	<div align="center">
 		<form action="${pageContext.request.contextPath}/shopping/shop" method="post">
@@ -50,11 +50,11 @@
 					<a href="${pageContext.request.contextPath}/shopping/shop">Back</a>
 				</p>
 				<p>
-					<span>A email confirmation of your order will be sent.</span>
+					<span>An email confirmation of your order will be sent.</span>
 				</p>
 			</div>
 			<p>
-				<input type="submit" value=" Place order " />
+				<input type="submit" value=" Please press if you wand email to be sent. " />
 			</p>
 		</form>
 	</div>

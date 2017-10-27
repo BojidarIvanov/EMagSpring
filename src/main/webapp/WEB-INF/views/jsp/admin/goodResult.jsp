@@ -2,7 +2,7 @@
 <html>
 <head>
 <title>Emag</title>
-<link rel = "stylesheet" href = "style.css" type = "text/css"></link>
+<link rel = "stylesheet" href = "${pageContext.request.contextPath}/css/css/styless.css" type = "text/css"></link>
 </head>
 <body>
   <div class  = "goodResult">
