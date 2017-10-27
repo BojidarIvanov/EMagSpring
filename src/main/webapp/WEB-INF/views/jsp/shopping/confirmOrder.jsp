@@ -48,7 +48,7 @@
 			<p>
 			<div class="total">
 				<span>Total: $</span>
-				<fmt:formatNumber type='currency' value="${total}" />
+				<fmt:formatNumber  value="${total}" />
 			</div>
 			<c:set var="totalSum" value="${total}" />
 			
