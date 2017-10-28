@@ -52,9 +52,9 @@ label input, label textarea, label select {
 	</fieldset>
 </form>
 Already have an account? Please login:
-<a href="login.jsp">here</a>
+<a href="loginPage">here</a>
 <br>
-<a href="index.jsp" title="Go to Home Page">Home</a>
+<!-- <a href="index" title="Go to Home Page">Home</a>   -->
 <jsp:include page="footer.jsp"></jsp:include>
 
 </body>

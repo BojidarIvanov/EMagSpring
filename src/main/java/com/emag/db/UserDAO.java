@@ -94,6 +94,8 @@ public class UserDAO {
 
 	// only checking for email
 	public boolean userExists(UserPojo user) throws SQLException {
+		System.out.println("Users: "+ users);
+		System.out.println("User" + user);
 		return users.get(user.getEmail()) != null;
 	}
 

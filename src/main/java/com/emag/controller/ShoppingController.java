@@ -5,10 +5,11 @@ import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.TreeMap;
 
+import javax.mail.MessagingException;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,12 +21,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.emag.db.OrderDAO;
-import com.emag.db.ProductDAO;
-import com.emag.model.CategoryPojo;
+import com.emag.db.UserDAO;
 import com.emag.model.LineItem;
 import com.emag.model.OrderPojo;
 import com.emag.model.ProductPojo;
 import com.emag.model.UserPojo;
+import com.emag.util.MailUtilGmail;
 
 @Controller
 public class ShoppingController {
@@ -97,7 +98,7 @@ public class ShoppingController {
 				ind++;
 			}
 			if (total.compareTo(BigDecimal.ZERO) <= 0) {
-				sendErrorResponse(req, res, "No items chosen during shopping or above available quantity.");
+				sendErrorResponse(req, res, "No items chosen during shopping. Please no messing around :)");
 			}
 		} catch (NumberFormatException e) {
 			sendErrorResponse(req, res, "Data validation errors arose during processing.");
@@ -177,6 +178,15 @@ public class ShoppingController {
 		TreeMap<Integer, ProductPojo> products = (TreeMap<Integer, ProductPojo>) application.getAttribute("products");
 		UserPojo user = (UserPojo) session.getAttribute("user");
 		System.out.println(user);
+
+		if (user == null) {
+			try {
+				res.sendRedirect("/EmagSpring/html/lostSession.html");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return;
+		}
 		OrderPojo order = new OrderPojo(LocalDateTime.now(), user.getCustomerID(), user.getAddress(), user.getAddress(),
 				this.total, 1);
 
@@ -185,18 +195,18 @@ public class ShoppingController {
 		}
 
 		System.out.println("Orders:" + order);
-
+		long orderId = 0;
 		try {
-			OrderDAO.getInstance().addOrder(order);
+			orderId = OrderDAO.getInstance().addOrder(order);
 			// if no exception is thrown it's save to empty current collection
 			// of orders
 			order.getCollection().clear();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			sendErrorResponse(req, res, "SQL exception friend - BIG TIME!!!\n\n" + e.toString());
+			sendErrorResponse(req, res, "SQL exception friend - BIG TIME!!!" + "\n" + e.toString());
 		}
-
 		System.out.println(lineItems);
+		session.setAttribute("orderId", orderId);
 	}
 
 	private String sendResponseCo(HttpServletRequest req, HttpServletResponse res, List<LineItem> items,
@@ -222,4 +232,74 @@ public class ShoppingController {
 		return "shopping/badResult";
 	}
 
+	@RequestMapping(value = "/shopping/send")
+	public String sendEmailToCustomer(HttpServletRequest request, HttpServletResponse response) {
+		// get current action
+		String url = "";
+		// get parameters from the request
+		String message = "";
+		String em = request.getParameter("email");
+		for (String params : Collections.list(request.getParameterNames())) {
+			// Whatever you want to do with your map
+			// Key : params
+			// Value : httpServletRequest.getParameter(params)
+			System.out.println("Print params: " + params);
+			System.out.println("Print value: " + request.getParameter(params));
+		}
+		UserPojo user = null;
+		try {
+			user = UserDAO.getInstance().getAllUsers().get(em);
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+			return "forward:sqlError.html";
+		}
+		if (user == null) {
+			return "forward:lostSession.html";
+		}
+		String email = user.getEmail();
+		String firstName = user.getName();
+		String to = email;
+		String from = "pechorinnd@gmail.com";
+		HttpSession session = request.getSession();
+		List<LineItem> lineItems = (List<LineItem>) session.getAttribute("items");
+		Long orderId = (Long) session.getAttribute("orderId");
+		String subject = "Regarding your order at EMAG, with order id: " + orderId;
+		BigDecimal subtotal = (BigDecimal) session.getAttribute("total");
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < lineItems.size(); i++) {
+			sb.append((i + 1) + ". Product name: " + lineItems.get(i).getProduct())
+					.append(System.getProperty("line.separator"));
+			sb.append(" Number of items: " + lineItems.get(i).getQty()).append(System.getProperty("line.separator"));
+			sb.append(" Unit price: $" + lineItems.get(i).getPrice())
+					.append(System.getProperty("line.separator"));
+			sb.append("=========================================================")
+					.append(System.getProperty("line.separator"));
+		}
+		sb.append(" The total amount spent: $" + subtotal);
+		String body = "Dear " + firstName + ",\n\n" + "Your order details are as follows: \n\n" + sb.toString();
+
+		boolean isBodyHTML = false;
+		try {
+			System.out.println("inside try");
+			MailUtilGmail.sendMail(to, from, subject, body, isBodyHTML);
+
+		} catch (MessagingException e) {
+			String errorMessage = "ERROR: Unable to send email. " + "Check Tomcat logs for details.<br>"
+					+ "NOTE: You may need to configure your system " + "as described in chapter 14.<br>"
+					+ "ERROR MESSAGE: " + e.getMessage();
+			request.setAttribute("errorMessage", errorMessage);
+			/*
+			 * this.log("Unable to send email. \n" +
+			 * "Here is the email you tried to send: \n" +
+			 * "=====================================\n" + "TO: " + email + "\n"
+			 * + "FROM: " + from + "\n" + "SUBJECT: " + subject + "\n" + "\n" +
+			 * body + "\n\n");
+			 */
+			message = "password has been sent to your email ";
+		}
+
+		request.setAttribute("message", message);
+		url = "/shopping/shop";
+		return "forward:" + url;
+	}
 }
