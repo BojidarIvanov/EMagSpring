@@ -1,4 +1,5 @@
 <%@ page isErrorPage="true" import="java.io.*" contentType="text/plain"%>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 
 Message:
 <%=exception.getMessage()%>

@@ -41,9 +41,18 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<input type="submit" value="Go To Login Page">
 			</form>
 		</c:if>
+		
 		<form class="navi" action="contact">
 			<input type="submit" value="Contacts">
 		</form>
+			
+		
+		<form class = "navi" action="searchProduct" method = "get">
+				<input  class= "navi"  type="text" name="productName" value = "Serch for product">
+				<input class = "navi" type="submit" name="submit" value="Search">
+		</form>
+		
+		
 		<c:if test="${sessionScope.user != null}">
 			<form class="navi" action="logout" method="post">
 				<input type="submit" value="Logout">
