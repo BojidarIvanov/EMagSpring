@@ -56,6 +56,8 @@ public class SearchController {
 			model.addAttribute("productName", searchedProduct.getName());
 			model.addAttribute("productPrice", searchedProduct.getPrice());
 			model.addAttribute("productQuantity", searchedProduct.getQuantity());
+			model.addAttribute("productId", searchedProduct.getProductID());
+
 			System.out.println("Product exists");
 			
 		} 
