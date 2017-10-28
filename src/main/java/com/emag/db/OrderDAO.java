@@ -63,21 +63,29 @@ public class OrderDAO {
 			ps = con.prepareStatement(
 					"INSERT INTO orders (customer_id, shipping_address, billing_address, amount, created_at, status) VALUES(?,?,?,?,?,?);",
 					Statement.RETURN_GENERATED_KEYS);
-			ps.setLong(1, 1);
+			ps.setLong(1, order.getUserId());
 			ps.setString(2, order.getShippingAddress());
 			ps.setString(3, order.getBillingAddress());
 			ps.setBigDecimal(4, order.getTotalPrice());
 			ps.setString(5, order.getDate().toString());
-			// default status 0
-			ps.setInt(6, 0);
+			// default status 1
+			ps.setInt(6, 1);
 			ps.executeUpdate();
 			// getting auto-generated key
 			ResultSet rs = ps.getGeneratedKeys();
 			rs.next();
 			long key = rs.getLong(1);
+
 			// calling the method to fill the ordered_products table
 			orderedProducts = addToOrderedProducts(order, key);
 			con.commit();
+			// if no exception is thrown till this moment it's time to update
+			// allProducts
+			Map<Integer, ProductPojo> prod = ProductDAO.getInstance().getAllProducts();
+			synchronized (prod) {
+				prod = ProductDAO.getInstance().getAllProducts(true);
+			}
+
 		} catch (SQLException e) {
 			if (con != null) {
 				try {
@@ -96,28 +104,36 @@ public class OrderDAO {
 				orderedProducts.close();
 			}
 			con.setAutoCommit(true);
-		}	
+		}
 	}
 
-	// no need to create separate Pojo for ordered_product table it's being
+	// no need to create separate pojo for ordered_product table it's being
 	// populated by below method.
 	public PreparedStatement addToOrderedProducts(OrderPojo order, long key) throws SQLException {
 		Connection con = DBManager.CON1.getConnection();
 		PreparedStatement ps = con.prepareStatement("INSERT INTO ordered_products  VALUES(?,?,?);");
-		Map<ProductPojo, Integer> busket = order.getCollection();
-
-		for (Entry<ProductPojo, Integer> entry : busket.entrySet()) {
+		Map<ProductPojo, Integer> basket = order.getCollection();
+		System.out.println("Basket: " + basket);
+		PreparedStatement prepStatement = null;
+		for (Entry<ProductPojo, Integer> entry : basket.entrySet()) {
+			System.out.println("Product vs order");
 			ps.setLong(1, key);
 			ps.setLong(2, entry.getKey().getProductID());
 			ps.setInt(3, entry.getValue());
 			ps.executeUpdate();
+			// when adding product to ordered items they are deducted from
+			// products table availability column
+			 prepStatement = ProductDAO.getInstance()
+					.removeProductByIdAndQnt(entry.getKey().getProductID(), entry.getValue());
+			
 		}
+		prepStatement.close();
 		return ps;
 	}
 
 	public HashSet<OrderPojo> getOrdersForUser(UserPojo u) throws SQLException {
 		Connection con = DBManager.CON1.getConnection();
-		PreparedStatement ps = con.prepareStatement("SELECT * FROM orders WHERE customer_id = ? ORDER BY created_at");
+		PreparedStatement ps = con.prepareStatement("SELECT * FROM orders WHERE customer_id = ?;");
 		ps.setLong(1, u.getCustomerID());
 		ResultSet rs = ps.executeQuery();
 		LinkedHashSet<OrderPojo> orders = new LinkedHashSet<>();

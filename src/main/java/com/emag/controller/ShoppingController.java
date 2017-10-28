@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.emag.db.OrderDAO;
+import com.emag.db.ProductDAO;
+import com.emag.model.CategoryPojo;
 import com.emag.model.LineItem;
 import com.emag.model.OrderPojo;
 import com.emag.model.ProductPojo;
@@ -30,7 +32,7 @@ public class ShoppingController {
 
 	@Autowired
 	ServletContext application;
-	
+
 	private BigDecimal total = BigDecimal.ZERO;
 
 	@RequestMapping(value = "/shopping/shop")
@@ -39,7 +41,8 @@ public class ShoppingController {
 	}
 
 	@RequestMapping(value = "/shopping/confirmOrder", method = RequestMethod.GET)
-	public String confirmOrder() {
+	public String confirmOrder(HttpServletRequest req, HttpServletResponse res) {
+		System.out.println("/shopping/confirmation/");
 		return "shopping/confirmOrder";
 	}
 
@@ -78,6 +81,13 @@ public class ShoppingController {
 					String product = req.getParameter("prod-" + ind);
 					String category = req.getParameter("cat-" + ind);
 					BigDecimal price = new BigDecimal(req.getParameter("price-" + ind).trim());
+					// tried to get name for the category - had some issues
+					// we'll try later
+					// int cat = Integer.parseInt(category);
+					// Map<Integer, CategoryPojo> categories = (Map<Integer,
+					// CategoryPojo>) application
+					// .getAttribute("categories");
+
 					lineItems.add(new LineItem(qty, id, product, category, price));
 					if (qty > 0) {
 						BigDecimal subtotal = price.multiply(new BigDecimal(qty));
@@ -86,14 +96,14 @@ public class ShoppingController {
 				}
 				ind++;
 			}
-			if (total.equals(0)) {
-				sendErrorResponse(req, res, "No items chosen during shopping.");
+			if (total.compareTo(BigDecimal.ZERO) <= 0) {
+				sendErrorResponse(req, res, "No items chosen during shopping or above available quantity.");
 			}
 		} catch (NumberFormatException e) {
 			sendErrorResponse(req, res, "Data validation errors arose during processing.");
 			return null;
 		}
-		
+
 		System.out.println(lineItems);
 		return lineItems;
 	}
@@ -101,6 +111,7 @@ public class ShoppingController {
 	private void sendResponse(HttpServletRequest req, HttpServletResponse res, List<LineItem> items,
 			BigDecimal totalPrice) {
 		try {
+			System.out.println("Send response");
 			HttpSession session = req.getSession();
 			session.setAttribute("items", items);
 			session.setAttribute("total", totalPrice);
@@ -114,19 +125,20 @@ public class ShoppingController {
 		try {
 			HttpSession session = req.getSession();
 			session.setAttribute("result", msg);
-			res.sendRedirect("admin/badResult");
+			res.sendRedirect("badResult");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	@RequestMapping(value = "/confirmOrder", method = RequestMethod.POST)
+	@RequestMapping(value = "confirmOrder", method = RequestMethod.POST)
 	public void orderPlacer(HttpServletRequest req, HttpServletResponse res) {
 		try {
+			System.out.println("Confirming order.........");
 			total = BigDecimal.ZERO;
 			List<LineItem> lineItems = getConfirmationInputs(req, res);
-			saveToDB(lineItems, req, this.total);
 			sendResponseCo(req, res, lineItems, this.total);
+			System.out.println("Order placer");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -157,44 +169,57 @@ public class ShoppingController {
 		return lineItems;
 	}
 
-	private void saveToDB(List<LineItem> lineItems, HttpServletRequest req, BigDecimal bd) {
-		System.out.println("Trying to add to database orders..........................................................");
-		System.out.println(lineItems);
+	private void saveToDB(List<LineItem> lineItems, HttpServletRequest req, HttpServletResponse res, BigDecimal bd) {
+		System.out
+				.println("Trying to add to database orders..........................................................");
+		System.out.println("Lineitems: " + lineItems);
 		HttpSession session = req.getSession();
-		TreeMap<Integer,ProductPojo> products = (TreeMap<Integer,ProductPojo>) application.getAttribute("products");
+		TreeMap<Integer, ProductPojo> products = (TreeMap<Integer, ProductPojo>) application.getAttribute("products");
 		UserPojo user = (UserPojo) session.getAttribute("user");
+		System.out.println(user);
 		OrderPojo order = new OrderPojo(LocalDateTime.now(), user.getCustomerID(), user.getAddress(), user.getAddress(),
 				this.total, 1);
-		
-		for(int i = 0; i < lineItems.size(); i++) {
-			order.getCollection().put(products.get(lineItems.get(0).getId()), lineItems.get(0).getQty());
+
+		for (int i = 0; i < lineItems.size(); i++) {
+			order.getCollection().put(products.get(lineItems.get(i).getId()), lineItems.get(i).getQty());
 		}
-		
-		System.out.println(order);
-		
+
+		System.out.println("Orders:" + order);
+
 		try {
 			OrderDAO.getInstance().addOrder(order);
+			// if no exception is thrown it's save to empty current collection
+			// of orders
+			order.getCollection().clear();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			sendErrorResponse(req, res, "SQL exception friend - BIG TIME!!!\n\n" + e.toString());
 		}
+
 		System.out.println(lineItems);
 	}
 
-	private void sendResponseCo(HttpServletRequest req, HttpServletResponse res, List<LineItem> items,
+	private String sendResponseCo(HttpServletRequest req, HttpServletResponse res, List<LineItem> items,
 			BigDecimal totalPrice) {
-		try {
-			HttpSession session = req.getSession();
-			session.setAttribute("items", items);
-			session.setAttribute("total", totalPrice);
-			res.sendRedirect("shopping/placeOrder");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+
+		System.out.println("sendResponseCo");
+		HttpSession session = req.getSession();
+		session.setAttribute("items", items);
+		session.setAttribute("total", totalPrice);
+		saveToDB(items, req, res, this.total);
+		return "forword:/shopping/placeOrder";
 	}
 
 	@RequestMapping(value = "shopping/placeOrder", method = RequestMethod.POST)
 	public String placeOrder(HttpServletRequest req, HttpServletResponse res) {
+		System.out.println("shopping/placeOrder");
+		orderPlacer(req, res);
 		return "shopping/placeOrder";
+	}
+
+	@RequestMapping(value = "shopping/badResult")
+	public String shoppingBadResult(HttpServletRequest req, HttpServletResponse res) {
+		return "shopping/badResult";
 	}
 
 }

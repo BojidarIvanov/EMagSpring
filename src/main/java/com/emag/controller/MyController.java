@@ -178,6 +178,7 @@ public class MyController {
 					}
 					if (application.getAttribute("categories") == null) {
 						Map<Integer, CategoryPojo> categories = CategoryDAO.getInstance().getAllCategories();
+						 System.out.println(categories);
 						application.setAttribute("categories", categories);
 					}
 					if (application.getAttribute("products") == null) {

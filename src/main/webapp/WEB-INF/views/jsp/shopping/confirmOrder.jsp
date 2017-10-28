@@ -24,7 +24,7 @@
 					<th>Qty</th>
 					<th>Id</th>
 					<th>Product name</th>
-					<th>Category</th>
+					<th>Availability</th>
 					<th>Price</th>
 				</tr>
 				<c:set var='ind' value='1' />
@@ -48,7 +48,7 @@
 			<p>
 			<div class="total">
 				<span>Total: $</span>
-				<fmt:formatNumber type='currency' value="${total}" />
+				<fmt:formatNumber  value="${total}" />
 			</div>
 			<c:set var="totalSum" value="${total}" />
 			
@@ -62,9 +62,6 @@
 				<h4> No items were chosen, nothing to confirm. </h4>
 			</p>
 				</c:if>
-				
-				
-				
 		</form>
 		<center>
 			<a href="${pageContext.request.contextPath}/shopping/shop">Back</a>
