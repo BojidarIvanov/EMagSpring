@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Final Confirmation</title>
+<title>Email Confirmation</title>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/css/styless.css"
 	type="text/css"></link>
@@ -17,7 +17,7 @@
 		<h3>Confirmation send by email</h3>
 	</center>
 	<div align="center">
-		<form action="${pageContext.request.contextPath}/shopping/shop"
+		<form action="${pageContext.request.contextPath}/shopping/send"
 			method="post">
 			<table class="products" border="1" cellpadding="5">
 				<tr>
@@ -46,6 +46,7 @@
 				</c:forEach>
 			</table>
 			<input type="hidden" value="${items.size()}" name="rowCount" />
+			<input type="hidden" value="${sessionScope.user.email}" name="email" />
 			<p>
 			<div class="total">
 				<span>Total: $ </span>

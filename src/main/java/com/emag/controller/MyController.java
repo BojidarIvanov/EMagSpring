@@ -136,7 +136,7 @@ public class MyController {
 		return "login";
 	}
 
-	@RequestMapping(value = "/logout", method = RequestMethod.POST)
+	@RequestMapping(value = "/logout")
 	public String logout(HttpSession s) {
 		s.invalidate();
 		return "index";

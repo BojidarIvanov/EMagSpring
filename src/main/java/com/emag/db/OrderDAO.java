@@ -52,11 +52,12 @@ public class OrderDAO {
 		return orders;
 	}
 
-	public void addOrder(OrderPojo order) throws SQLException {
+	public long addOrder(OrderPojo order) throws SQLException {
 
 		Connection con = DBManager.CON1.getConnection();
 		PreparedStatement ps = null;
 		PreparedStatement orderedProducts = null;
+		long orderId = 0;
 		try {
 			// setting up mySql transaction
 			con.setAutoCommit(false);
@@ -75,7 +76,7 @@ public class OrderDAO {
 			ResultSet rs = ps.getGeneratedKeys();
 			rs.next();
 			long key = rs.getLong(1);
-
+			orderId = key;
 			// calling the method to fill the ordered_products table
 			orderedProducts = addToOrderedProducts(order, key);
 			con.commit();
@@ -105,6 +106,7 @@ public class OrderDAO {
 			}
 			con.setAutoCommit(true);
 		}
+		return orderId;
 	}
 
 	// no need to create separate pojo for ordered_product table it's being
