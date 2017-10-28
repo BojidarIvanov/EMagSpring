@@ -29,7 +29,7 @@
 		<div class="contact-info">
 			<h3>CONTACT FORM</h3>
 		</div>
-		<form action="messageFromCustomer" message = "get">
+		<form action="messageFromCustomer" method = "POST">
 			<div class="contact-left">
 				<input type="text" placeholder="Name" required name="name">
 				<input	type="text" placeholder="E-mail" required name="email"> 

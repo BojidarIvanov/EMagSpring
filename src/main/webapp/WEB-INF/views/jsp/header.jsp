@@ -4,6 +4,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+
 <html>
 
 <!-- Custom Theme files -->
@@ -18,10 +20,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>EMAG</title>
+
+
+<!--  <a href="index"></a> <img src="img/emag.jpg" alt="Logo"> -->
+
 <link rel="stylesheet" type="text/css" href="css/styles.css">
 
 </head>
-<!-- <a href="index"> <img src="img/emag.jpg"> -->
 
 <body>
 	<div class="header">
@@ -36,8 +41,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<input type="submit" value="View My orders">
 			</form>
 		</c:if>
+		<form class="navi" action="categories" method="GET">
+			<input type="submit" value="View Categories">
+		</form>
 		<c:if test="${sessionScope.user == null}">
-			<form class="navi" action="loginPage" method="get">
+			<form class="navi" action="loginPage" method="GET">
 				<input type="submit" value="Go To Login Page">
 			</form>
 		</c:if>
@@ -45,7 +53,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<input type="submit" value="Contacts">
 		</form>
 		<c:if test="${sessionScope.user != null}">
-			<form class="navi" action="logout" method="post">
+			<form class="navi" action="logout" method="GET">
 				<input type="submit" value="Logout">
 			</form>
 		</c:if>
@@ -59,7 +67,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 		<c:if test="${sessionScope.user != null}">
 			<form class="navi"
-				action="${pageContext.request.contextPath}/shopping/shop" method="post">
+				action="${pageContext.request.contextPath}/shopping/shop"
+				method="post">
 				<input type="submit" value="Let's go shopping!!!">
 			</form>
 		</c:if>

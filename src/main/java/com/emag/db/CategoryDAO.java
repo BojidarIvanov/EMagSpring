@@ -56,20 +56,17 @@ public class CategoryDAO {
 
 	public Map<Integer, CategoryPojo> setParentCategories() throws SQLException {
 
-		if (!allCategories.isEmpty()) {
-			return allCategories;
-		} else {
-			Connection conn = DBManager.CON1.getConnection();
-			PreparedStatement ps = conn.prepareStatement("SELECT category_id, parent_category_id FROM categories");
-			ResultSet rs = ps.executeQuery();
-			while (rs.next()) {
-				allCategories.get(rs.getInt("category_id"))
-						.setParentCategory(allCategories.get(rs.getInt("parent_category_id")));
-			}
-			rs.close();
-			ps.close();
-			return allCategories;
+		Connection conn = DBManager.CON1.getConnection();
+		PreparedStatement ps = conn.prepareStatement("SELECT category_id, parent_category_id FROM categories");
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()) {
+			allCategories.get(rs.getInt("category_id"))
+					.setParentCategory(allCategories.get(rs.getInt("parent_category_id")));
 		}
+		rs.close();
+		ps.close();
+		return allCategories;
+
 	}
 
 	public Map<Integer, CategoryPojo> getAllCategories() throws SQLException {

@@ -5,7 +5,9 @@
 <html>
 <head>
 <title>Create new user</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/css/styless.css" type="text/css"></link>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/css/styless.css"
+	type="text/css"></link>
 </head>
 <body>
 	<sql:setDataSource var="myDS" driver="com.mysql.jdbc.Driver"
@@ -16,10 +18,15 @@
 	SELECT * FROM products where product_id = ${param.id};
     </sql:query>
 	<p>
-		<a
-			href="${pageContext.request.contextPath}/admin/productManagement">Back</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-		<a
-			href="${pageContext.request.contextPath}/admin/edit?id=${param.id}">Edit</a>
+		<c:if test="${ sessionScope.user.isAdmin == true }">
+			<a href="${pageContext.request.contextPath}/admin/productManagement">Back</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+		<a href="${pageContext.request.contextPath}/admin/edit?id=${param.id}">Edit</a>
+		</c:if>
+		<c:if
+			test="${ sessionScope.user == null || sessionScope.user.isAdmin == false}">
+			<a href="${pageContext.request.contextPath}/categories">Back</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+		</c:if>
+
 	</p>
 	<div>
 		<fieldset>
@@ -40,7 +47,7 @@
 					<tr style="background: white;">
 						<td><label for="category">Category:</label></td>
 						<td><input id="category" name="category"
-							style="border: none;" value="${listStuff.rows[0].category_id}" 
+							style="border: none;" value="${listStuff.rows[0].category_id}"
 							type="text" readonly /></td>
 					</tr>
 
@@ -65,25 +72,28 @@
 							readonly /></td>
 					</tr>
 
-					
+
 					<tr style="background: white;">
 						<td><label for="displayImage">Display image: </label></td>
 						<td><input type="image" src="${listStuff.rows[0].image_url}"
 							id="displayImage" name="displayImage" style="border: none;"
-							value="${listStuff.rows[0].image_url}" type="text" readonly /></td>					
+							value="${listStuff.rows[0].image_url}" type="text" readonly /></td>
 					</tr>
-					
+
 				</tbody>
 			</table>
 		</fieldset>
 	</div>
 	<p>
-	
-		<a
-			href="${pageContext.request.contextPath}/admin/productManagement">Back</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-		<a
-			href="${pageContext.request.contextPath}/admin/edit?id=${param.id}">Edit</a>
-			
+		<c:if test="${ sessionScope.user.isAdmin == true }">
+			<a href="${pageContext.request.contextPath}/admin/productManagement">Back</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+		<a href="${pageContext.request.contextPath}/admin/edit?id=${param.id}">Edit</a>
+		</c:if>
+		<c:if
+			test="${ sessionScope.user == null || sessionScope.user.isAdmin == false}">
+			<a href="${pageContext.request.contextPath}/categories">Back</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+		</c:if>
+
 	</p>
 </body>
 </html>

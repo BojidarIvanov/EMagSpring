@@ -79,5 +79,10 @@ public class CategoryPojo {
 		return true;
 	}
 
-	
+	@Override
+	public String toString() {
+		return "CategoryPojo [categoryID=" + categoryID + ", name=" + name + ", imageURL=" + imageURL
+				+ ", parentCategory=" + parentCategory + "]";
+	}
+
 }

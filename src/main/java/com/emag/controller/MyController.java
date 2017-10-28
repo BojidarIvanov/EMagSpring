@@ -84,8 +84,8 @@ public class MyController {
 			try {
 				String pass = PasswordUtil.hashPassword(password);
 				System.out.println(pass);
-				customer = new UserPojo(name, email, phone, LocalDate.of(Integer.parseInt(dob), 1, 1),
-						pass, address, false);
+				customer = new UserPojo(name, email, phone, LocalDate.of(Integer.parseInt(dob), 1, 1), pass, address,
+						false);
 			} catch (NumberFormatException e1) {
 				e1.printStackTrace();
 			} catch (NoSuchAlgorithmException e1) {
@@ -117,13 +117,44 @@ public class MyController {
 	}
 
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
-	public String welcomePage() {
+	public String welcomePage(HttpServletRequest request) {
+
+		try {
+			synchronized (application) {
+				if (application.getAttribute("brands") == null) {
+					Map<Integer, BrandPojo> brands = BrandDAO.getInstance().getAllBrands();
+					application.setAttribute("brands", brands);
+				}
+				if (application.getAttribute("categories") == null) {
+					Map<Integer, CategoryPojo> categories = CategoryDAO.getInstance().getAllCategories();
+					application.setAttribute("categories", categories);
+				}
+				if (application.getAttribute("products") == null) {
+					TreeMap<Integer, ProductPojo> products = ProductDAO.getInstance().getAllProducts();
+					// System.out.println(products);
+					application.setAttribute("products", products);
+				}
+				if (application.getAttribute("users") == null) {
+					TreeMap<Integer, ProductPojo> users;
+					users = ProductDAO.getInstance().getAllProducts();
+					application.setAttribute("users", users);
+				}
+			}
+		} catch (SQLException e) {
+			request.setAttribute("error", "database problem : " + e.getMessage() + e.getErrorCode());
+			return "forward:loginPage";
+		}
 		return "index";
 	}
 
 	@RequestMapping(value = "/orders", method = RequestMethod.GET)
 	public String myOrders() {
 		return "orders";
+	}
+
+	@RequestMapping(value = "/categories", method = RequestMethod.GET)
+	public String categories() {
+		return "categories";
 	}
 
 	@RequestMapping(value = "/contact", method = RequestMethod.GET)
@@ -165,33 +196,35 @@ public class MyController {
 		}
 
 		try {
+
+			synchronized (application) {
+				if (application.getAttribute("brands") == null) {
+					Map<Integer, BrandPojo> brands = BrandDAO.getInstance().getAllBrands();
+					application.setAttribute("brands", brands);
+				}
+				if (application.getAttribute("categories") == null) {
+					Map<Integer, CategoryPojo> categories = CategoryDAO.getInstance().getAllCategories();
+					System.out.println(categories);
+					application.setAttribute("categories", categories);
+				}
+				if (application.getAttribute("products") == null) {
+					TreeMap<Integer, ProductPojo> products = ProductDAO.getInstance().getAllProducts();
+					// System.out.println(products);
+					application.setAttribute("products", products);
+				}
+				if (application.getAttribute("users") == null) {
+					TreeMap<Integer, ProductPojo> users = ProductDAO.getInstance().getAllProducts();
+					application.setAttribute("users", users);
+				}
+			}
+
 			boolean exists = UserDAO.getInstance().userExistsEmailAndPassword(user);
+
 			if (exists) {
 				// update session
 				UserPojo u = UserDAO.getInstance().getUser(user);
 				request.getSession().setAttribute("user", u);
 
-				synchronized (application) {
-					if (application.getAttribute("brands") == null) {
-						Map<Integer, BrandPojo> brands = BrandDAO.getInstance().getAllBrands();
-						application.setAttribute("brands", brands);
-					}
-					if (application.getAttribute("categories") == null) {
-						Map<Integer, CategoryPojo> categories = CategoryDAO.getInstance().getAllCategories();
-						 System.out.println(categories);
-						application.setAttribute("categories", categories);
-					}
-					if (application.getAttribute("products") == null) {
-						TreeMap<Integer, ProductPojo> products = ProductDAO.getInstance().getAllProducts();
-						// System.out.println(products);
-						application.setAttribute("products", products);
-					}
-					if (application.getAttribute("users") == null) {
-						TreeMap<Integer, ProductPojo> users = ProductDAO.getInstance().getAllProducts();
-						application.setAttribute("users", users);
-					}
-
-				}
 				return "forward:main";
 			} else {
 				request.setAttribute("error", "user does not exist");
@@ -239,5 +272,17 @@ public class MyController {
 		set.addAll(u.getOrders());
 		u.setOrders(set);
 		return "orders";
+	}
+
+	@RequestMapping(value = "/sortCategories", method = RequestMethod.GET)
+	public String sortCategories(HttpServletRequest request, HttpServletResponse response) {
+		String sort = request.getParameter("sort");
+		Integer categoryId = Integer.parseInt(sort);
+		Map<Integer, CategoryPojo> categories = (Map<Integer, CategoryPojo>) application.getAttribute("categories");
+		System.out.println(categories);
+		CategoryPojo category = categories.get(categoryId);
+		request.setAttribute("specificCategory", category);
+		System.out.println("Category" + category);
+		return "categories";
 	}
 }
