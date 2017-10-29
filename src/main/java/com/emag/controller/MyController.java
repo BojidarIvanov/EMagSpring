@@ -137,6 +137,7 @@ public class MyController {
 				if (application.getAttribute("users") == null) {
 					Map<String, UserPojo> users;
 					users = UserDAO.getInstance().getAllUsers();
+					System.out.println(users);
 					application.setAttribute("users", users);
 				}
 			}

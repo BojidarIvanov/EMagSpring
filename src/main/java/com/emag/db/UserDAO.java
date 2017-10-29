@@ -1,4 +1,4 @@
-	package com.emag.db;
+package com.emag.db;
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
@@ -10,21 +10,19 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import com.emag.model.OrderPojo;
 import com.emag.model.UserPojo;
-import com.emag.util.PasswordUtil;
-
 
 public class UserDAO {
 
 	private static UserDAO instance;;
 	private Connection connection;
-	private static final ConcurrentHashMap<String, UserPojo> users = new ConcurrentHashMap<>();
+	private static final HashMap<String, UserPojo> users = new HashMap<>();
 
 	private UserDAO() {
 	}
@@ -54,8 +52,11 @@ public class UserDAO {
 			ps.executeUpdate();
 			ResultSet rs = ps.getGeneratedKeys();
 			rs.next();
-			users.put(user.getEmail(), new UserPojo(rs.getInt(1), user.getName(), user.getEmail(), user.getPhone(),
-					user.getDateOfBirth(), user.getPassword(), user.getAddress(), user.getIsAdmin()));
+			synchronized (users) {
+				users.put(user.getEmail(), new UserPojo(rs.getInt(1), user.getName(), user.getEmail(), user.getPhone(),
+						user.getDateOfBirth(), user.getPassword(), user.getAddress(), user.getIsAdmin()));
+			}
+
 			rs.close();
 			ps.close();
 			return true;
@@ -74,7 +75,7 @@ public class UserDAO {
 	}
 
 	public Map<String, UserPojo> getAllUsers() throws SQLException {
-
+		System.out.println("UserDAO-------------------------------------------------------");
 		if (!users.isEmpty()) {
 			return users;
 		}
@@ -89,18 +90,19 @@ public class UserDAO {
 		}
 		rs.close();
 		ps.close();
+		System.out.println("users");
 		return users;
 	}
 
 	// only checking for email
 	public boolean userExists(UserPojo user) throws SQLException {
-		System.out.println("Users: "+ users);
+		System.out.println("Users: " + users);
 		System.out.println("User" + user);
 		return users.get(user.getEmail()) != null;
 	}
 
 	public boolean userExistsEmailAndPassword(UserPojo user) {
-	
+
 		if (users.get(user.getEmail()) != null && user.getPassword().equals(users.get(user.getEmail()).getPassword())) {
 			return true;
 		}
@@ -115,17 +117,6 @@ public class UserDAO {
 		return databaseValue.toLocalDate();
 	}
 
-	public static void main(String[] args) throws SQLException, ParseException {
-
-		DateTimeFormatter germanFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)
-				.withLocale(Locale.GERMAN);
-		LocalDate xmas = LocalDate.parse("24.12.2017", germanFormatter);
-		System.out.println("Start");
-		UserPojo u1 = new UserPojo("name", "email2", "phone", xmas, "password", "address", true);
-		// UserDAO.getInstance().addUser(u1);
-		System.out.println("End");
-	}
-
 	public void updatePass(UserPojo u) throws SQLException {
 
 		this.connection = DBManager.CON1.getConnection();
@@ -135,5 +126,16 @@ public class UserDAO {
 		ps.executeUpdate();
 		System.out.println("Password was set.");
 		ps.close();
+	}
+
+	public static void main(String[] args) throws SQLException, ParseException {
+
+		DateTimeFormatter germanFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)
+				.withLocale(Locale.GERMAN);
+		LocalDate xmas = LocalDate.parse("24.12.2017", germanFormatter);
+		System.out.println("Start");
+		UserPojo u1 = new UserPojo("name", "email2", "phone", xmas, "password", "address", true);
+		// UserDAO.getInstance().addUser(u1);
+		System.out.println("End");
 	}
 }
