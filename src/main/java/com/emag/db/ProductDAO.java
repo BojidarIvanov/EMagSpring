@@ -68,12 +68,17 @@ public class ProductDAO {
 			PreparedStatement ps = conn.prepareStatement("SELECT * FROM products");
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				products.put(rs.getInt("product_id"), new ProductPojo(rs.getInt("product_id"), rs.getString("name"),
-						rs.getBigDecimal("price").toString(), rs.getString("description"),
-						rs.getInt("available_products"),
-						CategoryDAO.getInstance().getAllCategories().get(rs.getInt("category_id")),
-						BrandDAO.getInstance().getAllBrands().get(rs.getInt("brand_id")), rs.getString("image_url")));
+				synchronized (products) {
+					products.put(rs.getInt("product_id"),
+							new ProductPojo(rs.getInt("product_id"), rs.getString("name"),
+									rs.getBigDecimal("price").toString(), rs.getString("description"),
+									rs.getInt("available_products"),
+									CategoryDAO.getInstance().getAllCategories().get(rs.getInt("category_id")),
+									BrandDAO.getInstance().getAllBrands().get(rs.getInt("brand_id")),
+									rs.getString("image_url")));
+				}
 			}
+
 			return products;
 		}
 	}
@@ -112,8 +117,19 @@ public class ProductDAO {
 		pstmt.setInt(8, productIdParsed);
 		pstmt.executeUpdate();
 		pstmt.close();
+		synchronized (products) {
+			products.put(Integer.parseInt(productId),
+					new ProductPojo(Integer.parseInt(productId), productName, priceBD.toString(), description,
+							categoryId, CategoryDAO.getInstance().getAllCategories().get(categoryId),
+							BrandDAO.getInstance().getAllBrands().get(brandId), imageUrl));
 
+		}
 	}
+	
+	// removal of product is problematic by design it's a foreign key in some tables 
+	// below method handles purchases and is not to be used for deleting entry in database
+	// one approach to set quantity to zero and the product will not be displayed
+	// in real world situation deleting of business records is not always appropriate that's why there will be no such option
 
 	public PreparedStatement removeProductByIdAndQnt(int productId, int quantity) throws SQLException {
 

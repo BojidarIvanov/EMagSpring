@@ -135,8 +135,8 @@ public class MyController {
 					application.setAttribute("products", products);
 				}
 				if (application.getAttribute("users") == null) {
-					TreeMap<Integer, ProductPojo> users;
-					users = ProductDAO.getInstance().getAllProducts();
+					Map<String, UserPojo> users;
+					users = UserDAO.getInstance().getAllUsers();
 					application.setAttribute("users", users);
 				}
 			}
@@ -213,8 +213,8 @@ public class MyController {
 					application.setAttribute("products", products);
 				}
 				if (application.getAttribute("users") == null) {
-					TreeMap<Integer, ProductPojo> users = ProductDAO.getInstance().getAllProducts();
-					application.setAttribute("users", users);
+					Map<String, UserPojo> users;
+					users = UserDAO.getInstance().getAllUsers();
 				}
 			}
 

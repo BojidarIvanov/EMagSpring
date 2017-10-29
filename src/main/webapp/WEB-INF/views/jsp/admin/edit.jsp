@@ -41,18 +41,18 @@
 						</tr>
 						<tr style="background: white;">
 							<td><label for="product">Product name:</label></td>
-							<td><input id="product" placeholder="<%=productName%>"
+							<td><input id="product" value="<%=productName%>"
 								name="name" type="text" minlength="3" required /></td>
 						</tr>
 						<tr style="background: white;">
 							<td><label for="category">Category id:</label></td>
 							<td><input id="categoryId"
-								placeholder=<%=p.getCategory().getCategoryID()%>
+								value=<%=p.getCategory().getCategoryID()%>
 								name="categoryId" type="number" type="number" step="1" min="1" /></td>
 						</tr>
 						<tr style="background: white;">
 							<td><label for="price">Price:</label></td>
-							<td><input id="price" placeholder=<%= p.getPrice() %>
+							<td><input id="price" value=<%= p.getPrice() %>
 								name="price" value="${p.price}" type="number" step="0.01"
 								min="0" /></td>
 						</tr>
@@ -60,27 +60,34 @@
 						<tr style="background: white;">
 							<td><label for="description">Description:</label></td>
 							<td><input id="description"
-								placeholder="<%=p.getDescription()%>" name="description"
+								value="<%=p.getDescription()%>" name="description"
 								type="text" minlength="3" required /></td>
 						</tr>
 
 						<tr style="background: white;">
 							<td><label for="brand">Brand id:</label></td>
 							<td><input id="brandId"
-								placeholder=<%=p.getBrand().getBrandID()%> name="brandId"
+								value=<%=p.getBrand().getBrandID()%> name="brandId"
 								type="number" step="1" min="1" /></td>
 						</tr>
 
 						<tr style="background: white;">
 							<td><label for="availability">Available quantity:</label></td>
 							<td><input id="availability"
-								placeholder=<%=p.getQuantity()%> name="availability"
-								type="number" step="1" min="1" /></td>
+								value=<%=p.getQuantity()%> name="availability"
+								type="number" step="1" min="0" /></td>
+						</tr>
+						
+						<tr style="background: white;">
+							<td><label for="discount">Discount:</label></td>
+							<td><input id="discount"
+								value="0" name="discountPercent"
+								type="number" step="0.01" min="0" /></td>
 						</tr>
 
 						<tr style="background: white;">
 							<td><label for="image">Image url:</label></td>
-							<td><input id="imageURL" placeholder=<%=p.getImageURL()%>
+							<td><input id="imageURL" value= "<%=p.getImageURL()%> "
 								name="imageUrl" type="text" /></td>
 						</tr>
 					</tbody>
@@ -94,5 +101,17 @@
 			</form>
 		</fieldset>
 	</div>
+	
+	<form action="messageFromCustomer" method = "POST">
+			<div class="contact-left">
+			<h3 style = "color : brown">Please provide text of the promo mail to be sent to subscribed customers: </h3>
+				<input	type="text" value="Subject" required  name="subject" style="width:300px">
+			</div>
+			<div class="contact-right">
+				<textarea placeholder="Message" required maxlength = "1000" name = "promoContent"></textarea>
+			</div>
+			<div class="clearfix"></div>
+			<input type="submit" value="SUBMIT">
+		</form>
 </body>
 </html>
