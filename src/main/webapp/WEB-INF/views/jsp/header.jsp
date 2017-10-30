@@ -63,14 +63,19 @@ label input, label textarea, label select {
 <div class="mom">
 	<div class="child">
 		<a href="index"> <img src="img/emag.jpg" alt="Logo">
-							</a>
+		</a>
 	</div>
 	<div class="child">
 		<form action="searchProduct" method="get">
-			<input class="navi" type="text" name="productName" placeholder = "Serch for product..."
-				 style="height:45px; width: 300px"> <input class="navi" type="submit"
-				name="submit" value="Search" style="height:45px; width: 150px">
+			<input class="navi" type="text" name="productName"
+				placeholder="Serch for product..."
+				style="height: 45px; width: 300px"> <input class="navi"
+				type="submit" name="submit" value="Search"
+				style="height: 45px; width: 150px">
 		</form>
+	</div>
+	<div class="child">
+		<h3 class="welcome">Welcome, ${sessionScope.user.name }</h3>
 	</div>
 </div>
 <link rel="stylesheet" type="text/css" href="css/styles.css">
@@ -126,7 +131,7 @@ label input, label textarea, label select {
 			</form>
 		</c:if>
 
-		<h3 class="welcome">Welcome, ${sessionScope.user.name }</h3>
+
 	</div>
 	
 	

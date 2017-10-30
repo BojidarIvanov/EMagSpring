@@ -1,6 +1,9 @@
-
+<%@ page import="com.emag.model.ProductPojo"%>
+<%@ page import="com.emag.model.CategoryPojo"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
+<%@ page import="java.util.TreeMap"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,6 +20,15 @@
 	<sql:query var="listStuff" dataSource="${myDS}">
 	SELECT * FROM products where product_id = ${param.id};
     </sql:query>
+    
+    	<%
+		ProductPojo p = null;
+		String productName = "";
+		TreeMap<Integer, ProductPojo> prod = (TreeMap<Integer, ProductPojo>) application.getAttribute("products");
+		p = prod.get(Integer.parseInt(request.getParameter("id")));
+		productName = p.getName();
+	%>
+
 	<p>
 		<c:if test="${ sessionScope.user.isAdmin == true }">
 			<a href="${pageContext.request.contextPath}/admin/productManagement">Back</a>&nbsp;&nbsp;|&nbsp;&nbsp;
@@ -26,8 +38,8 @@
 			test="${ sessionScope.user == null || sessionScope.user.isAdmin == false}">
 			<a href="${pageContext.request.contextPath}/categories">Back</a>&nbsp;&nbsp;|&nbsp;&nbsp;
 		</c:if>
-
 	</p>
+	
 	<div>
 		<fieldset>
 
@@ -42,25 +54,25 @@
 					<tr style="background: white;">
 						<td><label for="product">Product:</label></td>
 						<td><input id="product" name="product" style="border: none;"
-							value="${listStuff.rows[0].name}" type="text" readonly /></td>
+							value="<%=productName%>" type="text" readonly /></td>
 					</tr>
 					<tr style="background: white;">
 						<td><label for="category">Category:</label></td>
-						<td><input id="category" name="category"
-							style="border: none;" value="${listStuff.rows[0].category_id}"
+						<td><input id="category" name= "category"
+							style="border: none;" value="<%=p.getCategory().getName()%>"
 							type="text" readonly /></td>
 					</tr>
 
 					<tr style="background: white;">
 						<td><label for="price">Price:</label></td>
 						<td><input id="price" name="price" style="border: none;"
-							value="${listStuff.rows[0].price}" type="text" readonly /></td>
+							value= " <%= p.getPrice() %>" type="text" readonly /></td>
 					</tr>
 
 					<tr style="background: white;">
 						<td><label for="brand">Brand:</label></td>
 						<td><input id="brand" name="brand" style="border: none;"
-							value="${listStuff.rows[0].brand_id}" type="text" readonly /></td>
+							value=<%=p.getBrand().getName() %> type="text" readonly /></td>
 					</tr>
 
 					<tr style="background: white;">
@@ -68,16 +80,15 @@
 								products:</label></td>
 						<td><input id="availableProducts" name="availableProducts"
 							style="border: none;"
-							value="${listStuff.rows[0].available_products}" type="text"
+							value= "<%=p.getQuantity()%>" type="text"
 							readonly /></td>
 					</tr>
 
-
 					<tr style="background: white;">
 						<td><label for="displayImage">Display image: </label></td>
-						<td><input type="image" src="${listStuff.rows[0].image_url}"
+						<td><input type="image" src="${p.imageURL}"
 							id="displayImage" name="displayImage" style="border: none;"
-							value="${listStuff.rows[0].image_url}" type="text" readonly /></td>
+							value="<%=p.getImageURL()%>" type="text" readonly /></td>
 					</tr>
 
 				</tbody>

@@ -41,6 +41,8 @@
 				<td class="cent"><c:out value="${ product.name }"></c:out></td>
 				<td class="cent"><c:out value="${ product.quantity }"></c:out></td>
 				<td class="cent"><c:out value="${ product.price }"></c:out></td>
+				<td><a
+					href="${pageContext.request.contextPath}/admin/show?id=${product.productID}">Show</a></td>
 			</tr>
 		</c:forEach>
 	</table>

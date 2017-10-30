@@ -8,7 +8,9 @@
 <html>
 <head>
 <title>Emag shop ordering process</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/css/styless.css" type="text/css"></link>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/css/styless.css"
+	type="text/css"></link>
 </head>
 <body>
 
@@ -19,7 +21,8 @@
 	<sql:query var="listStuff" dataSource="${myDS}"> 
       SELECT * FROM products ORDER BY product_id;
     </sql:query>
-
+ 
+	
 	<center>
 		<h3>Emag shop ordering process</h3>
 	</center>

@@ -59,6 +59,7 @@ public class BrandDAO {
 			ps.setInt(1, brand.getBrandID());
 			result = ps.executeUpdate();
 			allBrands.remove(brand.getBrandID());
+			ps.close();
 		}
 		return result > 0;
 	}

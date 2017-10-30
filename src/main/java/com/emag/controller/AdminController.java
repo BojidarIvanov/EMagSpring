@@ -2,9 +2,9 @@ package com.emag.controller;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.SQLException;
 import java.util.TreeMap;
-import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -51,18 +51,17 @@ public class AdminController {
 	public String getEditIndeed() {
 		return "admin/edit";
 	}
-	
-	
+
 	@RequestMapping(value = "/admin/create", method = RequestMethod.GET)
 	public String getCreate() {
 		return "/admin/create";
 	}
-	
+
 	@RequestMapping(value = "/admin/goodResult", method = RequestMethod.GET)
 	public String goodResult() {
 		return "/admin/goodResult";
 	}
-	
+
 	@RequestMapping(value = "/admin/badResult", method = RequestMethod.GET)
 	public String badResult() {
 		return "/admin/badResult";
@@ -80,7 +79,7 @@ public class AdminController {
 		String brandId = req.getParameter("brandId");
 		String availability = req.getParameter("availability");
 		String imageUrl = req.getParameter("imageUrl");
-
+		String discountPercent = req.getParameter("discountPercent");
 		// data verification checks
 		if (productName == null || price == null || description == null || categoryId == null || brandId == null
 				|| availability == null || imageUrl == null) { // bad
@@ -96,15 +95,25 @@ public class AdminController {
 			System.out.println(imageUrl);
 
 			sendResponse(req, res, "One or more bad input items.", true);
-
 		}
+		
 		BigDecimal priceBD = convertPrice(price);
+		priceBD = priceBD.setScale(2,BigDecimal.ROUND_HALF_EVEN);
+	    
+	    // in case there is a value for discount percentage a new price is calculated
+		if(Float.parseFloat(discountPercent) > 0d) {
+			BigDecimal decimalDiscountPercent = new BigDecimal(discountPercent);
+			BigDecimal discountAmount = priceBD.multiply(decimalDiscountPercent).divide(new BigDecimal("100"));
+		    discountAmount = discountAmount.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+		    BigDecimal newPrice = priceBD.subtract(discountAmount);
+		    priceBD = newPrice;
+		    System.out.println("New prcie:" + newPrice);
+		}
 
 		if (productName.length() < MinLength) {
 			sendResponse(req, res, "A product's name must be at least " + MinLength + " characters.", true);
 		}
 
-		
 		if (priceBD == null) {
 			sendResponse(req, res, "Price entered contains invalid characters: +/-, ., and decimal digits only.", true);
 		}
@@ -126,23 +135,23 @@ public class AdminController {
 
 		// Capitalize product name
 		productName = capitalizeParts(productName);
-		System.out.println("The product name " + productName
-				+ "=====================================================================");
 
 		if (productId == null) { // create rather than edit
-			if (productNameInUse(productName, req, res))
+			if (productNameInUse(productName, req, res)) {
 				sendResponse(req, res, "The name '" + productName + "' is already in use.", true);
-			else if (handleCreate(productName, priceBD, description, Integer.parseInt(categoryId),
-					Integer.parseInt(brandId), Integer.parseInt(availability), imageUrl))
+			} else if (handleCreate(productName, priceBD, description, Integer.parseInt(categoryId),
+					Integer.parseInt(brandId), Integer.parseInt(availability), imageUrl)) {
 				sendResponse(req, res, productName + " added to the DB.", false);
-			else
+			} else {
 				sendResponse(req, res, "Problem saving " + productName + " to the DB", true);
+			}
 		} else { // edit rather than create
 			if (handleEdit(productId, productName, priceBD, description, Integer.parseInt(categoryId),
-					Integer.parseInt(brandId), Integer.parseInt(availability), imageUrl))
+					Integer.parseInt(brandId), Integer.parseInt(availability), imageUrl)) {
 				sendResponse(req, res, productName + " updated successfully.", false);
-			else
+			} else {
 				sendResponse(req, res, "Problem updating " + productName, true);
+			}
 		}
 	}
 

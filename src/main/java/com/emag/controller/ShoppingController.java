@@ -1,4 +1,4 @@
-package com.emag.controller;
+	package com.emag.controller;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
 
 import javax.mail.MessagingException;
@@ -82,12 +83,6 @@ public class ShoppingController {
 					String product = req.getParameter("prod-" + ind);
 					String category = req.getParameter("cat-" + ind);
 					BigDecimal price = new BigDecimal(req.getParameter("price-" + ind).trim());
-					// tried to get name for the category - had some issues
-					// we'll try later
-					// int cat = Integer.parseInt(category);
-					// Map<Integer, CategoryPojo> categories = (Map<Integer,
-					// CategoryPojo>) application
-					// .getAttribute("categories");
 
 					lineItems.add(new LineItem(qty, id, product, category, price));
 					if (qty > 0) {
@@ -238,26 +233,11 @@ public class ShoppingController {
 		String url = "";
 		// get parameters from the request
 		String message = "";
-		String em = request.getParameter("email");
-		for (String params : Collections.list(request.getParameterNames())) {
-			// Whatever you want to do with your map
-			// Key : params
-			// Value : httpServletRequest.getParameter(params)
-			System.out.println("Print params: " + params);
-			System.out.println("Print value: " + request.getParameter(params));
-		}
-		UserPojo user = null;
-		try {
-			user = UserDAO.getInstance().getAllUsers().get(em);
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-			return "forward:sqlError.html";
-		}
-		if (user == null) {
-			return "forward:lostSession.html";
-		}
-		String email = user.getEmail();
-		String firstName = user.getName();
+		String email = request.getParameter("email");
+		Map<String, UserPojo> users = (Map<String, UserPojo>) application.getAttribute("users");
+		System.out.println(users);
+		UserPojo user = users.get(email);
+		String fullName = user.getName();
 		String to = email;
 		String from = "pechorinnd@gmail.com";
 		HttpSession session = request.getSession();
@@ -276,7 +256,7 @@ public class ShoppingController {
 					.append(System.getProperty("line.separator"));
 		}
 		sb.append(" The total amount spent: $" + subtotal);
-		String body = "Dear " + firstName + ",\n\n" + "Your order details are as follows: \n\n" + sb.toString();
+		String body = "Dear " + fullName + ",\n\n" + "Your order details are as follows: \n\n" + sb.toString();
 
 		boolean isBodyHTML = false;
 		try {
@@ -288,17 +268,10 @@ public class ShoppingController {
 					+ "NOTE: You may need to configure your system " + "as described in chapter 14.<br>"
 					+ "ERROR MESSAGE: " + e.getMessage();
 			request.setAttribute("errorMessage", errorMessage);
-			/*
-			 * this.log("Unable to send email. \n" +
-			 * "Here is the email you tried to send: \n" +
-			 * "=====================================\n" + "TO: " + email + "\n"
-			 * + "FROM: " + from + "\n" + "SUBJECT: " + subject + "\n" + "\n" +
-			 * body + "\n\n");
-			 */
 			message = "password has been sent to your email ";
 		}
 
-		request.setAttribute("message", message);
+	//	request.setAttribute("message", message);
 		url = "/shopping/shop";
 		return "forward:" + url;
 	}

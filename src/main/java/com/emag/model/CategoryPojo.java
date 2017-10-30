@@ -38,8 +38,9 @@ public class CategoryPojo {
 	public int getCategoryID() {
 		return this.categoryID;
 	}
+	
 
-	public void setcategoryID(int id) {
+	public void setCategoryID(int id) {
 		this.categoryID = id;
 	}
 
