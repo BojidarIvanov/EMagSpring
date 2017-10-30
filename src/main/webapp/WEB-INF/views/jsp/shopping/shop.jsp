@@ -15,8 +15,8 @@
 <body>
 
 	<sql:setDataSource var="myDS" driver="com.mysql.jdbc.Driver"
-		url="jdbc:mysql://localhost:3306/emag_final_project" user="root"
-		password="admin" />
+		url="jdbc:mysql://localhost:3306/emag_final_project" user="Ivan"
+		password="Koparan2525" />
 
 	<sql:query var="listStuff" dataSource="${myDS}"> 
       SELECT * FROM products ORDER BY product_id;
