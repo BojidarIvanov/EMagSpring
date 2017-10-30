@@ -1,5 +1,5 @@
 <%@page import="com.emag.db.ProductDAO"%>
-<%@page import="com.emag.model.ProductPojo"%>s
+<%@page import="com.emag.model.ProductPojo"%>
 <%@page import="java.util.HashSet"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -25,6 +25,7 @@
 	</c:if>
 
 	<jsp:include page="header.jsp"></jsp:include>
+	
 	
 <div align="center">
 	<table class="products" border="1" cellpadding="5">

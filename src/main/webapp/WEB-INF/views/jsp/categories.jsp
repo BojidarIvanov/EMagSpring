@@ -80,7 +80,8 @@ label input, label textarea, label select {
 	</div>
 	<br>
 	<div align="center">
-
+		<a href="sortProducts?sort=desc"><button>Price high to low</button></a>
+		<a href="sortProducts?sort=asc"><button>Price low to high</button></a>
 		<table class="products" border="1" cellpadding="5">
 			<tr>
 				<th>Id</th>

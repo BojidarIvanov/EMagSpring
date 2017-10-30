@@ -150,18 +150,18 @@ public class OrderDAO {
 		return orders;
 	}
 
-	public static void main(String[] args) throws SQLException {
-		System.out.println("Start");
-		OrderDAO od = OrderDAO.getInstance();
-		OrderPojo op1 = new OrderPojo(LocalDateTime.now(), 1);
-		OrderPojo op2 = new OrderPojo(LocalDateTime.now().minusDays(5), 2);
-		OrderPojo op3 = new OrderPojo(LocalDateTime.now().minusDays(10), 1);
-
-		od.addOrder(op1);
-		od.addOrder(op2);
-		od.addOrder(op3);
-		System.out.println("End");
-		System.out.println(od.getOrdersForUser(1));
-
-	}
+//	public static void main(String[] args) throws SQLException {
+//		System.out.println("Start");
+//		OrderDAO od = OrderDAO.getInstance();
+//		OrderPojo op1 = new OrderPojo(LocalDateTime.now(), 1);
+//		OrderPojo op2 = new OrderPojo(LocalDateTime.now().minusDays(5), 2);
+//		OrderPojo op3 = new OrderPojo(LocalDateTime.now().minusDays(10), 1);
+//
+//		od.addOrder(op1);
+//		od.addOrder(op2);
+//		od.addOrder(op3);
+//		System.out.println("End");
+//		System.out.println(od.getOrdersForUser(1));
+//
+//	}
 }

@@ -92,6 +92,9 @@ label input, label textarea, label select {
 		<form class="navi" action="categories" method="GET">
 			<input type="submit" value="View Categories">
 		</form>
+		<form class="navi" action="gotToSortProducts" method="GET">
+			<input type="submit" value="Sort by price">
+		</form>
 		<c:if test="${sessionScope.user == null}">
 			<form class="navi" action="loginPage" method="GET">
 				<input type="submit" value="Go To Login Page">
@@ -125,5 +128,7 @@ label input, label textarea, label select {
 
 		<h3 class="welcome">Welcome, ${sessionScope.user.name }</h3>
 	</div>
+	
+	
 </body>
 </html>
