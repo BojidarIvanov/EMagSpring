@@ -1,7 +1,6 @@
 package com.emag.controller;
 
 import java.sql.SQLException;
-import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import javax.servlet.ServletContext;
@@ -18,83 +17,28 @@ import com.emag.model.ProductPojo;
 
 @Controller
 public class SearchController {
-	
-	@Autowired
-	ServletContext application;
 
 	@RequestMapping(value = "/searchProduct", method = RequestMethod.GET)
 	public String searchProduct(Model model, HttpServletRequest req) {	
-		System.out.println("1");
-		// Get the specified product from the request
-		String productName = req.getParameter("productName");
-		// Get all the products from the database
-		TreeMap<Integer, ProductPojo> products = null;
-		try {
-			products = ProductDAO.getInstance().getAllProducts();
-			System.out.println("2");
-		} catch (SQLException e) {
-			System.out.println("Error loading the products " + e.getMessage());
-		}
-		// Find if the requested product exists in the data base
-		System.out.println("3");
 		boolean productExists = false;
-		ProductPojo searchedProduct = null;
-		for (Entry<Integer, ProductPojo> p : products.entrySet()) {
-			if (p.getValue().getName().equalsIgnoreCase(productName)) {
-				searchedProduct = p.getValue();
-				productExists = true;
-				break;
-			}
+		// Get the specified product from the request
+		TreeMap<Integer, ProductPojo> matchingProducts = null;
+		String productName = req.getParameter("productName");
+		try {
+			//Find it in the db
+			matchingProducts = ProductDAO.getMatchingProducts(productName);
+		} catch (SQLException e1) {
+			System.out.println("Issue retrieving the products from the database " + e1.getMessage() );
 		}
-		System.out.println("4");
-		
-		// If it dosen't exist go to homepage
-		System.out.println(productExists);
+		//return it to the req if it exists
+		if(matchingProducts.size() > 0) {
+			productExists = true;
+			req.setAttribute("matchingProducts", matchingProducts);
+		}
+		//return to the view
 		model.addAttribute("productExists", productExists);
-		if (productExists) {
-			// If it exists store it in the Model
-			model.addAttribute("productName", searchedProduct.getName());
-			model.addAttribute("productPrice", searchedProduct.getPrice());
-			model.addAttribute("productQuantity", searchedProduct.getQuantity());
-			model.addAttribute("productId", searchedProduct.getProductID());
-
-			System.out.println("Product exists");
-			
-		} 
 		return "searchView";
 
 		
 	}
-//	@RequestMapping (value = "/searchProduct", method = RequestMethod.GET)
-//	public String search() {
-//		
-//		return "about";
-//	}
-	// System.out.println("Start of search servlet");
-			// String productName = req.getParameter("productName");
-			// Map<Integer, ProductPojo> products = null;
-			// ProductPojo product = null;
-			// try {
-			// ProductDAO p = ProductDAO.getInstance();
-			// products = p.getAllProducts();
-			// } catch (SQLException e) {
-			// System.out.println("Problem loading the products " + e.getMessage());
-			// }
-			// System.out.println("Middle of search servlet");
-			// if(products != null) {
-			// for(Entry<Integer, ProductPojo> p : products.entrySet()) {
-			// if(p.getValue().getName().equalsIgnoreCase(productName)) {
-			// product = p.getValue();
-			// }
-			// }
-			// }
-			// System.out.println(product);;
-			// req.setAttribute("product", product);
-			// System.out.println("End of search servlet");
-			// return "SearchView";
-			//
-			//
-			// }
-
-
 }
