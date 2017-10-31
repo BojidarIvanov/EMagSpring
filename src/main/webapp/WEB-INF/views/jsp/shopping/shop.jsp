@@ -64,6 +64,8 @@
 							<td><img
 							src="${pageContext.request.contextPath}/admin/getImage/${item.product_id}"
 							height="80" width="80"></td>
+							<td><a
+							href="${pageContext.request.contextPath}/admin/show?id=${item.product_id}">Show</a></td>
 					</tr>
 					<c:set var='ind' value='${ind + 1}' />
 				</c:forEach>

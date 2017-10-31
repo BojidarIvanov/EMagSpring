@@ -15,52 +15,36 @@
 </head>
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
-	<<<<<<< HEAD
+
 	<div align="center">
 		<a href="sortProducts?sort=desc"><button>Price high to
 				low</button></a> <a href="sortProducts?sort=asc"><button>Price low
 				to high</button></a>
-		<table class="products" border="1" cellpadding="5">
-			=======
-			<center>
-				<a href="sortProducts?sort=desc"><button>Price high to
-						low</button></a> <a href="sortProducts?sort=asc"><button>Price low
-						to high</button></a>
+	</div>
+	<div>
+		<center>
+			<table class="products" border="1" cellpadding="5">
 
-
+				<tr>
+					<th>Product Name</th>
+					<th>Product Price</th>
+					<th>Product Quantity</th>
+				</tr>
 				<c:forEach items="${ sessionScope.products }" var="product">
-
-					<table border="1">
-						>>>>>>> 2e9f614c790a90d2be855e527846b451e4efa2b3
-						<tr>
-							<th>Product Name</th>
-							<th>Product Price</th>
-							<th>Product Quantity</th>
-						</tr>
-						<c:forEach items="${ sessionScope.products }" var="product">
-							<tr>
-								<td>${product.getName()}</td>
-								<td>${product.getPrice()}</td>
-								<td>${product.getQuantity()}</td>
-								<td><img
-									src="${pageContext.request.contextPath}/admin/getImage/${product.getProductID()}"
-									height="80" width="80"></td>
-								<td><a
-									href="${pageContext.request.contextPath}/admin/show?id=${product.getProductID()}">Show</a></td>
-							</tr>
-
-
-						</c:forEach>
-					</table>
-			</center>
-
-			</div>
-
-		</table>
-		</c:forEach>
-
+					<tr>
+						<td>${product.getName()}</td>
+						<td>${product.getPrice()}</td>
+						<td>${product.getQuantity()}</td>
+						<td><img
+							src="${pageContext.request.contextPath}/admin/getImage/${product.getProductID()}"
+							height="80" width="80"></td>
+						<td><a
+							href="${pageContext.request.contextPath}/admin/show?id=${product.getProductID()}">Show</a></td>
+					</tr>
+				</c:forEach>
+			</table>
 		</center>
-
-		<jsp:include page="footer.jsp"></jsp:include>
+	</div>
+<!-- 	<jsp:include page="footer.jsp"></jsp:include> -->
 </body>
 </html>
