@@ -63,10 +63,10 @@
 					test="${ requestScope.specificCategory == null && product.quantity > 0}">
 					<tr>
 						<td class="cent">${ product.productID }</td>
-						<td class="cent"><c:out value="${ product.name }"></c:out></td>
-						<td class="cent"><c:out value="${ product.category.name}"></c:out></td>
-						<td class="cent"><c:out value="${ product.quantity }"></c:out></td>
-						<td class="cent"><c:out value="${ product.price }"></c:out></td>
+						<td class="cent">${ product.name }</td>
+						<td class="cent">${ product.category.name}</td>
+						<td class="cent">${ product.quantity }</td>
+						<td class="cent">${ product.price }</td>
 						<td><img
 							src="${pageContext.request.contextPath}/admin/getImage/${product.productID}"
 							height="80" width="80"></td>
@@ -94,7 +94,7 @@
 							height="80" width="80"></td>
 						<td><a
 							href="${pageContext.request.contextPath}/admin/show?id=${product.productID}">Show</a></td>
-						
+
 					</tr>
 				</c:if>
 			</c:forEach>
