@@ -9,6 +9,9 @@
 	href="${pageContext.request.contextPath}/css/css/styless.css"
 	type="text/css"></link>
 <title>Insert title here</title>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/css/styless.css"
+	type="text/css"></link>
 </head>
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
@@ -31,12 +34,15 @@
 					<td>${product.getQuantity()}</td>
 					
 					
-				 <td><a href="${pageContext.request.contextPath}/admin/show?id=${productId}">Show</a></td>
+				 <td><a href="${pageContext.request.contextPath}/admin/show?id=${product.getProductID()}">Show</a></td>
 				 			
 				</tr>
 			</table>
 		</c:forEach>
+<<<<<<< HEAD
 	</center>
+=======
+>>>>>>> 9b90a129086f38394bf14cd1c2535b6894362e23
 		<jsp:include page="footer.jsp"></jsp:include>		
 </body>
 </html>

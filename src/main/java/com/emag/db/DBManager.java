@@ -11,8 +11,8 @@ public enum DBManager {
 	private final String DB_IP = "localhost";
 	private final String DB_PORT = "3306";
 	private final String DB_NAME = "emag_final_project";
-	private final String DB_USER = "root";
-	private final String DB_PASS = "admin";
+	private final String DB_USER = "Ivan";
+	private final String DB_PASS = "Koparan2525";
 	private final String URL = "jdbc:mysql://" + DB_IP + ":" + DB_PORT + "/" + DB_NAME;
 	
 	private Connection connection;
