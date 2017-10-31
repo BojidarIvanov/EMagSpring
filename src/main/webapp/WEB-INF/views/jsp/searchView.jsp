@@ -30,8 +30,9 @@
 						<td>${productEntry.value.getName()}</td>
 						<td>${productEntry.value.getPrice()}</td>
 						<td>${productEntry.value.getQuantity()}</td>
-						<td><a
-							href="${pageContext.request.contextPath}/admin/show?id=${productId}">Show</a></td>
+					<td><a
+							href="${pageContext.request.contextPath}/admin/show?id=${productEntry.value.getProductID()}">Show</a></td>
+
 		
 					</tr>
 					</c:forEach>

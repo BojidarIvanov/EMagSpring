@@ -146,7 +146,7 @@ public class ProductDAO {
 		return psRemovedProduct;
 	}
 
-<<<<<<< HEAD
+
 	public void setImageUrl(int productId, String url) throws SQLException {
 
 		String sql = "UPDATE products SET image_url = ? where product_id = ?;";
@@ -157,8 +157,7 @@ public class ProductDAO {
 		updateUrl.executeUpdate();
 	}
 
-	public static void main(String[] args) {
-=======
+
 	public static TreeMap<Integer, ProductPojo> getMatchingProducts(String product) throws SQLException {
 		TreeMap<Integer, ProductPojo> products = new TreeMap<>();
 		Connection conn = DBManager.CON1.getConnection();
@@ -182,7 +181,6 @@ public class ProductDAO {
 	}
 
 	public static void main(String[] args) throws SQLException {
->>>>>>> 2e9f614c790a90d2be855e527846b451e4efa2b3
 
 		System.out.println("Start");
 		// ProductDAO pdao = ProductDAO.getInstance();
