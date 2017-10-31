@@ -101,7 +101,7 @@ h3 {
 					<div class="item-header">
 						<a
 							href="${pageContext.request.contextPath}/admin/show?id=3"
-							class="item-img"> <img src="img/Logitech.jpg" alt="" />
+							class="item-img"> <img src="img/Logitech1.jpg" alt="" />
 						</a>
 						<!--	<a href="" class="item-img-zoom btn btn-secondary btn-circle"
 										title="Zoom In"> <span class="fa fa-search-plus"></span>
