@@ -1,8 +1,12 @@
+<%@ page import="com.emag.model.ProductPojo"%>
+<%@ page import="com.emag.model.CategoryPojo"%>
 <%@ page language="java" contentType="text/html; charset = UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page errorPage="error.jsp"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
+<%@ page import="java.util.TreeMap"%>
+
 
 <!DOCTYPE html>
 <html>
@@ -14,6 +18,8 @@
 </head>
 <body>
 
+
+	
 	<sql:setDataSource var="myDS" driver="com.mysql.jdbc.Driver"
 		url="jdbc:mysql://localhost:3306/emag_final_project" user="Ivan"
 		password="Koparan2525" />
@@ -21,8 +27,7 @@
 	<sql:query var="listStuff" dataSource="${myDS}"> 
       SELECT * FROM products ORDER BY product_id;
     </sql:query>
- 
-	
+    
 	<center>
 		<h3>Emag shop ordering process</h3>
 	</center>
@@ -56,6 +61,9 @@
 							type="text" value="${item.available_products}" readonly /></td>
 						<td><input type="text" name="price-${ind}"
 							value="${item.price}" size="7" readonly /></td>
+							<td><img
+							src="${pageContext.request.contextPath}/admin/getImage/${item.product_id}"
+							height="80" width="80"></td>
 					</tr>
 					<c:set var='ind' value='${ind + 1}' />
 				</c:forEach>

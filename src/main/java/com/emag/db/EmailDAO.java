@@ -25,6 +25,7 @@ public class EmailDAO {
 
 	public boolean addEmail(String email) throws SQLException {
 		boolean emailAdded = false;
+		getAllEmails();
 		if (!emailExists(email)) {
 			this.connection = DBManager.CON1.getConnection();
 			PreparedStatement ps = this.connection.prepareStatement("INSERT INTO subscribers (emails) VALUES (?);");

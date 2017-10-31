@@ -5,18 +5,18 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Custom Theme files -->
-<!-- <link rel="stylesheet" type="text/css" href="css/css/style.css"> -->
-<link rel="stylesheet" type="text/css" href="header.css">
 
-<!-- Custom Theme files -->
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="keywords"
-	content="Eshop Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
-Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
 
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+<link rel='stylesheet prefetch'
+	href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css'>
+<link rel='stylesheet prefetch'
+	href='https://fonts.googleapis.com/css?family=Signika:700,400'
+	rel='stylesheet' type='text/css'>
 <style media="screen" type="text/css">
 label {
 	display: block;
@@ -97,9 +97,6 @@ label input, label textarea, label select {
 		<form class="navi" action="categories" method="GET">
 			<input type="submit" value="View Categories">
 		</form>
-		<form class="navi" action="gotToSortProducts" method="GET">
-			<input type="submit" value="Sort by price">
-		</form>
 		<c:if test="${sessionScope.user == null}">
 			<form class="navi" action="loginPage" method="GET">
 				<input type="submit" value="Go To Login Page">
@@ -118,7 +115,7 @@ label input, label textarea, label select {
 		<c:if test="${sessionScope.user.isAdmin == true}">
 			<form class="navi"
 				action="${pageContext.request.contextPath}/admin/productManagement"
-				method="get">
+				method="GET">
 				<input type="submit" value="Product Management">
 			</form>
 		</c:if>
@@ -126,14 +123,11 @@ label input, label textarea, label select {
 		<c:if test="${sessionScope.user != null}">
 			<form class="navi"
 				action="${pageContext.request.contextPath}/shopping/shop"
-				method="post">
+				method="GET">
 				<input type="submit" value="Let's go shopping!!!">
 			</form>
 		</c:if>
-
-
+		
 	</div>
-	
-	
 </body>
 </html>

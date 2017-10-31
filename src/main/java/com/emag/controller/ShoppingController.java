@@ -18,6 +18,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -37,18 +39,24 @@ public class ShoppingController {
 
 	private BigDecimal total = BigDecimal.ZERO;
 
-	@RequestMapping(value = "/shopping/shop")
-	public String shopping() {
+	@RequestMapping(value = "/shopping/shop?id=${param.id}, method = RequestMethod.GET")
+	public String shopping(@PathVariable("id") int id, HttpSession session) {
+		session.setAttribute("id", id);
+		return "forward:shopping/shop";
+	}
+	
+	@RequestMapping(value = "/shopping/shop", method = RequestMethod.GET)
+	public String getShopIndeed() {
 		return "shopping/shop";
 	}
 
-	@RequestMapping(value = "/shopping/confirmOrder", method = RequestMethod.GET)
+	@RequestMapping(value = "/shopping/confirmOrder")
 	public String confirmOrder(HttpServletRequest req, HttpServletResponse res) {
 		System.out.println("/shopping/confirmation/");
 		return "shopping/confirmOrder";
 	}
 
-	@RequestMapping(value = "/shopping/handleOrder", method = RequestMethod.POST)
+	@RequestMapping(value = "/shopping/handleOrder")
 	public String handleOrder(HttpServletRequest req, HttpServletResponse res) {
 		System.out.println("Handle Order");
 		try {
@@ -272,7 +280,7 @@ public class ShoppingController {
 		}
 
 	//	request.setAttribute("message", message);
-		url = "/shopping/shop";
-		return "forward:" + url;
+		
+		return "shopping/shop";
 	}
 }

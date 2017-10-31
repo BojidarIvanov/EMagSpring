@@ -101,7 +101,7 @@ public class AdminController {
 		priceBD = priceBD.setScale(2,BigDecimal.ROUND_HALF_EVEN);
 	    
 	    // in case there is a value for discount percentage a new price is calculated
-		if(Float.parseFloat(discountPercent) > 0d) {
+		if(discountPercent != null && Float.parseFloat(discountPercent) > 0d) {
 			BigDecimal decimalDiscountPercent = new BigDecimal(discountPercent);
 			BigDecimal discountAmount = priceBD.multiply(decimalDiscountPercent).divide(new BigDecimal("100"));
 		    discountAmount = discountAmount.setScale(2, BigDecimal.ROUND_HALF_EVEN);

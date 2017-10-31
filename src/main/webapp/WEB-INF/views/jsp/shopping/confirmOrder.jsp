@@ -7,7 +7,9 @@
 <html>
 <head>
 <title>Order Confirmation</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/css/styless.css" type="text/css"></link>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/css/styless.css"
+	type="text/css"></link>
 </head>
 <body>
 	<center>
@@ -31,7 +33,7 @@
 				<c:forEach var="item" items="${items}">
 					<tr>
 						<td><input type="number" name="num-${ind}" min="0" max="99"
-							step="1" value="${item.qty}" size="3" readonly/></td>
+							step="1" value="${item.qty}" size="3" readonly /></td>
 						<td><input type="text" name="id-${ind}" value="${item.id}"
 							size="4" readonly /></td>
 						<td><input style="text-align: center;" name="prod-${ind}"
@@ -48,23 +50,24 @@
 			<p>
 			<div class="total">
 				<span>Total: $</span>
-				<fmt:formatNumber  value="${total}" />
+				<fmt:formatNumber value="${total}" />
 			</div>
 			<c:set var="totalSum" value="${total}" />
-			
-				<c:if test= "${totalSum.unscaledValue() > 0 }">
-			<p>
-				<input type="submit" value=" Confirm order " />
-			</p>
-				</c:if>
-				<c:if test= "${totalSum.unscaledValue() == 0 }">
-			<p>
-				<h4> No items were chosen, nothing to confirm. </h4>
-			</p>
-				</c:if>
+
+			<c:if
+				test="${totalSum.unscaledValue() > 0 && sessionScope.user != null }">
+				<p>
+					<input type="submit" value=" Confirm order " />
+				</p>
+			</c:if>
+			<c:if test="${totalSum.unscaledValue() == 0 }">
+				<p>
+				<h4>No items were chosen, nothing to confirm.</h4>
+				</p>
+			</c:if>
 		</form>
 		<center>
-			<a href="${pageContext.request.contextPath}/shopping/shop">Back</a>
+			<a href="${pageContext.request.contextPath}/index">Back</a>
 		</center>
 
 	</div>

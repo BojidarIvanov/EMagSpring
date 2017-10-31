@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -12,30 +12,33 @@
 </head>
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
-	 
-	<a href="sortProducts?sort=desc"><button>Price high to low</button></a>
-		<a href="sortProducts?sort=asc"><button>Price low to high</button></a>
-		
-		<c:forEach items="${ sessionScope.products }" var="product">
-		
-			<table border="1">
+	<div align="center">
+		<a href="sortProducts?sort=desc"><button>Price high to
+				low</button></a> <a href="sortProducts?sort=asc"><button>Price low
+				to high</button></a>
+		<table class="products" border="1" cellpadding="5">
 			<tr>
 				<th>Product Name</th>
 				<th>Product Price</th>
 				<th>Product Quantity</th>
 			</tr>
+			<c:forEach items="${ sessionScope.products }" var="product">
 				<tr>
 					<td>${product.getName()}</td>
 					<td>${product.getPrice()}</td>
 					<td>${product.getQuantity()}</td>
-					
-					
-				 <td><a href="${pageContext.request.contextPath}/admin/show?id=${product.getProductID()}">Show</a></td>
-				 			
+					<td><img
+							src="${pageContext.request.contextPath}/admin/getImage/${product.getProductID()}"
+							height="80" width="80"></td>
+					<td><a
+						href="${pageContext.request.contextPath}/admin/show?id=${product.getProductID()}">Show</a></td>
 				</tr>
-			</table>
-			<hr>
-		</c:forEach>
-		<jsp:include page="footer.jsp"></jsp:include>		
+
+			</c:forEach>
+		</table>
+		</center>
+		
+	</div>
+	<jsp:include page="footer.jsp"></jsp:include>
 </body>
 </html>

@@ -6,13 +6,15 @@
 <html>
 <head>
 <title>The products in stock</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/css/styless.css" type="text/css"></link>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/css/styless.css"
+	type="text/css"></link>
 </head>
 <body>
 
 	<c:if
 		test="${sessionScope.user == null || sessionScope.user.isAdmin == false}">
-		<c:redirect url="login"></c:redirect>
+		<c:redirect url="loginPage"></c:redirect>
 	</c:if>
 
 	<center>
@@ -31,27 +33,30 @@
 				<th>Id</th>
 				<th>Product</th>
 				<th>Category</th>
+				<th>Brand</th>
+				<th>Availability</th>
 				<th>Price</th>
+				<th>Image</th>
+
 			</tr>
 			<c:forEach var="item" items="${products.values()}">
-        <c:if test="${ item.quantity > 0}">
-		
-	
-				<tr>
-					<td class="rght"><c:out value="${item.productID}" /></td>
-					<td class="cent"><c:out value="${item.name}" /></td>
-					<td class="cent"><c:out value="${item.category.name}" /></td>
-					<td class="rght"><c:out value="$${item.price}" /></td>
-					<td><a
-						href="${pageContext.request.contextPath}/admin/show?id=${item.productID}">Show</a></td>
-					<td><a
-						href="${pageContext.request.contextPath}/admin/edit?id=${item.productID}">Edit</a></td>
-
-					<td><a href="${item.imageURL}">Display Image</a></td>
-				</tr>
-
-</c:if>
-
+				<c:if test="${ item.quantity > 0}">
+					<tr>
+						<td class="rght"><c:out value="${item.productID}" /></td>
+						<td class="cent"><c:out value="${item.name}" /></td>
+						<td class="cent"><c:out value="${item.category.name}" /></td>
+						<td class="cent"><c:out value="${item.brand.name}" /></td>
+						<td class="cent"><c:out value="${item.quantity}" /></td>
+						<td class="cent"><c:out value="$${item.price}" /></td>
+						<td><img
+							src="${pageContext.request.contextPath}/admin/getImage/${item.productID}"
+							height="80" width="80"></td>
+						<td><a
+							href="${pageContext.request.contextPath}/admin/show?id=${item.productID}">Show</a></td>
+						<td><a
+							href="${pageContext.request.contextPath}/admin/edit?id=${item.productID}">Edit</a></td>
+					</tr>
+				</c:if>
 			</c:forEach>
 		</table>
 		<p>

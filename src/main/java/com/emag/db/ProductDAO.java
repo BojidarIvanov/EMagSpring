@@ -46,7 +46,7 @@ public class ProductDAO {
 		ResultSet rs = ps.getGeneratedKeys();
 		rs.next();
 		products.put(rs.getInt(1),
-				new ProductPojo(rs.getInt(1), name, priceBD.toString(), description, categoryId,
+				new ProductPojo(rs.getInt(1), name, priceBD.toString(), description, availableProducts,
 						CategoryDAO.getInstance().getAllCategories().get(categoryId),
 						BrandDAO.getInstance().getAllBrands().get(brandId), imageUrl));
 		rs.close();
@@ -120,16 +120,20 @@ public class ProductDAO {
 		synchronized (products) {
 			products.put(Integer.parseInt(productId),
 					new ProductPojo(Integer.parseInt(productId), productName, priceBD.toString(), description,
-							categoryId, CategoryDAO.getInstance().getAllCategories().get(categoryId),
+							availability, CategoryDAO.getInstance().getAllCategories().get(categoryId),
 							BrandDAO.getInstance().getAllBrands().get(brandId), imageUrl));
 
 		}
 	}
-	
-	// removal of product is problematic by design it's a foreign key in some tables 
-	// below method handles purchases and is not to be used for deleting entry in database
-	// one approach to set quantity to zero and the product will not be displayed
-	// in real world situation deleting of business records is not always appropriate that's why there will be no such option
+
+	// removal of product is problematic by design it's a foreign key in some
+	// tables
+	// below method handles purchases and is not to be used for deleting entry
+	// in database
+	// one approach to set quantity to zero and the product will not be
+	// displayed
+	// in real world situation deleting of business records is not always
+	// appropriate that's why there will be no such option
 
 	public PreparedStatement removeProductByIdAndQnt(int productId, int quantity) throws SQLException {
 
@@ -140,6 +144,16 @@ public class ProductDAO {
 		psRemovedProduct.setInt(2, productId);
 		psRemovedProduct.executeUpdate();
 		return psRemovedProduct;
+	}
+
+	public void setImageUrl(int productId, String url) throws SQLException {
+
+		String sql = "UPDATE products SET image_url = ? where product_id = ?;";
+		Connection conn = DBManager.CON1.getConnection();
+		PreparedStatement updateUrl = conn.prepareStatement(sql);
+		updateUrl.setString(1, url);
+		updateUrl.setInt(2, productId);
+		updateUrl.executeUpdate();
 	}
 
 	public static void main(String[] args) {
