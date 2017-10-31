@@ -13,31 +13,37 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	
 	<jsp:include page="header.jsp"></jsp:include>
-	<c:if test="${productExists}">
-		<table border="1">
-			<tr>
-				<th>Product Name</th>
-				<th>Product Price</th>
-				<th>Product Quantity</th>
+		<center>
+			<c:if test="${productExists}">
+				<table border="1">
+					<tr>
+						<th>Product ID</th>
+						<th>Product Name</th>
+						<th>Product Price</th>
+						<th>Product Quantity</th>
+					</tr>
+					<tr>
+						<c:forEach items="${ requestScope.matchingProducts }" var="productEntry">
+						<td>${productEntry.key}</td>
+						<td>${productEntry.value.getName()}</td>
+						<td>${productEntry.value.getPrice()}</td>
+						<td>${productEntry.value.getQuantity()}</td>
+						<td><a
+							href="${pageContext.request.contextPath}/admin/show?id=${productId}">Show</a></td>
+		
+					</tr>
+					</c:forEach>
+				</table>
+			</c:if>
+			<c:if test="${not productExists}">
+				<h1 style="color: Tomato;">No Product found</h1>
+			</c:if>
 			</tr>
-			<tr>
-
-				<td>${productName}</td>
-				<td>${productPrice}</td>
-				<td>${productQuantity}</td>
-				<td><a
-					href="${pageContext.request.contextPath}/admin/show?id=${productId}">Show</a></td>
-
-			</tr>
-		</table>
-	</c:if>
-	<c:if test="${not productExists}">
-		<h1 style="color: Tomato;">No Product found</h1>
-	</c:if>
-	</tr>
-
+		
+		</center>
 	<jsp:include page="footer.jsp"></jsp:include>
+		
 </body>
 </html>

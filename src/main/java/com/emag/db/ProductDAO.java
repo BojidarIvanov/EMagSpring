@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import com.emag.model.ProductPojo;
@@ -125,11 +126,13 @@ public class ProductDAO {
 
 		}
 	}
-	
-	// removal of product is problematic by design it's a foreign key in some tables 
-	// below method handles purchases and is not to be used for deleting entry in database
+
+	// removal of product is problematic by design it's a foreign key in some tables
+	// below method handles purchases and is not to be used for deleting entry in
+	// database
 	// one approach to set quantity to zero and the product will not be displayed
-	// in real world situation deleting of business records is not always appropriate that's why there will be no such option
+	// in real world situation deleting of business records is not always
+	// appropriate that's why there will be no such option
 
 	public PreparedStatement removeProductByIdAndQnt(int productId, int quantity) throws SQLException {
 
@@ -142,10 +145,36 @@ public class ProductDAO {
 		return psRemovedProduct;
 	}
 
-	public static void main(String[] args) {
+	public static TreeMap<Integer, ProductPojo> getMatchingProducts(String product) throws SQLException {
+		TreeMap<Integer, ProductPojo> products = new TreeMap<>();
+		Connection conn = DBManager.CON1.getConnection();
+		if (product != null && !product.isEmpty()) {
+			PreparedStatement psGetMatchingProduts = conn.prepareStatement("SELECT * FROM products WHERE name LIKE ?");
+			psGetMatchingProduts.setString(1, "%" + product + "%");
+			ResultSet rs = psGetMatchingProduts.executeQuery();
+			while (rs.next()) {
+				synchronized (products) {
+					products.put(rs.getInt("product_id"),
+							new ProductPojo(rs.getInt("product_id"), rs.getString("name"),
+									rs.getBigDecimal("price").toString(), rs.getString("description"),
+									rs.getInt("available_products"),
+									CategoryDAO.getInstance().getAllCategories().get(rs.getInt("category_id")),
+									BrandDAO.getInstance().getAllBrands().get(rs.getInt("brand_id")),
+									rs.getString("image_url")));
+				}
+			}
+		}
+		return products;
+	}
+
+	public static void main(String[] args) throws SQLException {
 
 		System.out.println("Start");
 		// ProductDAO pdao = ProductDAO.getInstance();
+		TreeMap<Integer, ProductPojo> products = getMatchingProducts("p");
+		for (Entry<Integer, ProductPojo> p : products.entrySet()) {
+			System.out.println(p.getKey() + " : " + p.getValue());
+		}
 		System.out.println("end");
 
 	}
