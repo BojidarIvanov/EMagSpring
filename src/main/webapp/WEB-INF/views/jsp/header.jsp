@@ -132,7 +132,7 @@ label input, label textarea, label select {
 		<form class="navi" action="contact">
 			<input type="submit" value="Contacts">
 		</form>
-		<form class="navi" action="comment" method = "PUT"> 
+		<form class="navi" action="comment" method="PUT">
 			<input type="submit" value="Comments">
 		</form>
 		<c:if test="${sessionScope.user != null}">
@@ -155,10 +155,14 @@ label input, label textarea, label select {
 				<input type="submit" value="Let's go shopping!!!">
 			</form>
 		</c:if>
-		<br>
-		<br>
-		<br>
-		<h3 style="color: lime; align="center";">${requestScope.SubscrMsg }</h3>
+		<br> <br> <br>
+		<c:if test="${ sessionScope.newUser != null }">
+	<h5 style="color: lime;"center";">New account registered ${ sessionScope.newUser.name} . Congratulations!</h5>
+
+</c:if>
+		<h3 style="color: lime;"center";">${requestScope.SubscrMsg }</h3>
+		<h3 style="color: lime;"center";">${requestScope.errorMsg }</h3>
+		<h3 style="color: lime;"center";">${requestScope.error}</h3>
 		<br>
 
 	</div>

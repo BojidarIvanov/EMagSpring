@@ -61,6 +61,9 @@ public class ReviewDAO {
 				reviewToGet = r;
 			}
 		}
+		
+		rs.close();
+		ps.close();
 		return reviewToGet;
 	}
 	public boolean deleteReview(ReviewPojo review) throws SQLException {

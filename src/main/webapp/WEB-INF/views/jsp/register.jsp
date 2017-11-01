@@ -27,30 +27,33 @@ label input, label textarea, label select {
 <title>Insert title here</title>
 </head>
 <jsp:include page="header.jsp"></jsp:include>
-<c:if test="${ requestScope.error == null }">
-	<h1>Welcome, please register an account</h1>
-	<br>
-</c:if>
+
+
 <c:if test="${ requestScope.error != null }">
 	<h1 style="color: red">Sorry, registration unsuccessful. Reason:
 		${requestScope.error}</h1>
 </c:if>
-<form action="register" method="post">
-	<fieldset>
-		<legend>Personal information:</legend>
-		<label><span>Full name </span> <input type="text" 
-			name="name" required></label> <br>
-			 <label><span>Email</span> <input
-			type="text"  name="email" required > </label><br> <label><span>Year
-				of birth</span> <input type="text" name="DOB"> <br></label> <br>
-				<label><span>Phone</span><input
-			type="text" name="phone"> </label><br> <label><span>Address</span><input
-			type="text" name="address"> </label><br> <label><span>Password</span><input
-			type="password" name="pass" required> </label><br> <label><span>Confirm
-				password</span><input type="password"  name="pass2" required> </label><br>
-		<input type="submit" value="Register"><br>
-	</fieldset>
-</form>
+<c:if test="${ requestScope.user == null }">
+	<h1>Welcome, please register an account</h1>
+	<br>
+
+
+	<form action="${pageContext.request.contextPath}/register" method="post">
+		<fieldset>
+			<legend>Personal information:</legend>
+			<label><span>Full name </span> <input type="text" name="name"
+				required></label> <br> <label><span>Email</span> <input
+				type="text" name="email" required> </label><br> <label><span>Year
+					of birth</span> <input type="text" name="DOB"> <br></label> <br>
+			<label><span>Phone</span><input type="text" name="phone">
+			</label><br> <label><span>Address</span><input type="text"
+				name="address"> </label><br> <label><span>Password</span><input
+				type="password" name="pass" required> </label><br> <label><span>Confirm
+					password</span><input type="password" name="pass2" required> </label><br>
+			<input type="submit" value="Register"><br>
+		</fieldset>
+	</form>
+</c:if>
 Already have an account? Please login:
 <a href="loginPage">here</a>
 <br>

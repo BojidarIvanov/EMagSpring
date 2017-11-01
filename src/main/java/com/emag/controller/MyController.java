@@ -1,6 +1,7 @@
 package com.emag.controller;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -8,7 +9,9 @@ import java.util.Comparator;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.UUID;
 
+import javax.mail.MessagingException;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +20,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -29,6 +33,7 @@ import com.emag.model.CategoryPojo;
 import com.emag.model.OrderPojo;
 import com.emag.model.ProductPojo;
 import com.emag.model.UserPojo;
+import com.emag.util.MailUtilGmail;
 import com.emag.util.PasswordUtil;
 
 @Controller
@@ -58,25 +63,25 @@ public class MyController {
 
 		if (!password.equals(password2)) {
 			request.setAttribute("error", "passwords missmatch");
-			return "redirect:registerPage";
+			return "index";
 		}
 
 		try {
 			PasswordUtil.checkPasswordStrength(password2);
 		} catch (Exception e2) {
 			request.setAttribute("error", "password is too short");
-			return "redirect:registerPage";
+			return "index";
 		}
 
 		try {
 
 			if (Integer.parseInt(dob) < 1900 || Integer.parseInt(dob) > 2018) {
 				request.setAttribute("error", "Please provide adequate date of birth");
-				return "redirect:registerPage";
+				return "index";
 			}
 		} catch (NumberFormatException e) {
 			request.setAttribute("error", " Please enter correct year of birth.");
-			return "redirect:registerPage";
+			return "index";
 		}
 
 		try {
@@ -99,15 +104,15 @@ public class MyController {
 				}
 				request.getSession().setAttribute("user", customer);
 				request.getSession().setAttribute("newUser", customer);
-				return "forward:main";
+				return "index";
 			} else {
 				request.setAttribute("error", "user already registered");
-				return "redirect:registerPage";
+				return "index";
 
 			}
 		} catch (SQLException e) {
 			request.setAttribute("error", "database problem : " + e.getMessage());
-			return "redirect:loginPage";
+			return "index";
 		}
 	}
 
@@ -180,7 +185,7 @@ public class MyController {
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String loginPage(HttpServletRequest request, HttpServletResponse response) {
+	public String loginPage(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 
 		String email = request.getParameter("user");
 		String password = request.getParameter("pass");
@@ -224,9 +229,10 @@ public class MyController {
 			if (exists) {
 				// update session
 				UserPojo u = UserDAO.getInstance().getUser(user);
-				request.getSession().setAttribute("user", u);
+				session.setAttribute("user", u);
+				session.setAttribute("email", u.getEmail());
 
-				return "forward:main";
+				return "redirect:categories";
 			} else {
 				request.setAttribute("error", "user does not exist");
 				return "forward:loginPage";
@@ -275,15 +281,110 @@ public class MyController {
 		return "orders";
 	}
 
-	@RequestMapping(value = "/sortCategories", method = RequestMethod.GET)
-	public String sortCategories(HttpServletRequest request, HttpServletResponse response) {
-		String sort = request.getParameter("sort");
-		Integer categoryId = Integer.parseInt(sort);
-		Map<Integer, CategoryPojo> categories = (Map<Integer, CategoryPojo>) application.getAttribute("categories");
-		System.out.println(categories);
-		CategoryPojo category = categories.get(categoryId);
-		request.setAttribute("specificCategory", category);
-		System.out.println("Category" + category);
-		return "categories";
+	private String url = "";
+	private String errorMsg = "";
+
+	@RequestMapping(value = "/changePass", method = RequestMethod.POST)
+	public String changePass(Model model, HttpServletRequest req, HttpSession session, HttpServletResponse response) {
+		url = "index";
+		if (session.getAttribute("user") != null) {
+			String oldPass = req.getParameter("oldPassword");
+			String newPass = req.getParameter("newPassword");
+			UserPojo u = null;
+			try {
+				u = UserDAO.getInstance().getAllUsers().get((String) session.getAttribute("email"));
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+				errorMsg = "something went wrong, please try again later";
+			}
+			try {
+				if (PasswordUtil.hashPassword(oldPass).equals(u.getPassword())) {
+					if (!PasswordUtil.validatePassword(newPass)) {
+						errorMsg = "Password is not safe! Please use imagination. It is all about your safety.";
+					} else {
+						try {
+							u.setPassword(PasswordUtil.hashPassword(newPass));
+							UserDAO.getInstance().updatePass(u);
+							errorMsg = "Password successfully changed!";
+						} catch (SQLException e) {
+							errorMsg = "something went wrong, please try again later";
+						}
+					}
+				} else {
+					errorMsg = "Password does not match our records, your changes were not saved!";
+				}
+			} catch (NoSuchAlgorithmException e) {
+				errorMsg = "Password does not match our records, your changes were not saved!";
+				e.printStackTrace();
+			}
+
+		} else {
+			errorMsg = "Please log in before changing the password.";
+			url = "forward:loginPage";
+		}
+		model.addAttribute("errorMsg", errorMsg);
+		errorMsg = null;
+		return url;
 	}
+
+	@RequestMapping(value = "/forgotPassword", method = RequestMethod.POST)
+	public String forgotPass(Model model, HttpServletRequest request, HttpServletResponse response) {
+		try {
+			request.setCharacterEncoding("utf-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			errorMsg = "The encoding in use seems to be a problem.";
+			url = "forgotPassword";
+		}
+		String email = request.getParameter("email").trim();
+		Map<String, UserPojo> users = (Map<String, UserPojo>) application.getAttribute("users");
+	
+		if (email == null) {
+			errorMsg = "No such user";
+			url = "forgotPassword";
+		} else {
+			UserPojo u = users.get(email);
+			url = "forgotPassword";
+			String password = UUID.randomUUID().toString().substring(8);
+			String hashedPassword = "";
+			try {
+				hashedPassword = PasswordUtil.hashPassword(password);
+			} catch (NoSuchAlgorithmException e1) {
+				e1.printStackTrace();
+				return "forgotPassword";
+			}
+			u.setPassword(hashedPassword);
+			String subject = "Regarding Password Recovery";
+			String body = "Dear " + u.getName() + ",\n\n" + "Your new password: " + password + "\n\n"
+					+ "You can change your password using Change password functionality which is located at the "
+					+ "\n\n"
+					+ "bottom of the main page of the site. Please note it is available only when you are logged in."
+					+ "\n\n" + " Best regards," + "\n\n" + "Emag team.";
+			try {
+				UserDAO.getInstance().updatePass(u);
+				try {
+					MailUtilGmail.sendMail(email, "pechorinnd@gmail.com", subject, body, false);
+					errorMsg = "A new password was sent to your email. We recommend changing the password after login.";
+				} catch (MessagingException e) {
+					e.printStackTrace();
+					errorMsg = "Something went wrong, please try again later" + e;
+					url = "forgotPassword";
+				}
+
+			} catch (SQLException e) {
+				errorMsg = "Something went wrong, please try again later" + e;
+				url = "forgotPassword";
+			}
+
+		}
+		model.addAttribute("errorMsg", errorMsg);
+		errorMsg = null;
+		return url;
+	}
+
+	@RequestMapping(value = "/forgotPassword", method = RequestMethod.GET)
+	public String forgotPassword() {
+		return "forgotPassword";
+	}
+
 }

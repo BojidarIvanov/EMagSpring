@@ -17,18 +17,22 @@
 	type="text/css"></link>
 </head>
 <body>
-	
-	<form action="${pageContext.request.contextPath}/searchProduct" method="get">
-			<input class="navi" type="text" name="productName"
-				placeholder="Serch for product..."
-				style="height: 45px; width: 300px"> <input class="navi"
-				type="submit" name="submit" value="Search"
-				style="height: 45px; width: 150px">
-		</form>
+
+	<c:if test="${ sessionScope.user == null }">
+		<c:redirect url="../categories"></c:redirect>
+	</c:if>
+
+	<form action="${pageContext.request.contextPath}/searchProduct"
+		method="get">
+		<input class="navi" type="text" name="productName"
+			placeholder="Serch for product..." style="height: 45px; width: 300px">
+		<input class="navi" type="submit" name="submit" value="Search"
+			style="height: 45px; width: 150px">
+	</form>
 
 	<sql:setDataSource var="myDS" driver="com.mysql.jdbc.Driver"
-		url="jdbc:mysql://localhost:3306/emag_final_project" user="root"
-		password="admin" />
+		url="jdbc:mysql://localhost:3306/emag_final_project" user="Ivan"
+		password="Koparan2525" />
 
 	<sql:query var="listStuff" dataSource="${myDS}"> 
       SELECT * FROM products ORDER BY product_id;

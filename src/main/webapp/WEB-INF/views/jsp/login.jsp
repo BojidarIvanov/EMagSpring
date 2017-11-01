@@ -12,6 +12,8 @@
 <title>Emag final project</title>
 </head>
 
+
+
 <c:if test="${ requestScope.error == null }">
 	<h2>Welcome, please login:</h2>
 	<br>
@@ -34,8 +36,8 @@
 			placeholder="Enter email" size="35" style="width: 193px"></label> <br>
 		<label><span>Password:</span><input type="password"
 			placeholder="Enter Password" name="pass" style="width: 193px"></label>
-		<br>
-		<br> <label><input type="submit" value="Login"> </label>
+		<br> <br> <label><input type="submit" value="Login">
+		</label>
 
 
 	</form>

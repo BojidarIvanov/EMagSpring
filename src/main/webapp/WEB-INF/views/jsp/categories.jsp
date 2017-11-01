@@ -18,6 +18,7 @@
 <body>
 
 	<jsp:include page="header.jsp"></jsp:include>
+	
 
 	<h2>Please select category:</h2>
 	<div class="mom">
@@ -53,10 +54,10 @@
 				catId = ((CategoryPojo) category).getCategoryID();
 			}
 		%>
-		<a href="sortProducts?sort=desc&cat=<%=catId%>"><button
-				size="35" style="width: 150px">Price high to low</button></a> <a
-			href="sortProducts?sort=asc&cat=<%=catId%>"><button
-				size="35" style="width: 150px">Price low to high</button></a>
+		<a href="sortProducts?sort=desc&cat=<%=catId%>"><button size="35"
+				style="width: 150px">Price high to low</button></a> <a
+			href="sortProducts?sort=asc&cat=<%=catId%>"><button size="35"
+				style="width: 150px">Price low to high</button></a>
 		<table class="products" border="1" cellpadding="5">
 			<tr>
 				<th>Id</th>

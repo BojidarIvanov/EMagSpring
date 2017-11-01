@@ -131,11 +131,12 @@ public class UserDAO {
 	public void updatePass(UserPojo u) throws SQLException {
 
 		this.connection = DBManager.CON1.getConnection();
-		PreparedStatement ps = this.connection.prepareStatement("UPDATE users SET password = ? * WHERE email = ?");
+		PreparedStatement ps = this.connection.prepareStatement("UPDATE users SET password = ? WHERE email = ?");
 		ps.setString(1, u.getPassword());
-		ps.setString(1, u.getEmail());
+		ps.setString(2, u.getEmail());
 		ps.executeUpdate();
 		System.out.println("Password was set.");
+
 		ps.close();
 	}
 

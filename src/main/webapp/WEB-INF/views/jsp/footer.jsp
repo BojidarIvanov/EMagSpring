@@ -60,14 +60,15 @@ label input, label textarea, label select {
 							<h2>Password Recovery</h2>
 
 							<p>Please Enter the email address associated to your account.</p>
-							<p>${message}</p>
 							<div class="container">
-								<form action="send" method="post">
+								<form action="${pageContext.request.contextPath}/forgotPassword"
+									method="post">
 									<div>
-										<span><strong>Email Address for password recovery:</strong></span> <input
-											type="text" name="email" placeholder="Enter email" size="35"
-											style="width: 193px"> <input type="submit"
-											value="Send" style="height: 35px; width: 150px" />
+										<span><strong>Email Address for password
+												recovery:</strong></span> <input type="text" name="email"
+											placeholder="Enter email" size="35" style="width: 193px">
+										<input type="submit" value="Send"
+											style="height: 35px; width: 150px" />
 									</div>
 								</form>
 							</div>
@@ -82,11 +83,27 @@ label input, label textarea, label select {
 								</form>
 
 							</div>
-							<div class="clearfix"></div>
+							<c:if test="${sessionScope.user != null}">
+								<div class="container">
+									<form action="${pageContext.request.contextPath}/changePass"
+										method="post">
+										<h1 class="lead">Change Password</h1>
+									<label><span>Current Password:</span> <input class="input" type="password"
+											placeholder="enter current password" name="oldPassword"
+											size="35" style="width: 193px" required="required"></label></br> <label><span>New
+												Password:</span> <input class="input" type="password"
+											placeholder="enter new password" name="newPassword" size="35"
+											style="width: 193px" required="required"></label></br> <input
+											class="btn" type="submit" style="height: 35px; width: 300px"
+											value="Change Password"></br>
+									</form>
+									<br>
+									<div class="clearfix"></div>
+								</div>
+							</c:if>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
 </body>
 </html>

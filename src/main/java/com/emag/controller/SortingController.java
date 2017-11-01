@@ -9,6 +9,7 @@ import java.util.TreeSet;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,18 @@ public class SortingController {
 	
 	@Autowired
 	ServletContext application;
+	
+	@RequestMapping(value = "/sortCategories", method = RequestMethod.GET)
+	public String sortCategories(HttpServletRequest request, HttpServletResponse response) {
+		String sort = request.getParameter("sort");
+		Integer categoryId = Integer.parseInt(sort);
+		Map<Integer, CategoryPojo> categories = (Map<Integer, CategoryPojo>) application.getAttribute("categories");
+		System.out.println(categories);
+		CategoryPojo category = categories.get(categoryId);
+		request.setAttribute("specificCategory", category);
+		System.out.println("Category" + category);
+		return "categories";
+	}
 	
 	@RequestMapping(value = "/sortProducts", method = RequestMethod.GET)
 	public String sortProductsByAscendingOrder(HttpSession session, HttpServletRequest req, Model model) {
