@@ -17,9 +17,7 @@
 	type="text/css"></link>
 </head>
 <body>
-	<c:if test="${sessionScope.user == null }">
-		<jsp:forward page="index"></jsp:forward>
-	</c:if>
+	
 	<form action="searchProduct" method="get">
 			<input class="navi" type="text" name="productName"
 				placeholder="Serch for product..."
