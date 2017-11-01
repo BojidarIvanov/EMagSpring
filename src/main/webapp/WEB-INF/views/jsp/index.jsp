@@ -30,306 +30,257 @@
 h3 {
 	color: white;
 }
-
-
 </style>
-	<h3 align="center"; >
+	<h3 align="center"; >Take advantage of hot offers, the prices were
+		never so attractive !</h3>
+	</style>
 
-		Take advantage of hot offers, the prices were never so
-			attractive !</h3>
-		</style>
-
-		<div class="wrap">
-			<ul class="grid grid-sm-2 grid-lg-4">
-				<li>
-					<div class="cat-item">
-						<div class="item-header">
-							<a href="" class="item-img"> <img src="img/Cisco.jpg" alt="" />
-								<!--  	</a> <a href="" class="item-img-zoom btn btn-secondary btn-circle"
+	<div class="wrap">
+		<ul class="grid grid-sm-2 grid-lg-4">
+			<li>
+				<div class="cat-item">
+					<div class="item-header">
+						<a href="${pageContext.request.contextPath}/admin/show?id=1"
+							class="item-img"> <img src="img/Cisco.jpg" alt="" />
+						</a>
+						<!-- <a href="" class="item-img-zoom btn btn-secondary btn-circle"
 								title="Zoom In"> <span class="fa fa-search-plus"></span>
 							</a> -->
-						</div>
-						<div class="item-body">
-							<h4 class="item-title">Sony Headphones</h4>
-							<div class="item-size">24 Pack</div>
-							<div class="item-rating rating">
-								<ul class="item-stars rating-stars">
-									<li><span class="fa fa-star"></span></li>
-									<li><span class="fa fa-star"></span></li>
-									<li><span class="fa fa-star"></span></li>
-									<li><span class="fa fa-star-half-o"></span></li>
-									<li><span class="fa fa-star-o"></span></li>
-								</ul>
-								<span class="item-rating-no rating-no small">300</span>
-							</div>
-							<div class="item-price h4">30 лв.</div>
-						</div>
-						<a href="" class="btn btn-primary btn-expanded">Добави в
-							количка</a>
 					</div>
-				</li>
-				<li>
-					<div class="cat-item">
-						<div class="item-header">
-							<a href="" class="item-img"> <img src="img/Dell.jpg" alt="" />
-							</a>
-							<!-- <a href="" class="item-img-zoom btn btn-secondary btn-circle"
-								title="Zoom In"> <span class="fa fa-search-plus"></span> 
-							</a> -->
-						</div>
-						<div class="item-body">
-							<h4 class="item-title">Dell laptop</h4>
-							<div class="item-size">24 Pack</div>
-							<div class="item-rating rating">
-								<ul class="item-stars rating-stars">
-									<li><span class="fa fa-star"></span></li>
-									<li><span class="fa fa-star"></span></li>
-									<li><span class="fa fa-star"></span></li>
-									<li><span class="fa fa-star-half-o"></span></li>
-									<li><span class="fa fa-star-o"></span></li>
-								</ul>
-								<span class="item-rating-no rating-no small">300</span>
-							</div>
-							<div class="item-price h4">$9000 лв.</div>
-						</div>
-						<a href="" class="btn btn-primary btn-expanded">Добави в
-							количка</a>
-					</div>
-				</li>
-				<li>
-					<div class="cat-item">
-						<div class="item-header">
-							<a href="" class="item-img"> <img src="img/Logitech.jpg"
-								alt="" />
-							</a>
-							<!--	<a href="" class="item-img-zoom btn btn-secondary btn-circle"
-										title="Zoom In"> <span class="fa fa-search-plus"></span>
-									</a> -->
-						</div>
-						<div class="item-body">
-							<h4 class="item-title">Logitech PC mouse</h4>
-							<div class="item-size">24 Pack</div>
-							<div class="item-rating rating">
-								<ul class="item-stars rating-stars">
-									<li><span class="fa fa-star"></span></li>
-									<li><span class="fa fa-star"></span></li>
-									<li><span class="fa fa-star"></span></li>
-									<li><span class="fa fa-star-half-o"></span></li>
-									<li><span class="fa fa-star-o"></span></li>
-								</ul>
-								<span class="item-rating-no rating-no small">300</span>
-							</div>
-							<div class="item-price h4">20 лв.</div>
-						</div>
-						<a href="" class="btn btn-primary btn-expanded">Добави в
-							количка</a>
-					</div>
-				</li>
-				<li>
-					<div class="cat-item">
-						<div class="item-header">
-							<a href="" class="item-img"> <img src="img/Elysee.jpg" alt="" />
-							</a>
-							<!-- <a href="" class="item-img-zoom btn btn-secondary btn-circle"
-								title="Zoom In"> <span class="fa fa-search-plus"></span>
-							</a> -->
-						</div>
-						<div class="item-body">
-							<h4 class="item-title">Original Casio Watch</h4>
-							<div class="item-size">24 Pack</div>
-							<div class="item-rating rating">
-								<ul class="item-stars rating-stars">
-									<li><span class="fa fa-star"></span></li>
-									<li><span class="fa fa-star"></span></li>
-									<li><span class="fa fa-star"></span></li>
-									<li><span class="fa fa-star-half-o"></span></li>
-									<li><span class="fa fa-star-o"></span></li>
-								</ul>
-								<span class="item-rating-no rating-no small">300</span>
-							</div>
-							<div class="item-price h4">100 лв.</div>
-						</div>
-						<a href="" class="btn btn-primary btn-expanded">Добави в
-							количка</a>
-					</div>
-				</li>
-				<li>
-					<div class="cat-item">
-						<div class="item-header">
-							<a href="" class="item-img"> <img src="img/Hermes.jpg" alt="" />
-							</a>
-							<!-- <a href="" class="item-img-zoom btn btn-secondary btn-circle"
-								title="Zoom In"> <span class="fa fa-search-plus"></span>
-							</a> -->
-						</div>
-						<div class="item-body">
-							<h4 class="item-title">Hermes Watch</h4>
-							<div class="item-size">24 Pack</div>
-							<div class="item-rating rating">
-								<ul class="item-stars rating-stars">
-									<li><span class="fa fa-star"></span></li>
-									<li><span class="fa fa-star"></span></li>
-									<li><span class="fa fa-star"></span></li>
-									<li><span class="fa fa-star-half-o"></span></li>
-									<li><span class="fa fa-star-o"></span></li>
-								</ul>
-								<span class="item-rating-no rating-no small">300</span>
-							</div>
-							<div class="item-price h4">890 лв.</div>
-						</div>
-						<a href="" class="btn btn-primary btn-expanded">Добави в
-							количка</a>
-					</div>
-				</li>
-				<li>
-					<div class="cat-item">
-						<div class="item-header">
-							<a href="" class="item-img"> <img src="img/Swatch.jpg" alt="" />
-							</a>
-							<!-- <a href="" class="item-img-zoom btn btn-secondary btn-circle"
-										title="Zoom In"> <span class="fa fa-search-plus"></span>
-									</a> -->
-						</div>
-						<div class="item-body">
-							<h4 class="item-title">Swatch Watch</h4>
-							<div class="item-size">24 Pack</div>
-							<div class="item-rating rating">
-								<ul class="item-stars rating-stars">
-									<li><span class="fa fa-star"></span></li>
-									<li><span class="fa fa-star"></span></li>
-									<li><span class="fa fa-star"></span></li>
-									<li><span class="fa fa-star-half-o"></span></li>
-									<li><span class="fa fa-star-o"></span></li>
-								</ul>
-								<span class="item-rating-no rating-no small">300</span>
-							</div>
-							<div class="item-price h4">$10.99 - $12.99</div>
-						</div>
-						<a href="" class="btn btn-primary btn-expanded">Добави в
-							количка</a>
-					</div>
-				</li>
-
-
-				<li>
-					<div class="cat-item">
-						<div class="item-header">
-							<a href="" class="item-img"> <img src="img/Casio.jpg" alt="" />
-							</a>
-							<!-- <a href="" class="item-img-zoom btn btn-secondary btn-circle"
-										title="Zoom In"> <span class="fa fa-search-plus"></span>
-									</a> -->
-						</div>
-						<div class="item-body">
-							<h4 class="item-title">Casio Watch</h4>
-							<div class="item-size">24 Pack</div>
-							<div class="item-rating rating">
-								<ul class="item-stars rating-stars">
-									<li><span class="fa fa-star"></span></li>
-									<li><span class="fa fa-star"></span></li>
-									<li><span class="fa fa-star"></span></li>
-									<li><span class="fa fa-star-half-o"></span></li>
-									<li><span class="fa fa-star-o"></span></li>
-								</ul>
-								<span class="item-rating-no rating-no small">300</span>
-							</div>
-							<div class="item-price h4">250 лв.</div>
-						</div>
-						<a href="" class="btn btn-primary btn-expanded">Добави в
-							количка</a>
-					</div>
-				</li>
-
-				<li>
-					<div class="cat-item">
-						<div class="item-header">
-							<a href="" class="item-img"> <img src="img/Citizen.jpg"
-								alt="" />
-							</a>
-							<!-- <a href="" class="item-img-zoom btn btn-secondary btn-circle"
-										title="Zoom In"> <span class="fa fa-search-plus"></span>
-									</a> -->
-						</div>
-						<div class="item-body">
-							<h4 class="item-title">Citizen Watch</h4>
-							<div class="item-size">24 Pack</div>
-							<div class="item-rating rating">
-								<ul class="item-stars rating-stars">
-									<li><span class="fa fa-star"></span></li>
-									<li><span class="fa fa-star"></span></li>
-									<li><span class="fa fa-star"></span></li>
-									<li><span class="fa fa-star-half-o"></span></li>
-									<li><span class="fa fa-star-o"></span></li>
-								</ul>
-								<span class="item-rating-no rating-no small">300</span>
-							</div>
-							<div class="item-price h4">200 лв.</div>
-						</div>
-						<a href="" class="btn btn-primary btn-expanded">Добави в
-							количка</a>
-					</div>
-				</li>
-			</ul>
-
-			<!-- 	<div class="overlay-bg"></div>
-			<div class="overlay-wrap">
-				<a href="" class="btn btn-secondary btn-circle overlay-close"> <span
-					class="fa fa-times-circle-o"></span>
-				</a>
-				<div class="overlay item-preview">
-					<div class="preview-img">
-						<div class="slider">
-							<div>
-								<img src="http://placehold.it/327x350/227dd5/fff" alt="" />
-							</div>
-							<div>
-								<img src="http://placehold.it/327x350/22d57b/fff" alt="" />
-							</div>
-							<div>
-								<img src="http://placehold.it/327x350/3e22d5/fff" alt="" />
-							</div>
-							<div>
-								<img src="http://placehold.it/327x350/d57922/fff" alt="" />
-							</div>
-						</div>
-					</div>
-					<div class="preview-body">
-						<h4 class="preview-title">Original Mini Rawhide Chew Bones</h4>
-						<div class="preview-rating rating">
-							<ul class="preview-stars rating-stars">
+					<div class="item-body">
+						<h4 class="item-title">Sony Headphones</h4>
+						<div class="item-size">24 Pack</div>
+						<div class="item-rating rating">
+							<ul class="item-stars rating-stars">
 								<li><span class="fa fa-star"></span></li>
 								<li><span class="fa fa-star"></span></li>
 								<li><span class="fa fa-star"></span></li>
 								<li><span class="fa fa-star-half-o"></span></li>
 								<li><span class="fa fa-star-o"></span></li>
 							</ul>
-							<span class="preview-rating-no rating-no small">300</span>
+							<span class="item-rating-no rating-no small">300</span>
 						</div>
-						<div class="preview-price h4">$10.99 - $12.99</div>
-						<div class="row">
-							<div class="col col-lg-3-4">
-								<label for="size">Size</label> <select name="size" id="size">
-									<option value="single">Individual</option>
-									<option value="case">Full Case (6 units)</option>
-								</select>
-							</div>
-							<div class="col col-lg-1-4">
-								<label for="qty">Quantity</label> <input type="number" min="0"
-									max="25" name="qty" />
-							</div>
-						</div>
-						<a href="" class="btn btn-primary">Добави в количка</a>
+						<div class="item-price h4">30 лв.</div>
 					</div>
+					<a href=${pageContext.request.contextPath}/loginPage
+						" class="btn btn-primary btn-expanded">Добави в количка</a>
 				</div>
-			</div>
-		</div>
-		<script
-			src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-		<script
-			src='https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.2/owl.carousel.min.js'></script>
+			</li>
+			<li>
+				<div class="cat-item">
+					<div class="item-header">
+						<a
+							href="${pageContext.request.contextPath}/admin/show?id=2"
+							class="item-img"> <img src="img/Dell.jpg" alt="" />
+						</a>
+						<!-- <a href="" class="item-img-zoom btn btn-secondary btn-circle"
+								title="Zoom In"> <span class="fa fa-search-plus"></span> 
+							</a> -->
+					</div>
+					<div class="item-body">
+						<h4 class="item-title">Dell laptop</h4>
+						<div class="item-size">24 Pack</div>
+						<div class="item-rating rating">
+							<ul class="item-stars rating-stars">
+								<li><span class="fa fa-star"></span></li>
+								<li><span class="fa fa-star"></span></li>
+								<li><span class="fa fa-star"></span></li>
+								<li><span class="fa fa-star-half-o"></span></li>
+								<li><span class="fa fa-star-o"></span></li>
+							</ul>
+							<span class="item-rating-no rating-no small">300</span>
+						</div>
+						<div class="item-price h4">$900 лв.</div>
+					</div>
+					<a href="" class="btn btn-primary btn-expanded">Добави в
+						количка</a>
+				</div>
+			</li>
+			<li>
+				<div class="cat-item">
+					<div class="item-header">
+						<a
+							href="${pageContext.request.contextPath}/admin/show?id=3"
+							class="item-img"> <img src="img/Logitech1.jpg" alt="" />
+						</a>
+						<!--	<a href="" class="item-img-zoom btn btn-secondary btn-circle"
+										title="Zoom In"> <span class="fa fa-search-plus"></span>
+									</a> -->
+					</div>
+					<div class="item-body">
+						<h4 class="item-title">Logitech PC mouse</h4>
+						<div class="item-size">24 Pack</div>
+						<div class="item-rating rating">
+							<ul class="item-stars rating-stars">
+								<li><span class="fa fa-star"></span></li>
+								<li><span class="fa fa-star"></span></li>
+								<li><span class="fa fa-star"></span></li>
+								<li><span class="fa fa-star-half-o"></span></li>
+								<li><span class="fa fa-star-o"></span></li>
+							</ul>
+							<span class="item-rating-no rating-no small">300</span>
+						</div>
+						<div class="item-price h4">20 лв.</div>
+					</div>
+					<a href=${pageContext.request.contextPath}/loginPage
+						" class="btn btn-primary btn-expanded">Добави в количка</a>
+				</div>
+			</li>
+			<li>
+				<div class="cat-item">
+					<div class="item-header">
+						<a
+							href="${pageContext.request.contextPath}/admin/show?id=4"
+							class="item-img"> <img src="img/Elysee.jpg" alt="" />
+						</a>
+						<!-- <a href="" class="item-img-zoom btn btn-secondary btn-circle"
+								title="Zoom In"> <span class="fa fa-search-plus"></span>
+							</a> -->
+					</div>
+					<div class="item-body">
+						<h4 class="item-title">Original Casio Watch</h4>
+						<div class="item-size">24 Pack</div>
+						<div class="item-rating rating">
+							<ul class="item-stars rating-stars">
+								<li><span class="fa fa-star"></span></li>
+								<li><span class="fa fa-star"></span></li>
+								<li><span class="fa fa-star"></span></li>
+								<li><span class="fa fa-star-half-o"></span></li>
+								<li><span class="fa fa-star-o"></span></li>
+							</ul>
+							<span class="item-rating-no rating-no small">300</span>
+						</div>
+						<div class="item-price h4">100 лв.</div>
+					</div>
+					<a href=${pageContext.request.contextPath}/loginPage
+						" class="btn btn-primary btn-expanded">Добави в количка</a>
+				</div>
+			</li>
+			<li>
+				<div class="cat-item">
+					<div class="item-header">
+						<a
+							href="${pageContext.request.contextPath}/admin/show?id=5"
+							class="item-img"> <img src="img/Hermes.jpg" alt="" />
+						</a>
+						<!-- <a href="" class="item-img-zoom btn btn-secondary btn-circle"
+								title="Zoom In"> <span class="fa fa-search-plus"></span>
+							</a> -->
+					</div>
+					<div class="item-body">
+						<h4 class="item-title">Hermes Watch</h4>
+						<div class="item-size">24 Pack</div>
+						<div class="item-rating rating">
+							<ul class="item-stars rating-stars">
+								<li><span class="fa fa-star"></span></li>
+								<li><span class="fa fa-star"></span></li>
+								<li><span class="fa fa-star"></span></li>
+								<li><span class="fa fa-star-half-o"></span></li>
+								<li><span class="fa fa-star-o"></span></li>
+							</ul>
+							<span class="item-rating-no rating-no small">300</span>
+						</div>
+						<div class="item-price h4">890 лв.</div>
+					</div>
+					<a href=${pageContext.request.contextPath}/loginPage
+						" class="btn btn-primary btn-expanded">Добави в количка</a>
+				</div>
+			</li>
+			<li>
+				<div class="cat-item">
+					<div class="item-header">
+						<a
+							href="${pageContext.request.contextPath}/admin/show?id=6"
+							class="item-img"> <img src="img/Swatch.jpg" alt="" />
+						</a>
+						<!-- <a href="" class="item-img-zoom btn btn-secondary btn-circle"
+										title="Zoom In"> <span class="fa fa-search-plus"></span>
+									</a> -->
+					</div>
+					<div class="item-body">
+						<h4 class="item-title">Swatch Watch</h4>
+						<div class="item-size">24 Pack</div>
+						<div class="item-rating rating">
+							<ul class="item-stars rating-stars">
+								<li><span class="fa fa-star"></span></li>
+								<li><span class="fa fa-star"></span></li>
+								<li><span class="fa fa-star"></span></li>
+								<li><span class="fa fa-star-half-o"></span></li>
+								<li><span class="fa fa-star-o"></span></li>
+							</ul>
+							<span class="item-rating-no rating-no small">300</span>
+						</div>
+						<div class="item-price h4">500 лвю</div>
+					</div>
+					<a href=${pageContext.request.contextPath}/loginPage
+						" class="btn btn-primary btn-expanded">Добави в количка</a>
+				</div>
+			</li>
 
-		<script src="js/index.js"></script> -->
 
-			<jsp:include page="footer.jsp"></jsp:include>
+			<li>
+				<div class="cat-item">
+					<div class="item-header">
+						<a
+							href="${pageContext.request.contextPath}/admin/show?id=7"
+							class="item-img"> <img src="img/Casio.jpg" alt="" />
+						</a>
+						<!-- <a href="" class="item-img-zoom btn btn-secondary btn-circle"
+										title="Zoom In"> <span class="fa fa-search-plus"></span>
+									</a> -->
+					</div>
+					<div class="item-body">
+						<h4 class="item-title">Casio Watch</h4>
+						<div class="item-size">24 Pack</div>
+						<div class="item-rating rating">
+							<ul class="item-stars rating-stars">
+								<li><span class="fa fa-star"></span></li>
+								<li><span class="fa fa-star"></span></li>
+								<li><span class="fa fa-star"></span></li>
+								<li><span class="fa fa-star-half-o"></span></li>
+								<li><span class="fa fa-star-o"></span></li>
+							</ul>
+							<span class="item-rating-no rating-no small">300</span>
+						</div>
+						<div class="item-price h4">250 лв.</div>
+					</div>
+					<a href=${pageContext.request.contextPath}/loginPage
+						" class="btn btn-primary btn-expanded">Добави в количка</a>
+				</div>
+			</li>
+
+			<li>
+				<div class="cat-item">
+					<div class="item-header">
+						<a
+							href="${pageContext.request.contextPath}/admin/show?id=8"
+							class="item-img"> <img src="img/Citizen.jpg" alt="" />
+						</a>
+						<!-- <a href="" class="item-img-zoom btn btn-secondary btn-circle"
+										title="Zoom In"> <span class="fa fa-search-plus"></span>
+									</a> -->
+					</div>
+					<div class="item-body">
+						<h4 class="item-title">Citizen Watch</h4>
+						<div class="item-size">24 Pack</div>
+						<div class="item-rating rating">
+							<ul class="item-stars rating-stars">
+								<li><span class="fa fa-star"></span></li>
+								<li><span class="fa fa-star"></span></li>
+								<li><span class="fa fa-star"></span></li>
+								<li><span class="fa fa-star-half-o"></span></li>
+								<li><span class="fa fa-star-o"></span></li>
+							</ul>
+							<span class="item-rating-no rating-no small">300</span>
+						</div>
+						<div class="item-price h4">200 лв.</div>
+					</div>
+					<a href="${pageContext.request.contextPath}/loginPage"
+						 class="btn btn-primary btn-expanded">Добави в количка</a>
+				</div>
+			</li>
+		</ul>
+
+		<jsp:include page="footer.jsp"></jsp:include>
 </body>
 </html>

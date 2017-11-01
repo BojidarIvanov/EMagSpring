@@ -3,6 +3,8 @@ package com.emag.controller;
 import java.sql.SQLException;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.mail.MessagingException;
 import javax.servlet.ServletContext;
@@ -25,7 +27,7 @@ public class HandlingEmails {
 	ServletContext application;
 
 	@RequestMapping(value = "/sendMail", method = RequestMethod.POST)
-	public String subscribe(HttpServletRequest request, HttpServletResponse response) {
+	public String sendMail(HttpServletRequest request, HttpServletResponse response) {
 
 		String task = request.getParameter("task");
 		Set<String> allEmails = null;
@@ -49,7 +51,7 @@ public class HandlingEmails {
 		boolean isBodyHTML = false;
 		for (String email : allEmails) {
 			try {
-				if(users == null) {
+				if (users == null) {
 					return "redirect:html/lostSession.html";
 				}
 				fullName = users.get(email) != null ? users.get(email).getName() : "customer";
@@ -59,11 +61,50 @@ public class HandlingEmails {
 				String errorMessage = "ERROR: Unable to send email. " + "Check Tomcat logs for details.<br>"
 						+ "NOTE: You may need to configure your system " + "as described in chapter 14.<br>"
 						+ "ERROR MESSAGE: " + e.getMessage();
-				request.setAttribute("errorMessage", errorMessage);			
+				request.setAttribute("errorMessage", errorMessage);
 			}
 		}
 		// request.setAttribute("message", message);
 		String url = "/admin/productManagement";
 		return url;
 	}
+
+	@RequestMapping(value = "/addEmail", method = RequestMethod.POST)
+	public String subscribe(HttpServletRequest request, HttpServletResponse response) {
+
+		String email = request.getParameter("email");
+		boolean isEmailSaved = false;
+		boolean isValid = validate(email);
+		String result = "";
+		if (isValid) {
+			try {
+				isEmailSaved = EmailDAO.getInstance().addEmail(email);
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return "redirect:sqlError.html";
+			}
+			result = "Email saved. Thank you.";
+		}
+
+		if (!isEmailSaved && isValid) {
+			System.out.println("The email was already in our records.");
+			result = "The email was already in our records.";
+		}
+
+		if (!isValid) {
+			result = "Invalid email.";
+		}
+
+		request.setAttribute("SubscrMsg", result);
+		return "index";
+	}
+
+	public static final Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$",
+			Pattern.CASE_INSENSITIVE);
+
+	public static boolean validate(String emailStr) {
+		Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
+		return matcher.find();
+	}
+
 }

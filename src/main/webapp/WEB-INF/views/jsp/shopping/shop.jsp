@@ -1,8 +1,12 @@
+<%@ page import="com.emag.model.ProductPojo"%>
+<%@ page import="com.emag.model.CategoryPojo"%>
 <%@ page language="java" contentType="text/html; charset = UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page errorPage="error.jsp"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
+<%@ page import="java.util.TreeMap"%>
+
 
 <!DOCTYPE html>
 <html>
@@ -13,6 +17,14 @@
 	type="text/css"></link>
 </head>
 <body>
+	
+	<form action="${pageContext.request.contextPath}/searchProduct" method="get">
+			<input class="navi" type="text" name="productName"
+				placeholder="Serch for product..."
+				style="height: 45px; width: 300px"> <input class="navi"
+				type="submit" name="submit" value="Search"
+				style="height: 45px; width: 150px">
+		</form>
 
 	<sql:setDataSource var="myDS" driver="com.mysql.jdbc.Driver"
 		url="jdbc:mysql://localhost:3306/emag_final_project" user="root"
@@ -21,8 +33,7 @@
 	<sql:query var="listStuff" dataSource="${myDS}"> 
       SELECT * FROM products ORDER BY product_id;
     </sql:query>
- 
-	
+
 	<center>
 		<h3>Emag shop ordering process</h3>
 	</center>
@@ -56,6 +67,11 @@
 							type="text" value="${item.available_products}" readonly /></td>
 						<td><input type="text" name="price-${ind}"
 							value="${item.price}" size="7" readonly /></td>
+						<td><img
+							src="${pageContext.request.contextPath}/admin/getImage/${item.product_id}"
+							height="80" width="80"></td>
+						<td><a
+							href="${pageContext.request.contextPath}/admin/show?id=${item.product_id}">Show</a></td>
 					</tr>
 					<c:set var='ind' value='${ind + 1}' />
 				</c:forEach>

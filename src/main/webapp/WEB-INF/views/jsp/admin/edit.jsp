@@ -29,11 +29,19 @@
 	%>
 
 	<div>
+		<form action="uploadPicture" method="post"
+			enctype="multipart/form-data">
+			<input type="file" name="picture"> <input type="hidden"
+				value='${param.id}' name="id" /> <input type="submit">
+		</form>
+	</div>
+	<div>
 		<fieldset>
 			<legend class="legend">Edit product</legend>
 			<form action="${pageContext.request.contextPath}/dataVerifier"
 				method="post">
 				<table>
+					<font face="Britannic Bold" size="4" style="color: red;">${errorMsg}</font>
 					<tbody>
 						<tr style="background: white;">
 							<td><label for="id">Id:</label></td>
@@ -65,13 +73,13 @@
 
 						<tr style="background: white;">
 							<td><label for="brand">Brand id:</label></td>
-							<td><input id="brandId" value=<%=p.getBrand().getBrandID()%>
+							<td><input id="brandId" value=<%= p.getBrand().getBrandID()%>
 								name="brandId" type="number" step="1" min="1" /></td>
 						</tr>
 
 						<tr style="background: white;">
 							<td><label for="availability">Available quantity:</label></td>
-							<td><input id="availability" value=<%=p.getQuantity()%>
+							<td><input id="availability" value=<%= p.getQuantity() %>
 								name="availability" type="number" step="1" min="0" /></td>
 						</tr>
 
@@ -86,6 +94,12 @@
 							<td><input id="imageURL" value="<%=p.getImageURL()%> "
 								name="imageUrl" type="text" /></td>
 						</tr>
+						<tr>
+							<td><img
+								src="${pageContext.request.contextPath}/admin/getImage/<%=p.getProductID()%>"
+								height="125" width="125"></td>
+
+						</tr>
 					</tbody>
 				</table>
 				<p>
@@ -99,10 +113,14 @@
 		</fieldset>
 	</div>
 
-	<form action="${pageContext.request.contextPath}/sendMail" method="POST">
+	<form action="${pageContext.request.contextPath}/sendMail"
+		method="POST">
 		<div class="contact-left">
-			<h3 style="color: brown">Please provide text of the promo mail
-				to be sent to subscribed customers. <br>The first sentence with the name of the customer will be generated programmatically.</h3>
+			<h3 style="color: brown">
+				Please provide text of the promo mail to be sent to subscribed
+				customers. <br>The first sentence with the name of the customer
+				will be generated programmatically.
+			</h3>
 			<input type="text" value="Subject" required name="subject"
 				style="width: 300px">
 		</div>
@@ -111,8 +129,8 @@
 				name="promoContent"></textarea>
 		</div>
 		<div class="clearfix"></div>
-		<input type="hidden" value="promo" name="task" />
-		<input type="submit" value="SUBMIT">
+		<input type="hidden" value="promo" name="task" /> <input
+			type="submit" value="SUBMIT">
 	</form>
 </body>
 </html>

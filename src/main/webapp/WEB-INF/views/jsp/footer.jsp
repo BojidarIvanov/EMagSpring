@@ -58,23 +58,36 @@ label input, label textarea, label select {
 </style>
 
 							<h2>Password Recovery</h2>
-							</style>
+
 							<p>Please Enter the email address associated to your account.</p>
 							<p>${message}</p>
 							<div class="container">
 								<form action="send" method="post">
 									<div>
-										<span><strong>Email Address:</strong></span> <input type="text"
-											name="email" placeholder="Enter email" size="35"
+										<span><strong>Email Address:</strong></span> <input
+											type="text" name="email" placeholder="Enter email" size="35"
 											style="width: 193px"> <input type="submit"
-											value="Send" style="height:45px; width: 150px" />
+											value="Send" style="height: 35px; width: 150px" />
 									</div>
-
-
 								</form>
 							</div>
+					
+							<c:if test="${ requestScope.SubscrMsg != null }">
+								<h1 style="color: red">${requestScope.SubscrMsg }</h1>
+							</c:if>
+
+
+							<h4>JOIN OUR MAILING LIST</h4>
+							<div class="container">
+								<form action="addEmail" method="post">
+									<input type="text" name="email" placeholder="Enter email"
+										size="35" style="width: 193px" /> <input type="submit"
+										style="height: 35px; width: 150px" value=" SUBSCRIBE" />
+								</form>
+
+							</div>
+							<div class="clearfix"></div>
 						</div>
-						<div class="clearfix"></div>
 					</div>
 				</div>
 			</div>

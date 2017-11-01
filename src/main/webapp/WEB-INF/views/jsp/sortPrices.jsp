@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -15,34 +15,40 @@
 </head>
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
-	<center>
-	<a href="sortProducts?sort=desc"><button>Price high to low</button></a>
-		<a href="sortProducts?sort=asc"><button>Price low to high</button></a>
-		
-		
-		<c:forEach items="${ sessionScope.products }" var="product">
-		
-			<table border="1">
-			<tr>
-				<th>Product Name</th>
-				<th>Product Price</th>
-				<th>Product Quantity</th>
-			</tr>
+
+	<div align="center">
+		<a href="sortProducts?sort=desc"><button>Price high to
+				low</button></a> <a href="sortProducts?sort=asc"><button>Price low
+				to high</button></a>
+	</div>
+	<div>
+		<center>
+			<table class="products" border="1" cellpadding="5">
+
 				<tr>
-					<td>${product.getName()}</td>
-					<td>${product.getPrice()}</td>
-					<td>${product.getQuantity()}</td>
-					
-					
-				 <td><a href="${pageContext.request.contextPath}/admin/show?id=${product.getProductID()}">Show</a></td>
-				 			
+					<th>Id</th>
+					<th>Name</th>
+					<th>Category</th>
+					<th>Quantity</th>
+					<th>Price</th>
 				</tr>
+				<c:forEach items="${ sessionScope.products }" var="product">
+					<tr>
+						<td class="cent">${product.productID}</td>
+						<td class="cent">${product.name}</td>
+						<td class="cent">${product.category.name}</td>
+						<td class="cent">${product.quantity}</td>
+						<td class="cent">${product.price}</td>
+						<td><img
+							src="${pageContext.request.contextPath}/admin/getImage/${product.getProductID()}"
+							height="80" width="80"></td>
+						<td><a
+							href="${pageContext.request.contextPath}/admin/show?id=${product.getProductID()}">Show</a></td>
+					</tr>
+				</c:forEach>
 			</table>
-		</c:forEach>
-<<<<<<< HEAD
-	</center>
-=======
->>>>>>> 9b90a129086f38394bf14cd1c2535b6894362e23
-		<jsp:include page="footer.jsp"></jsp:include>		
+		</center>
+	</div>
+	<!-- 	<jsp:include page="footer.jsp"></jsp:include> -->
 </body>
 </html>
