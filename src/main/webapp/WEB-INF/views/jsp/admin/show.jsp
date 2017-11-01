@@ -22,14 +22,16 @@
 		productName = p.getName();
 	%>
 
+	<button type="button" name="back" onclick="history.back()">back</button>
 	<p>
 		<c:if test="${ sessionScope.user.isAdmin == true }">
-			<a href="${pageContext.request.contextPath}/admin/productManagement">Back</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-		<a href="${pageContext.request.contextPath}/admin/edit?id=${param.id}">Edit</a>
+			<!-- 		<a href="${pageContext.request.contextPath}/admin/productManagement">Back</a>&nbsp;&nbsp;|&nbsp;&nbsp; -->
+			<a
+				href="${pageContext.request.contextPath}/admin/edit?id=${param.id}">Edit</a>
 		</c:if>
 		<c:if
 			test="${ sessionScope.user == null || sessionScope.user.isAdmin == false}">
-			<a href="${pageContext.request.contextPath}/categories">Back</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+		<!-- 	<a href="${pageContext.request.contextPath}/categories">Back</a>&nbsp;&nbsp;|&nbsp;&nbsp; -->
 		</c:if>
 	</p>
 
@@ -99,18 +101,19 @@
 
 
 	<p>
+		<button type="button" name="back" onclick="history.back()">back</button>
 		<c:if test="${ sessionScope.user.isAdmin == true }">
-			<a href="${pageContext.request.contextPath}/admin/productManagement">Back</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+			<!--  	<a href="${pageContext.request.contextPath}/admin/productManagement">Back</a>&nbsp;&nbsp;|&nbsp;&nbsp; -->
 			<a
 				href="${pageContext.request.contextPath}/admin/edit?id=${param.id}">Edit</a>
 		</c:if>
 
 		<c:if
 			test="${ sessionScope.user == null || sessionScope.user.isAdmin == false}">
-			<a href="${pageContext.request.contextPath}/categories">Back</a> &nbsp;&nbsp;|&nbsp;&nbsp;
+			<!-- 		<a href="${pageContext.request.contextPath}/categories">Back</a> &nbsp;&nbsp;|&nbsp;&nbsp;  -->
 		</c:if>
 
-		
+
 	</p>
 </body>
 </html>

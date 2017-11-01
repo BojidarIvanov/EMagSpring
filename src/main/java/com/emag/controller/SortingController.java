@@ -3,26 +3,37 @@ package com.emag.controller;
 import java.sql.SQLException;
 import java.util.Map.Entry;
 import java.util.Comparator;
+import java.util.Map;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.emag.db.ProductDAO;
+import com.emag.model.CategoryPojo;
 import com.emag.model.ProductPojo;
 
 @Controller
 public class SortingController {
 	
+	@Autowired
+	ServletContext application;
+	
 	@RequestMapping(value = "/sortProducts", method = RequestMethod.GET)
-	public String sortProductsByAscendingOrder(HttpSession session, HttpServletRequest req) {
+	public String sortProductsByAscendingOrder(HttpSession session, HttpServletRequest req, Model model) {
 		//Get all products
 		String sort = req.getParameter("sort");
+		String catId = req.getParameter("cat");
+		int categoryId = Integer.parseInt(catId);
+		
 		TreeSet<ProductPojo> products = new TreeSet<ProductPojo>(new Comparator<ProductPojo>() {
 
 			@Override
@@ -39,14 +50,28 @@ public class SortingController {
 			//Store them in a treeset and order them by ascending order
 			productsFromDB = ProductDAO.getInstance().getAllProducts();
 			for(Entry<Integer, ProductPojo> p : productsFromDB.entrySet()) {
+				if(categoryId == 0) {
 				products.add(p.getValue());
+				} else {
+					if(p.getValue().getCategory().getCategoryID() == categoryId) {
+						products.add(p.getValue());
+					}
+				}
 			}
 			
 		} catch (SQLException e) {
 			System.out.println("Issue loading the prducts from the database " + e.getMessage() );
 		}
 		//Push them in the session
-		session.setAttribute("products", products);
+		Map<Integer, CategoryPojo> categories = (Map<Integer, CategoryPojo>) application.getAttribute("categories");
+		CategoryPojo category = categories.get(categoryId);
+		System.out.println("categoryId" + categoryId);
+		model.addAttribute("products", products);
+		model.addAttribute("categoryId",categoryId);
+		if(categoryId>0) {
+		model.addAttribute("specificCategory", category);
+		}
+
 		//Return to the main page 
 		return "sortPrices";
 	}

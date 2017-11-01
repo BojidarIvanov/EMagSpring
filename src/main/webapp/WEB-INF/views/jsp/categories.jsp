@@ -1,3 +1,4 @@
+<%@ page import="com.emag.model.CategoryPojo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -45,10 +46,17 @@
 	</div>
 	<br>
 	<div align="center">
-		<a href="sortProducts?sort=desc"><button size="35"
-				style="width: 150px">Price high to low</button></a> <a
-			href="sortProducts?sort=asc"><button size="35"
-				style="width: 150px">Price low to high</button></a>
+		<%
+			int catId = 0;
+			Object category = request.getAttribute("specificCategory");
+			if (category != null) {
+				catId = ((CategoryPojo) category).getCategoryID();
+			}
+		%>
+		<a href="sortProducts?sort=desc&cat=<%=catId%>"><button
+				size="35" style="width: 150px">Price high to low</button></a> <a
+			href="sortProducts?sort=asc&cat=<%=catId%>"><button
+				size="35" style="width: 150px">Price low to high</button></a>
 		<table class="products" border="1" cellpadding="5">
 			<tr>
 				<th>Id</th>
@@ -99,6 +107,7 @@
 				</c:if>
 			</c:forEach>
 		</table>
-		<!--  	<jsp:include page="footer.jsp"></jsp:include> -->
+	</div>
+	<!--  	<jsp:include page="footer.jsp"></jsp:include> -->
 </body>
 </html>

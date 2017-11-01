@@ -31,6 +31,10 @@
 						<td>${productEntry.value.getName()}</td>
 						<td>${productEntry.value.getPrice()}</td>
 						<td>${productEntry.value.getQuantity()}</td>
+						<td><img
+							src="${pageContext.request.contextPath}/admin/getImage/${productEntry.key}"
+							height="80" width="80"></td>
+						<td>
 						<td><a
 							href="${pageContext.request.contextPath}/admin/show?id=${productEntry.value.getProductID()}">Show</a></td>
 				</tr>

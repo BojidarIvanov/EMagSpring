@@ -5,7 +5,9 @@
 <!-- <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> -->
 <html>
 <head>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/css/styless.css" type="text/css"></link>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/css/styless.css"
+	type="text/css"></link>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
@@ -14,11 +16,12 @@
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
 	<br>
+		<font face="Britannic Bold" size="4" style="color: red;">${errorMessage}</font>
 	<br>
 	<h2>Bul Bulgaria 69. et 14</h2>
-	
+
 	<div class="contact-info">
-    	<h2>We are expecting you!</h2>
+		<h2>We are expecting you!</h2>
 	</div>
 	<div class="contact-map">
 		<iframe
@@ -30,14 +33,16 @@
 		<div class="contact-info">
 			<h3>CONTACT FORM</h3>
 		</div>
-		<form action="messageFromCustomer" method = "POST">
+		<form action="${pageContext.request.contextPath}/messageFromCustomer"
+			method="POST">
 			<div class="contact-left">
-				<input type="text" placeholder="Name" required name="name">
-				<input	type="text" placeholder="E-mail" required name="email"> 
-				<input	type="text" placeholder="Subject" required  name="subject">
+				<input type="text" placeholder="Name" required name="name" style="height: 30px; width: 250px">
+				<input type="text" placeholder="E-mail" required name="email" style="height: 30px; width: 300px">
+				<input type="text" placeholder="Subject" required name="subject" style="height: 30px; width: 300px">
 			</div>
 			<div class="contact-right">
-				<textarea placeholder="Message" required></textarea>
+				<textarea id="input3" onkeyup="auto_grow(this)" name="message"
+					placeholder="Enter your message" maxlength="400" required></textarea>
 			</div>
 			<div class="clearfix"></div>
 			<input type="submit" value="SUBMIT">

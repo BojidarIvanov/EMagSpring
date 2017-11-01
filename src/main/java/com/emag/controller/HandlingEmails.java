@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -97,6 +98,25 @@ public class HandlingEmails {
 
 		request.setAttribute("SubscrMsg", result);
 		return "index";
+	}
+
+	@RequestMapping(value = "/messageFromCustomer", method = RequestMethod.POST)
+	public String contact(Model model, HttpServletRequest request, HttpServletResponse response) {
+		String subject = request.getParameter("subject");
+		String email = request.getParameter("email");
+		String message = request.getParameter("message");
+		String name = request.getParameter("name");
+		String completeMessage = "The message was sent by customer " + name + ", with email: " + email + "\n\n" + message;
+		try {
+			MailUtilGmail.sendMail("pechorinnd@gmail.com", "pechorinnd@gmail.com", subject, completeMessage, false);
+			model.addAttribute("errorMessage", "The email was sent. We will contact you as soon as possible. Thank you for being our customer.");
+		} catch (MessagingException e) {
+			String errorMessage = "ERROR: Unable to send email. " + "Check Tomcat logs for details.<br>"
+					+ "NOTE: You may need to configure your system " + "as described in chapter 14.<br>"
+					+ "ERROR MESSAGE: " + e.getMessage();
+			model.addAttribute("errorMessage", errorMessage);
+		}
+		return "contact";
 	}
 
 	public static final Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$",

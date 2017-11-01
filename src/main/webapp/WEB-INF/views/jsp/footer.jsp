@@ -64,22 +64,18 @@ label input, label textarea, label select {
 							<div class="container">
 								<form action="send" method="post">
 									<div>
-										<span><strong>Email Address:</strong></span> <input
+										<span><strong>Email Address for password recovery:</strong></span> <input
 											type="text" name="email" placeholder="Enter email" size="35"
 											style="width: 193px"> <input type="submit"
 											value="Send" style="height: 35px; width: 150px" />
 									</div>
 								</form>
 							</div>
-					
-							<c:if test="${ requestScope.SubscrMsg != null }">
-								<h1 style="color: red">${requestScope.SubscrMsg }</h1>
-							</c:if>
-
 
 							<h4>JOIN OUR MAILING LIST</h4>
 							<div class="container">
-								<form action="addEmail" method="post">
+								<form action="${pageContext.request.contextPath}/addEmail"
+									method="post">
 									<input type="text" name="email" placeholder="Enter email"
 										size="35" style="width: 193px" /> <input type="submit"
 										style="height: 35px; width: 150px" value=" SUBSCRIBE" />

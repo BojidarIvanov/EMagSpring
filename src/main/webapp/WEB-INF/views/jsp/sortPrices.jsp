@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -15,40 +16,66 @@
 </head>
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
-
+	<h2>Please select category:</h2>
 	<div align="center">
-		<a href="sortProducts?sort=desc"><button>Price high to
-				low</button></a> <a href="sortProducts?sort=asc"><button>Price low
-				to high</button></a>
-	</div>
-	<div>
-		<center>
-			<table class="products" border="1" cellpadding="5">
-
-				<tr>
-					<th>Id</th>
-					<th>Name</th>
-					<th>Category</th>
-					<th>Quantity</th>
-					<th>Price</th>
-				</tr>
-				<c:forEach items="${ sessionScope.products }" var="product">
-					<tr>
-						<td class="cent">${product.productID}</td>
-						<td class="cent">${product.name}</td>
-						<td class="cent">${product.category.name}</td>
-						<td class="cent">${product.quantity}</td>
-						<td class="cent">${product.price}</td>
-						<td><img
-							src="${pageContext.request.contextPath}/admin/getImage/${product.getProductID()}"
-							height="80" width="80"></td>
-						<td><a
-							href="${pageContext.request.contextPath}/admin/show?id=${product.getProductID()}">Show</a></td>
-					</tr>
+				<div class="mom">
+			<c:if test="${ requestScope.specificCategory == null }">
+				<c:forEach items="${ applicationScope.categories }" var="category">
+					<div class="child">
+						<a href="sortCategories?sort=${category.key}"><button
+								size="35" style="width: 150px">${(category.value).name}</button></a>
+					</div>
 				</c:forEach>
-			</table>
-		</center>
-	</div>
-	<!-- 	<jsp:include page="footer.jsp"></jsp:include> -->
+			</c:if>
+
+			<c:if test="${ requestScope.specificCategory != null }">
+				<h2>Subcategories of ${ requestScope.specificCategory.name }:</h2>
+				<br>
+				<c:forEach items="${ applicationScope.categories }" var="category">
+					<div class="child">
+						<c:if
+							test="${ category.value.parentCategory.categoryID == requestScope.specificCategory.categoryID }">
+							<a href="sortCategories?sort=${category.key}"><button
+									size="35" style="width: 150px">${(category.value).name}</button></a>
+						</c:if>
+					</div>
+				</c:forEach>
+			</c:if>
+		</div>
+		<a
+			href="${pageContext.request.contextPath}/sortProducts?sort=desc&cat=${categoryId}"><button>Price
+				high to low</button></a> <a
+			href="${pageContext.request.contextPath}/sortProducts?sort=asc&cat=${categoryId}"><button>Price
+				low to high</button></a>
+
+		<div>
+			<center>
+				<table class="products" border="1" cellpadding="5">
+
+					<tr>
+						<th>Id</th>
+						<th>Name</th>
+						<th>Category</th>
+						<th>Quantity</th>
+						<th>Price</th>
+					</tr>
+					<c:forEach items="${ products }" var="product">
+						<tr>
+							<td class="cent">${product.productID}</td>
+							<td class="cent">${product.name}</td>
+							<td class="cent">${product.category.name}</td>
+							<td class="cent">${product.quantity}</td>
+							<td class="cent">${product.price}</td>
+							<td><img
+								src="${pageContext.request.contextPath}/admin/getImage/${product.productID}"
+								height="80" width="80"></td>
+							<td><a
+								href="${pageContext.request.contextPath}/admin/show?id=${product.productID}">Show</a></td>
+						</tr>
+					</c:forEach>
+				</table>
+			</center>
+		</div>
+		<!-- 	<jsp:include page="footer.jsp"></jsp:include> -->
 </body>
 </html>

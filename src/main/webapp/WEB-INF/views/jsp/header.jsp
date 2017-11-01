@@ -74,6 +74,7 @@ label input, label textarea, label select {
 				style="height: 45px; width: 150px">
 		</form>
 	</div>
+
 	<div class="child">
 		<h3 class="welcome">Welcome, ${sessionScope.user.name }</h3>
 	</div>
@@ -83,27 +84,30 @@ label input, label textarea, label select {
 
 <body>
 	<div class="header">
-		
+
 		<script>
-		  window.fbAsyncInit = function() {
-		    FB.init({
-		      appId      : '{EMagProject}',
-		      cookie     : true,
-		      xfbml      : true,
-		      version    : '{latest-api-version}'
-		    });
-		      
-		    FB.AppEvents.logPageView();   
-		      
-		  };
-		
-		  (function(d, s, id){
-		     var js, fjs = d.getElementsByTagName(s)[0];
-		     if (d.getElementById(id)) {return;}
-		     js = d.createElement(s); js.id = id;
-		     js.src = "https://connect.facebook.net/en_US/sdk.js";
-		     fjs.parentNode.insertBefore(js, fjs);
-		   }(document, 'script', 'facebook-jssdk'));
+			window.fbAsyncInit = function() {
+				FB.init({
+					appId : '{EMagProject}',
+					cookie : true,
+					xfbml : true,
+					version : '{latest-api-version}'
+				});
+
+				FB.AppEvents.logPageView();
+
+			};
+
+			(function(d, s, id) {
+				var js, fjs = d.getElementsByTagName(s)[0];
+				if (d.getElementById(id)) {
+					return;
+				}
+				js = d.createElement(s);
+				js.id = id;
+				js.src = "https://connect.facebook.net/en_US/sdk.js";
+				fjs.parentNode.insertBefore(js, fjs);
+			}(document, 'script', 'facebook-jssdk'));
 		</script>
 		<form class="navi" action="about">
 			<input type="submit" value="About Us">
@@ -149,7 +153,12 @@ label input, label textarea, label select {
 				<input type="submit" value="Let's go shopping!!!">
 			</form>
 		</c:if>
-		
+		<br>
+		<br>
+		<br>
+		<h3 style="color: lime; align="center";">${requestScope.SubscrMsg }</h3>
+		<br>
+
 	</div>
 </body>
 </html>
