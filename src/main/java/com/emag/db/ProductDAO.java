@@ -179,7 +179,7 @@ public class ProductDAO {
 		}
 		return products;
 	}
-
+	
 	public static void main(String[] args) throws SQLException {
 
 		System.out.println("Start");

@@ -132,7 +132,9 @@ label input, label textarea, label select {
 		<form class="navi" action="contact">
 			<input type="submit" value="Contacts">
 		</form>
-
+		<form class="navi" action="comment" method = "PUT"> 
+			<input type="submit" value="Comments">
+		</form>
 		<c:if test="${sessionScope.user != null}">
 			<form class="navi" action="logout" method="GET">
 				<input type="submit" value="Logout">

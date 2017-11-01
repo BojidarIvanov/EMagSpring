@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.TreeMap;
 
 import com.emag.model.ReviewPojo;
 
@@ -38,6 +39,7 @@ public class ReviewDAO {
 			ps.executeUpdate();
 			isAdded = true;
 		}
+		System.out.println("review is added");
 		return isAdded;
 	}
 	public boolean reviewExist(ReviewPojo review) throws SQLException {
@@ -73,14 +75,29 @@ public class ReviewDAO {
 		return result > 0;
 	}
 	
+	public TreeMap<Integer, ReviewPojo> getAllReviewsByProductId(int productId) throws SQLException{
+		
+		TreeMap<Integer, ReviewPojo> products = new TreeMap<>();
+		
+		this.connection = DBManager.CON1.getConnection();
+		PreparedStatement ps = this.connection.prepareStatement("SELECT * FROM reviews WHERE productID = ?");
+		ps.setInt(1, productId);
+		ResultSet rs = ps.executeQuery();
+		int commentNumber = 0;
+		while(rs.next()) {
+			products.put(++commentNumber, new ReviewPojo(rs.getInt("reviewID"), rs.getInt("reviewRating"), rs.getString("reviewText"), rs.getInt("reviewer"), rs.getInt("productID")));
+		}
+		return products;
+	}
+	
 	public static void main(String[] args) throws SQLException {
-		System.out.println("Start");
+
 		boolean exists = false;
 		ReviewDAO r = ReviewDAO.getInstance();
 		System.out.println(r.addReview(new ReviewPojo(1, "something", 1, 1)));
 		int count = 0;
 
-		System.out.println("End");
+		
 
 	}
 }
