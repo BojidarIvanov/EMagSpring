@@ -7,21 +7,29 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+
 <title>Create new user</title>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/css/styless.css"
 	type="text/css"></link>
+
 </head>
+
 <body>
+	<%--CHANGE PASSWORD HERE--%>
 	<sql:setDataSource var="myDS" driver="com.mysql.jdbc.Driver"
-		url="jdbc:mysql://localhost:3306/emag_final_project" user="Ivan"
-		password="Koparan2525" />
+		url="jdbc:mysql://localhost:3306/emag_final_project" user="root"
+		password="admin" />
 
 	<sql:query var="listStuff" dataSource="${myDS}">
-	SELECT * FROM products where product_id = ${param.id};
+	SELECT * FROM products WHERE product_id =  ${param.id};
+	
     </sql:query>
-    
-    	<%
+	<%
+		System.out.println("${param.id}");
+	%>
+	<%
 		ProductPojo p = null;
 		String productName = "";
 		TreeMap<Integer, ProductPojo> prod = (TreeMap<Integer, ProductPojo>) application.getAttribute("products");
@@ -39,7 +47,7 @@
 			<a href="${pageContext.request.contextPath}/categories">Back</a>&nbsp;&nbsp;|&nbsp;&nbsp;
 		</c:if>
 	</p>
-	
+
 	<div>
 		<fieldset>
 
@@ -58,7 +66,7 @@
 					</tr>
 					<tr style="background: white;">
 						<td><label for="category">Category:</label></td>
-						<td><input id="category" name= "category"
+						<td><input id="category" name="category"
 							style="border: none;" value="<%=p.getCategory().getName()%>"
 							type="text" readonly /></td>
 					</tr>
@@ -66,28 +74,27 @@
 					<tr style="background: white;">
 						<td><label for="price">Price:</label></td>
 						<td><input id="price" name="price" style="border: none;"
-							value= " <%= p.getPrice() %>" type="text" readonly /></td>
+							value=" <%=p.getPrice()%>" type="text" readonly /></td>
 					</tr>
 
 					<tr style="background: white;">
 						<td><label for="brand">Brand:</label></td>
 						<td><input id="brand" name="brand" style="border: none;"
-							value=<%=p.getBrand().getName() %> type="text" readonly /></td>
+							value=<%=p.getBrand().getName()%> type="text" readonly /></td>
 					</tr>
 
 					<tr style="background: white;">
 						<td><label for="availableProducts">Available
 								products:</label></td>
 						<td><input id="availableProducts" name="availableProducts"
-							style="border: none;"
-							value= "<%=p.getQuantity()%>" type="text"
+							style="border: none;" value="<%=p.getQuantity()%>" type="text"
 							readonly /></td>
 					</tr>
 
 					<tr style="background: white;">
 						<td><label for="displayImage">Display image: </label></td>
-						<td><input type="image" src="${p.imageURL}"
-							id="displayImage" name="displayImage" style="border: none;"
+						<td><input type="image" src="${p.imageURL}" id="displayImage"
+							name="displayImage" style="border: none;"
 							value="<%=p.getImageURL()%>" type="text" readonly /></td>
 					</tr>
 
@@ -95,6 +102,13 @@
 			</table>
 		</fieldset>
 	</div>
+
+
+
+	<%--BOZHIDAR ADDING RAVIEW--%>
+	<br>
+	<jsp:include page="../comment2.jsp"></jsp:include>
+	
 	<p>
 		<c:if test="${ sessionScope.user.isAdmin == true }">
 			<a href="${pageContext.request.contextPath}/admin/productManagement">Back</a>&nbsp;&nbsp;|&nbsp;&nbsp;

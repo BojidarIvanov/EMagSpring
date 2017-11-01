@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import com.emag.model.OrderPojo;
 import com.emag.model.UserPojo;
@@ -73,7 +74,17 @@ public class UserDAO {
 		theUser.setOrders(orders);
 		return theUser;
 	}
-
+	public UserPojo getUser(String email) throws SQLException {
+		Map<String, UserPojo> users = getAllUsers();
+		UserPojo user = null;
+		for(Entry<String, UserPojo> u : users.entrySet()) {
+			if(u.getValue().getEmail().equalsIgnoreCase(email)) {
+				user = u.getValue();
+				break;
+			}
+		}
+		return user;
+	}
 	public Map<String, UserPojo> getAllUsers() throws SQLException {
 		System.out.println("UserDAO-------------------------------------------------------");
 		if (!users.isEmpty()) {
