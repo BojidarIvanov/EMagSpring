@@ -18,7 +18,7 @@
 </head>
 <body>
 	
-	<form action="searchProduct" method="get">
+	<form action="${pageContext.request.contextPath}/searchProduct" method="get">
 			<input class="navi" type="text" name="productName"
 				placeholder="Serch for product..."
 				style="height: 45px; width: 300px"> <input class="navi"
