@@ -28,9 +28,7 @@
 			<table class="products" border="1" cellpadding="5">
 				<tr>
 					<th>Qty</th>
-					<th>Id</th>
 					<th>Product name</th>
-					<th>Availability</th>
 					<th>Price</th>
 				</tr>
 				<c:set var='ind' value='1' />
@@ -38,19 +36,19 @@
 					<tr>
 						<td><input type="number" name="num-${ind}" min="1" max="99"
 							step="1" value="${item.qty}" size="3" /></td>
-						<td><input type="text" name="id-${ind}" value="${item.id}"
-							size="4" readonly /></td>
+						<input type="hidden" name="id-${ind}" value="${item.id}" size="4"
+							readonly />
 						<td><input style="text-align: center;" name="prod-${ind}"
 							type="text" value="${item.product}" readonly /></td>
-						<td><input style="text-align: center;" name="cat-${ind}"
-							type="text" value="${item.category}" readonly /></td>
+						<input style="text-align: center;" name="cat-${ind}" type="hidden"
+							value="${item.category}" readonly />
 						<td><input type="text" name="price-${ind}"
 							value="${item.price}" size="7" readonly /></td>
-				<!--  	<td><form action="${pageContext.request.contextPath}/shopping/deleteEntry"
+						<!--  	<td><form action="${pageContext.request.contextPath}/shopping/deleteEntry"
 								method="POST">
 								<input type="hidden" value="${item.id}" name="productId" />
 								<input type="submit" value="Delete entry">
-							</form></td>-->	
+							</form></td>-->
 					</tr>
 					<c:set var='ind' value='${ind + 1}' />
 				</c:forEach>
@@ -83,6 +81,9 @@
 		<center>
 			<!--	<a href="${pageContext.request.contextPath}/index">Back</a> -->
 			<button type="button" name="back" onclick="history.back()">back</button>
+
+			<a href="${pageContext.request.contextPath}/shopping/cancelOrder">Cancel
+				order</a>
 
 		</center>
 

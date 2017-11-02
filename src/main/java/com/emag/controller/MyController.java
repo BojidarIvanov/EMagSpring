@@ -51,10 +51,10 @@ public class MyController {
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public String registerIndeed(HttpServletRequest request, HttpServletResponse response) {
 
-		String name = request.getParameter("name");
-		String email = request.getParameter("email");
-		String dob = request.getParameter("DOB");
-		String password = request.getParameter("pass");
+		String name = request.getParameter("name".trim());
+		String email = request.getParameter("email".trim());
+		String dob = request.getParameter("DOB".trim());
+		String password = request.getParameter("pass"    );
 		String password2 = request.getParameter("pass2");
 		String phone = request.getParameter("phone");
 		String address = request.getParameter("address");
@@ -232,7 +232,7 @@ public class MyController {
 				session.setAttribute("user", u);
 				session.setAttribute("email", u.getEmail());
 
-				return "redirect:categories";
+				return "redirect:index";
 			} else {
 				request.setAttribute("error", "user does not exist");
 				return "forward:loginPage";

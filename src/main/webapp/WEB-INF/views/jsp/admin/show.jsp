@@ -4,10 +4,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
 <%@ page import="java.util.TreeMap"%>
 
+
 <!DOCTYPE html>
 <html>
 <head>
-
 <title>Create new user</title>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/css/styless.css"
@@ -107,10 +107,7 @@
 								<tr>
 									<th>Buy</th>
 									<th>Qty</th>
-									<th>Id</th>
-									<th>Product</th>
-									<th>Availability</th>
-									<th>Price</th>
+
 								</tr>
 
 								<c:set var='ind' value='1' scope='page' />
@@ -120,23 +117,23 @@
 											value="${ind}" /></td>
 										<td><input type="number" name="num-${ind}" min="1"
 											max=<%=p.getQuantity()%> step="1" value="0" size="3" /></td>
-										<td><input type="number" name="id-${ind}"
-											value=<%=p.getProductID()%> size="10" readonly /></td>
-										<td><input style="text-align: center;" name="prod-${ind}"
-											type="text" value=<%=productName%> readonly /></td>
-										<td><input style="text-align: center;" name="cat-${ind}"
-											type="number" value=<%=p.getQuantity()%> readonly /></td>
-										<td><input type="number" name="price-${ind}"
-											value=<%=p.getPrice()%> size="7" readonly /></td>
+										<input type="hidden" name="id-${ind}"
+											value=<%=p.getProductID()%> size="10" readonly />
+										<input style="text-align: center;" name="prod-${ind}"
+											type="hidden" value=<%=productName%> readonly />
+										<input style="text-align: center;" name="cat-${ind}"
+											type="hidden" value=<%=p.getQuantity()%> readonly />
+										<input type="hidden" name="price-${ind}"
+											value=<%=p.getPrice()%> size="7" readonly />
 									</tr>
 									<tr>
 										<c:set var='ind' value='${ind + 1}' />
 								</c:forEach>
 								<input type="hidden" value="1" name="rowCount" />
 							</table>
-								<p>
-									<input type="submit" value=" Add to cart " />
-								</p>
+							<p>
+								<input type="submit" value=" Add to cart " />
+							</p>
 							<c:if test="sessionScope.user == null }">
 								<h3>Please login to be able to order goods.</h3>
 
@@ -172,6 +169,7 @@
 		</c:if>
 
 	</p>
+	<jsp:include page="../footer.jsp"></jsp:include>
 
 </body>
 </html>

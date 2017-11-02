@@ -23,11 +23,11 @@
 		<c:forEach items="${ sessionScope.user.orders }" var="order">
 			<h4>${ order.date }</h4>
 			<table class="products" border="1" cellpadding="5">
-			<c:forEach items="${ order.historyForOrderedProducts }" var="productEntry">
 				<tr>
 				<th>Product name</th>
 				<th>Number of items</th>
 			</tr>
+			<c:forEach items="${ order.historyForOrderedProducts }" var="productEntry">
 				<tr>
 					<td class="cent">${productEntry.key }</td>
 					<td class="cent">${productEntry.value }</td>

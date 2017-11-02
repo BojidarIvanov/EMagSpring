@@ -31,15 +31,12 @@
 <div class="container">
 
 	<form action="login" method="post">
-
 		<label><span>Email:</span> <input type="text" name="user"
 			placeholder="Enter email" size="35" style="width: 193px"></label> <br>
 		<label><span>Password:</span><input type="password"
 			placeholder="Enter Password" name="pass" style="width: 193px"></label>
 		<br> <br> <label><input type="submit" value="Login">
 		</label>
-
-
 	</form>
 </div>
 Don`t have an account yet? Please register

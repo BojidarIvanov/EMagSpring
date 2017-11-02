@@ -74,6 +74,7 @@ public class UserDAO {
 		theUser.setOrders(orders);
 		return theUser;
 	}
+	
 	public UserPojo getUser(String email) throws SQLException {
 		Map<String, UserPojo> users = getAllUsers();
 		UserPojo user = null;
@@ -86,7 +87,7 @@ public class UserDAO {
 		return user;
 	}
 	public Map<String, UserPojo> getAllUsers() throws SQLException {
-		System.out.println("UserDAO-------------------------------------------------------");
+		System.out.println("UserDAO------------------");
 		if (!users.isEmpty()) {
 			return users;
 		}

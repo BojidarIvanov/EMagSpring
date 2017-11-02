@@ -76,7 +76,7 @@ label input, label textarea, label select {
 	</div>
 
 	<div class="child">
-		<h3 class="welcome">Welcome, ${sessionScope.user.name }</h3>
+		<h3 class="welcome">Welcome  ${sessionScope.user.name }</h3>
 	</div>
 </div>
 <link rel="stylesheet" type="text/css" href="css/styles.css">
@@ -131,10 +131,10 @@ label input, label textarea, label select {
 
 		<form class="navi" action="contact">
 			<input type="submit" value="Contacts">
-		</form>
-		<form class="navi" action="comment" method="PUT">
+		</form>  
+	<!-- 	<form class="navi" action="comment" method="PUT">
 			<input type="submit" value="Comments">
-		</form>
+		</form> -->
 		<c:if test="${sessionScope.user != null}">
 			<form class="navi" action="logout" method="GET">
 				<input type="submit" value="Logout">

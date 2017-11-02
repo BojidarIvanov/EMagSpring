@@ -5,7 +5,6 @@ import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -18,13 +17,12 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.emag.db.OrderDAO;
-import com.emag.db.UserDAO;
+import com.emag.db.ProductDAO;
 import com.emag.model.LineItem;
 import com.emag.model.OrderPojo;
 import com.emag.model.ProductPojo;
@@ -60,7 +58,12 @@ public class ShoppingController {
 	public String handleOrder(HttpServletRequest req, HttpServletResponse res, HttpSession session) {
 		System.out.println("Handle Order");
 		try {
-			total = BigDecimal.ZERO;
+			Object currentTotal = session.getAttribute("total");
+			if (currentTotal == null) {
+				this.total = BigDecimal.ZERO;
+			} else {
+				this.total = (BigDecimal) currentTotal;
+			}
 			List<LineItem> lineItems = getAndVerifyInputs(req, res, session);
 			int rowCount = Integer.parseInt(req.getParameter("rowCount").trim());
 			if (rowCount <= 0) {
@@ -97,6 +100,7 @@ public class ShoppingController {
 					BigDecimal price = new BigDecimal(req.getParameter("price-" + ind).trim());
 
 					lineItems.add(new LineItem(qty, id, product, category, price));
+
 					if (qty > 0) {
 						BigDecimal subtotal = price.multiply(new BigDecimal(qty));
 						this.total = this.total.add(subtotal);
@@ -104,6 +108,7 @@ public class ShoppingController {
 				}
 				ind++;
 			}
+
 			if (total.compareTo(BigDecimal.ZERO) <= 0) {
 				sendErrorResponse(req, res, "No items chosen during shopping. Please no messing around :)");
 			}
@@ -214,6 +219,9 @@ public class ShoppingController {
 			// making steps to provide email functionality the needed list of
 			// items
 			session.setAttribute("itemsForEmail", lineItems);
+			// adding latest order to order history
+			user.getOrders().add(order);
+			order.setHistoryForOrderedProducts(ProductDAO.getInstance().getProductsForOrder((int) orderId));
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -261,7 +269,7 @@ public class ShoppingController {
 		String from = "pechorinnd@gmail.com";
 		HttpSession session = request.getSession();
 		List<LineItem> lineItems = (List<LineItem>) session.getAttribute("itemsForEmail");
-		if(lineItems == null) {
+		if (lineItems == null) {
 			return "index";
 		}
 		Long orderId = (Long) session.getAttribute("orderId");
@@ -293,31 +301,15 @@ public class ShoppingController {
 		}
 		session.removeAttribute("total");
 		// request.setAttribute("message", message);
-
 		return "shopping/shop";
 	}
-/*
-	@RequestMapping(value = "/shopping/deleteEntry", method = RequestMethod.POST)
-	public String deleteEntry(HttpServletRequest req, HttpSession session) {
-		String error = null;
-		String prodId = req.getParameter("productId");
-		int productId = Integer.parseInt(prodId);
-		List<LineItem> lineItems = (List<LineItem>) session.getAttribute("items");
-		boolean itemDeleted = false;
-		for(LineItem item : lineItems) {
-			if(item.getId()== productId) {
-				lineItems.remove(item);
-				itemDeleted = true;
-				break;
-			}
-		}
-		
-		if(itemDeleted) {
-			req.setAttribute("result", "The entry was deleted.");
-		} else {
-			req.setAttribute("result", "Invalid entry.");
-		}
 
-		return "handleOrder";
-	}*/
+	@RequestMapping(value = "/shopping/cancelOrder", method = RequestMethod.GET) 
+	public String deleteEntry(HttpServletRequest req, HttpSession session) {
+		session.removeAttribute("items");
+		session.removeAttribute("total");
+		req.setAttribute("result", "The order was cancelled");
+	 return "shopping/confirmOrder"; 
+	 }
+
 }
