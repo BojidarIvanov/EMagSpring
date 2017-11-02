@@ -38,11 +38,15 @@
 		</c:if>
 	</p>
 
+
+
 	<div>
 		<fieldset>
 
 			<legend class="legend">Display product</legend>
+
 			<table>
+
 				<tbody>
 					<tr style="background: white;">
 						<td><label for="id">Id:</label></td>
@@ -51,8 +55,8 @@
 					</tr>
 					<tr style="background: white;">
 						<td><label for="product">Product:</label></td>
-						<td><input id="product" name="product" style= "width: 250px"
-							value="<%=productName%>" type="text"  readonly /></td>
+						<td><input id="product" name="product" style="width: 250px"
+							value="<%=productName%>" type="text" readonly /></td>
 					</tr>
 					<tr style="background: white;">
 						<td><label for="category">Category:</label></td>
@@ -91,8 +95,54 @@
 						<td><img
 							src="${pageContext.request.contextPath}/admin/getImage/<%=p.getProductID()%>"
 							height="150" width="150"></td>
-
 					</tr>
+
+
+					<div>
+
+						<form
+							action="${pageContext.request.contextPath}/shopping/handleOrder"
+							method="post">
+							<table class="products" border="1" cellpadding="5">
+								<tr>
+									<th>Buy</th>
+									<th>Qty</th>
+									<th>Id</th>
+									<th>Product</th>
+									<th>Availability</th>
+									<th>Price</th>
+								</tr>
+
+								<c:set var='ind' value='1' scope='page' />
+								<c:forEach var="item" items="1">
+									<tr>
+										<td><input type="checkbox" name="check-${ind}"
+											value="${ind}" /></td>
+										<td><input type="number" name="num-${ind}" min="1"
+											max=<%=p.getQuantity()%> step="1" value="0" size="3" /></td>
+										<td><input type="number" name="id-${ind}"
+											value=<%=p.getProductID()%> size="10" readonly /></td>
+										<td><input style="text-align: center;" name="prod-${ind}"
+											type="text" value=<%=productName%> readonly /></td>
+										<td><input style="text-align: center;" name="cat-${ind}"
+											type="number" value=<%=p.getQuantity()%> readonly /></td>
+										<td><input type="number" name="price-${ind}"
+											value=<%=p.getPrice()%> size="7" readonly /></td>
+									</tr>
+									<tr>
+										<c:set var='ind' value='${ind + 1}' />
+								</c:forEach>
+								<input type="hidden" value="1" name="rowCount" />
+							</table>
+								<p>
+									<input type="submit" value=" Add to cart " />
+								</p>
+							<c:if test="sessionScope.user == null }">
+								<h3>Please login to be able to order goods.</h3>
+
+							</c:if>
+						</form>
+					</div>
 
 				</tbody>
 			</table>
@@ -103,8 +153,6 @@
 	<%--BOZHIDAR ADDING RAVIEW--%>
 	<br>
 	<jsp:include page="../comment2.jsp"></jsp:include>
-
-
 	<c:if test="${ sessionScope.user == null}">
 		<h3>Please log in to be able to buy goods.</h3>
 	</c:if>
@@ -124,5 +172,6 @@
 		</c:if>
 
 	</p>
+
 </body>
 </html>

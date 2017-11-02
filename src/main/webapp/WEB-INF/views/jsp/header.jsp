@@ -155,6 +155,17 @@ label input, label textarea, label select {
 				<input type="submit" value="Let's go shopping!!!">
 			</form>
 		</c:if>
+		
+		<c:if test="${sessionScope.user != null}">
+			<form class="navi"
+				action="${pageContext.request.contextPath}/shopping/confirmOrder"
+				method="GET">
+				<input type="submit" value="My cart">
+			</form>
+		</c:if>
+		
+		
+		
 		<br> <br> <br>
 		<c:if test="${ sessionScope.newUser != null }">
 	<h5 style="color: lime;"center";">New account registered ${ sessionScope.newUser.name} . Congratulations!</h5>

@@ -17,7 +17,9 @@
 	</center>
 	<div align="center">
 		<center>
-			<a href="${pageContext.request.contextPath}/shopping/shop">Back</a>
+			<button type="button" name="back" onclick="history.back()">back</button>
+
+			<!--  	<a href="${pageContext.request.contextPath}/shopping/shop">Back</a> -->
 		</center>
 
 		<form action="placeOrder" method="post">
@@ -32,8 +34,8 @@
 				<c:set var='ind' value='1' />
 				<c:forEach var="item" items="${items}">
 					<tr>
-						<td><input type="number" name="num-${ind}" min="0" max="99"
-							step="1" value="${item.qty}" size="3" readonly /></td>
+						<td><input type="number" name="num-${ind}" min="1" max="99"
+							step="1" value="${item.qty}" size="3" /></td>
 						<td><input type="text" name="id-${ind}" value="${item.id}"
 							size="4" readonly /></td>
 						<td><input style="text-align: center;" name="prod-${ind}"
@@ -60,6 +62,11 @@
 					<input type="submit" value=" Confirm order " />
 				</p>
 			</c:if>
+			<c:if test="${sessionScope.user == null }">
+				<p>
+				<h3>Please login to be able to make an order.</h3>
+				</p>
+			</c:if>
 			<c:if test="${totalSum.unscaledValue() == 0 }">
 				<p>
 				<h4>No items were chosen, nothing to confirm.</h4>
@@ -67,7 +74,9 @@
 			</c:if>
 		</form>
 		<center>
-			<a href="${pageContext.request.contextPath}/index">Back</a>
+			<!--	<a href="${pageContext.request.contextPath}/index">Back</a> -->
+			<button type="button" name="back" onclick="history.back()">back</button>
+
 		</center>
 
 	</div>

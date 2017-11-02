@@ -1,4 +1,4 @@
-	package com.emag.controller;
+package com.emag.controller;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -44,7 +44,7 @@ public class ShoppingController {
 		session.setAttribute("id", id);
 		return "forward:shopping/shop";
 	}
-	
+
 	@RequestMapping(value = "/shopping/shop", method = RequestMethod.GET)
 	public String getShopIndeed() {
 		return "shopping/shop";
@@ -57,11 +57,11 @@ public class ShoppingController {
 	}
 
 	@RequestMapping(value = "/shopping/handleOrder")
-	public String handleOrder(HttpServletRequest req, HttpServletResponse res) {
+	public String handleOrder(HttpServletRequest req, HttpServletResponse res, HttpSession session) {
 		System.out.println("Handle Order");
 		try {
 			total = BigDecimal.ZERO;
-			List<LineItem> lineItems = getAndVerifyInputs(req, res);
+			List<LineItem> lineItems = getAndVerifyInputs(req, res, session);
 			int rowCount = Integer.parseInt(req.getParameter("rowCount").trim());
 			if (rowCount <= 0) {
 				return "index";
@@ -73,8 +73,12 @@ public class ShoppingController {
 		return "shopping/shop";
 	}
 
-	private List<LineItem> getAndVerifyInputs(HttpServletRequest req, HttpServletResponse res) {
-		List<LineItem> lineItems = new ArrayList<LineItem>();
+	private List<LineItem> getAndVerifyInputs(HttpServletRequest req, HttpServletResponse res, HttpSession session) {
+		List<LineItem> lineItems;
+		lineItems = (List<LineItem>) session.getAttribute("items");
+		if (lineItems == null) {
+			lineItems = new ArrayList<LineItem>();
+		}
 		System.out.println("Am I getting here.........................!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		int ind = 1;
 		int rowCount = -1;
@@ -173,11 +177,10 @@ public class ShoppingController {
 		return lineItems;
 	}
 
-	private void saveToDB(List<LineItem> lineItems, HttpServletRequest req, HttpServletResponse res, BigDecimal bd) {
+	private void saveToDB(List<LineItem> lineItems, HttpServletRequest req, HttpServletResponse res, BigDecimal bd, HttpSession session) {
 		System.out
 				.println("Trying to add to database orders..........................................................");
 		System.out.println("Lineitems: " + lineItems);
-		HttpSession session = req.getSession();
 		TreeMap<Integer, ProductPojo> products = (TreeMap<Integer, ProductPojo>) application.getAttribute("products");
 		UserPojo user = (UserPojo) session.getAttribute("user");
 		System.out.println(user);
@@ -187,6 +190,7 @@ public class ShoppingController {
 				res.sendRedirect("/EmagSpring/html/lostSession.html");
 			} catch (IOException e) {
 				e.printStackTrace();
+				sendErrorResponse(req, res, "SQL exception friend - BIG TIME!!!" + "\n" + e.toString());
 			}
 			return;
 		}
@@ -204,6 +208,11 @@ public class ShoppingController {
 			// if no exception is thrown it's save to empty current collection
 			// of orders
 			order.getCollection().clear();
+			// remove cart from session scope
+			session.removeAttribute("items");
+			// making steps to provide email functionality the needed list of items
+			session.setAttribute("itemsForEmail", lineItems);
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 			sendErrorResponse(req, res, "SQL exception friend - BIG TIME!!!" + "\n" + e.toString());
@@ -219,7 +228,7 @@ public class ShoppingController {
 		HttpSession session = req.getSession();
 		session.setAttribute("items", items);
 		session.setAttribute("total", totalPrice);
-		saveToDB(items, req, res, this.total);
+		saveToDB(items, req, res, this.total,session);
 		return "forword:/shopping/placeOrder";
 	}
 
@@ -249,7 +258,7 @@ public class ShoppingController {
 		String to = email;
 		String from = "pechorinnd@gmail.com";
 		HttpSession session = request.getSession();
-		List<LineItem> lineItems = (List<LineItem>) session.getAttribute("items");
+		List<LineItem> lineItems = (List<LineItem>) session.getAttribute("itemsForEmail");
 		Long orderId = (Long) session.getAttribute("orderId");
 		String subject = "Regarding your order at EMAG, with order id: " + orderId;
 		BigDecimal subtotal = (BigDecimal) session.getAttribute("total");
@@ -258,8 +267,7 @@ public class ShoppingController {
 			sb.append((i + 1) + ". Product name: " + lineItems.get(i).getProduct())
 					.append(System.getProperty("line.separator"));
 			sb.append(" Number of items: " + lineItems.get(i).getQty()).append(System.getProperty("line.separator"));
-			sb.append(" Unit price: $" + lineItems.get(i).getPrice())
-					.append(System.getProperty("line.separator"));
+			sb.append(" Unit price: $" + lineItems.get(i).getPrice()).append(System.getProperty("line.separator"));
 			sb.append("=========================================================")
 					.append(System.getProperty("line.separator"));
 		}
@@ -270,7 +278,7 @@ public class ShoppingController {
 		try {
 			System.out.println("inside try");
 			MailUtilGmail.sendMail(to, from, subject, body, isBodyHTML);
-
+			session.removeAttribute("itemsForEmail");
 		} catch (MessagingException e) {
 			String errorMessage = "ERROR: Unable to send email. " + "Check Tomcat logs for details.<br>"
 					+ "NOTE: You may need to configure your system " + "as described in chapter 14.<br>"
@@ -279,8 +287,8 @@ public class ShoppingController {
 			message = "password has been sent to your email ";
 		}
 
-	//	request.setAttribute("message", message);
-		
+		// request.setAttribute("message", message);
+
 		return "shopping/shop";
 	}
 }
