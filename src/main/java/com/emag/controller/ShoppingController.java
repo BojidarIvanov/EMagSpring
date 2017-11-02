@@ -177,7 +177,8 @@ public class ShoppingController {
 		return lineItems;
 	}
 
-	private void saveToDB(List<LineItem> lineItems, HttpServletRequest req, HttpServletResponse res, BigDecimal bd, HttpSession session) {
+	private void saveToDB(List<LineItem> lineItems, HttpServletRequest req, HttpServletResponse res, BigDecimal bd,
+			HttpSession session) {
 		System.out
 				.println("Trying to add to database orders..........................................................");
 		System.out.println("Lineitems: " + lineItems);
@@ -208,11 +209,12 @@ public class ShoppingController {
 			// if no exception is thrown it's save to empty current collection
 			// of orders
 			order.getCollection().clear();
-			// remove cart from session scope
+			// remove info about cart from session scope
 			session.removeAttribute("items");
-			// making steps to provide email functionality the needed list of items
+			// making steps to provide email functionality the needed list of
+			// items
 			session.setAttribute("itemsForEmail", lineItems);
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			sendErrorResponse(req, res, "SQL exception friend - BIG TIME!!!" + "\n" + e.toString());
@@ -228,7 +230,7 @@ public class ShoppingController {
 		HttpSession session = req.getSession();
 		session.setAttribute("items", items);
 		session.setAttribute("total", totalPrice);
-		saveToDB(items, req, res, this.total,session);
+		saveToDB(items, req, res, this.total, session);
 		return "forword:/shopping/placeOrder";
 	}
 
@@ -259,6 +261,9 @@ public class ShoppingController {
 		String from = "pechorinnd@gmail.com";
 		HttpSession session = request.getSession();
 		List<LineItem> lineItems = (List<LineItem>) session.getAttribute("itemsForEmail");
+		if(lineItems == null) {
+			return "index";
+		}
 		Long orderId = (Long) session.getAttribute("orderId");
 		String subject = "Regarding your order at EMAG, with order id: " + orderId;
 		BigDecimal subtotal = (BigDecimal) session.getAttribute("total");
@@ -286,9 +291,33 @@ public class ShoppingController {
 			request.setAttribute("errorMessage", errorMessage);
 			message = "password has been sent to your email ";
 		}
-
+		session.removeAttribute("total");
 		// request.setAttribute("message", message);
 
 		return "shopping/shop";
 	}
+/*
+	@RequestMapping(value = "/shopping/deleteEntry", method = RequestMethod.POST)
+	public String deleteEntry(HttpServletRequest req, HttpSession session) {
+		String error = null;
+		String prodId = req.getParameter("productId");
+		int productId = Integer.parseInt(prodId);
+		List<LineItem> lineItems = (List<LineItem>) session.getAttribute("items");
+		boolean itemDeleted = false;
+		for(LineItem item : lineItems) {
+			if(item.getId()== productId) {
+				lineItems.remove(item);
+				itemDeleted = true;
+				break;
+			}
+		}
+		
+		if(itemDeleted) {
+			req.setAttribute("result", "The entry was deleted.");
+		} else {
+			req.setAttribute("result", "Invalid entry.");
+		}
+
+		return "handleOrder";
+	}*/
 }

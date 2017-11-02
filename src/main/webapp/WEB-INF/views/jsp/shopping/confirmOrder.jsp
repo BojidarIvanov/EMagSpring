@@ -12,6 +12,8 @@
 	type="text/css"></link>
 </head>
 <body>
+	<h3 style="color: lime;"center";">${requestScope.result }</h3>
+
 	<center>
 		<h3>Order Confirmation</h3>
 	</center>
@@ -44,6 +46,11 @@
 							type="text" value="${item.category}" readonly /></td>
 						<td><input type="text" name="price-${ind}"
 							value="${item.price}" size="7" readonly /></td>
+				<!--  	<td><form action="${pageContext.request.contextPath}/shopping/deleteEntry"
+								method="POST">
+								<input type="hidden" value="${item.id}" name="productId" />
+								<input type="submit" value="Delete entry">
+							</form></td>-->	
 					</tr>
 					<c:set var='ind' value='${ind + 1}' />
 				</c:forEach>

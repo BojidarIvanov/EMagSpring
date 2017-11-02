@@ -29,7 +29,7 @@
 				</tr>
 				<c:set var='ind' value='1' />
 			
-				<c:forEach var="item" items="${items}">
+				<c:forEach var="item" items="${itemsForEmail}">
 					<tr>
 						<td><input type="number" name="num-${ind}" min="0" max="99"
 							step="1" value="${item.qty}" size="3" readonly /></td>

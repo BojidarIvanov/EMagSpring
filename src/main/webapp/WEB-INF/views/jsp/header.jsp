@@ -156,13 +156,13 @@ label input, label textarea, label select {
 			</form>
 		</c:if>
 		
-		<c:if test="${sessionScope.user != null}">
+	<!--  	<c:if test="${sessionScope.user != null}"> -->
 			<form class="navi"
 				action="${pageContext.request.contextPath}/shopping/confirmOrder"
 				method="GET">
 				<input type="submit" value="My cart">
 			</form>
-		</c:if>
+<!-- 		</c:if> -->
 		
 		
 		
