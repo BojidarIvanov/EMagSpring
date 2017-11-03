@@ -25,10 +25,6 @@
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
 
-
-	<c:if test="${ sessionScope.user == null }">
-		<c:redirect url="login"></c:redirect>
-	</c:if>
 	<c:if test="${ sessionScope.newUser != null }">
 		<tr>
 			<td>You have successfully registered an account ${ sessionScope.newUser.name}
