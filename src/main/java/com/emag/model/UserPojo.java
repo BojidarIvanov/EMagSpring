@@ -150,7 +150,4 @@ public class UserPojo {
 				+ ", dateOfBirth=" + dateOfBirth + ", password=" + password + ", address=" + address + ", isAdmin="
 				+ isAdmin + "]";
 	}
-
-	
-
 }

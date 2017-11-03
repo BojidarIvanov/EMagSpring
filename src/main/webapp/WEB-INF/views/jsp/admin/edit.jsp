@@ -14,7 +14,6 @@
 </head>
 <body>
 
-
 	<c:if
 		test="${sessionScope.user == null || sessionScope.user.isAdmin == false}">
 		<c:redirect url="login"></c:redirect>
@@ -27,6 +26,8 @@
 		p = prod.get(Integer.parseInt(request.getParameter("id")));
 		productName = p.getName();
 	%>
+	
+
 
 	<div>
 		<form action="uploadPicture" method="post"
@@ -53,12 +54,14 @@
 							<td><input id="product" value="<%=productName%>" name="name"
 								type="text" minlength="3" required /></td>
 						</tr>
+
 						<tr style="background: white;">
 							<td><label for="category">Category id:</label></td>
 							<td><input id="categoryId"
 								value=<%=p.getCategory().getCategoryID()%> name="categoryId"
 								type="number" type="number" step="1" min="1" /></td>
 						</tr>
+
 						<tr style="background: white;">
 							<td><label for="price">Price:</label></td>
 							<td><input id="price" value=<%= p.getPrice() %> name="price"
@@ -73,20 +76,21 @@
 
 						<tr style="background: white;">
 							<td><label for="brand">Brand id:</label></td>
-							<td><input id="brandId" value=<%= p.getBrand().getBrandID()%>
-								name="brandId" type="number" step="1" min="1" /></td>
+							<td><input id="brandId"
+								value=<%=p.getBrand().getBrandID()%> name="brandId"
+								type="number" step="1" min="1" /></td>
 						</tr>
 
 						<tr style="background: white;">
 							<td><label for="availability">Available quantity:</label></td>
-							<td><input id="availability" value=<%= p.getQuantity() %>
+							<td><input id="availability" value=<%=p.getQuantity()%>
 								name="availability" type="number" step="1" min="0" /></td>
 						</tr>
 
 						<tr style="background: white;">
 							<td><label for="discount">Discount:</label></td>
 							<td><input id="discount" value="0" name="discountPercent"
-								type="number" step="0.01" min="0" /></td>
+								type="number" step="0.01" min="0" max="99" /></td>
 						</tr>
 
 						<tr style="background: white;">
@@ -98,7 +102,6 @@
 							<td><img
 								src="${pageContext.request.contextPath}/admin/getImage/<%=p.getProductID()%>"
 								height="125" width="125"></td>
-
 						</tr>
 					</tbody>
 				</table>

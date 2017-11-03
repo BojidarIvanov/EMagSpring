@@ -68,9 +68,8 @@
 				</p>
 			</c:if>
 			<c:if test="${sessionScope.user == null }">
-				<p>
-				<h3>Please login to be able to make an order.</h3>
-				</p>
+				
+				<h3>Please login to be able to make an order.</h3> 
 			</c:if>
 			<c:if test="${totalSum.unscaledValue() == 0 }">
 				<p>

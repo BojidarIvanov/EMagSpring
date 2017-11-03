@@ -26,10 +26,8 @@
 
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
-	<style>
-h3 {
-	color: white;
-}
+	
+
 </style>
 	<h3 align="center"; >Take advantage of hot offers, the prices were
 		never so attractive !</h3>
@@ -92,8 +90,8 @@ h3 {
 						</div>
 						<div class="item-price h4">$900 лв.</div>
 					</div>
-					<a href="" class="btn btn-primary btn-expanded">Добави в
-						количка</a>
+						<a href=${pageContext.request.contextPath}/loginPage
+						" class="btn btn-primary btn-expanded">Добави в количка</a>
 				</div>
 			</li>
 			<li>
@@ -216,8 +214,6 @@ h3 {
 						" class="btn btn-primary btn-expanded">Добави в количка</a>
 				</div>
 			</li>
-
-
 			<li>
 				<div class="cat-item">
 					<div class="item-header">

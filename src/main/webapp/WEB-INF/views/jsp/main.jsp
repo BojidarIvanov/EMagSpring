@@ -1,18 +1,30 @@
-<%@page import="com.emag.db.ProductDAO"%>
-<%@page import="com.emag.model.ProductPojo"%>
-<%@page import="java.util.HashSet"%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<style>
+.wrapper {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-gap: 10px;
+	grid-auto-rows: minmax(100px, auto);
+	padding-left: 5cm;
+}
+
+
+</style>
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/css/styless.css" type="text/css"></link>
 
 </head>
+
 <body>
+	<jsp:include page="header.jsp"></jsp:include>
+
 
 	<c:if test="${ sessionScope.user == null }">
 		<c:redirect url="login"></c:redirect>
@@ -24,33 +36,23 @@
 		</tr>
 	</c:if>
 
-	<jsp:include page="header.jsp"></jsp:include>
-	
-	
-<div align="center">
-	<table class="products" border="1" cellpadding="5">
-		<tr>
-			<th>Id</th>
-			<th>Name</th>
-			<th>Quantity</th>
-			<th>Price</th>
-		</tr>
+	<div class="wrapper">
 		<c:forEach items="${applicationScope.products.values()}" var="product">
-			<tr>
-				<td class="cent">${ product.productID }</td>
-				<td class="cent"><c:out value="${ product.name }"></c:out></td>
-				<td class="cent"><c:out value="${ product.quantity }"></c:out></td>
-				<td class="cent"><c:out value="${ product.price }"></c:out></td>
-				<td><img
-							src="${pageContext.request.contextPath}/admin/getImage/${product.productID}"
-							height="80" width="80"></td>
-				<td><a
-					href="${pageContext.request.contextPath}/admin/show?id=${product.productID}">Show</a></td>
-			</tr>
+
+
+			<div class = "padding">
+				<a
+					href="${pageContext.request.contextPath}/admin/show?id=${product.productID}">
+					<img
+					src="${pageContext.request.contextPath}/admin/getImage/${product.productID}"
+					height="180" width="200" alt="" />
+				<p>	 <span> "${product.name}" </span> </p>
+				
+				</a>
+			</div>
+
 		</c:forEach>
-	</table>
-
-
+	</div>
 	<!-- <jsp:include page="footer.jsp"></jsp:include> -->
 </body>
 </html>

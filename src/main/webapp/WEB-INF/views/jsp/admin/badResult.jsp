@@ -5,6 +5,8 @@
 <link rel = "stylesheet" href = "${pageContext.request.contextPath}/css/css/styless.css" type = "text/css"></link>
 </head>
 <body>
+	<jsp:include page="../header.jsp"></jsp:include>
+
   <div class  = "badResult">
     <center>${result}</center>
 

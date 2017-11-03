@@ -18,6 +18,7 @@
 	href='https://fonts.googleapis.com/css?family=Signika:700,400'
 	rel='stylesheet' type='text/css'>
 <style media="screen" type="text/css">
+h3 { color: white; } 
 label {
 	display: block;
 	position: relative;
@@ -132,9 +133,9 @@ label input, label textarea, label select {
 		<form class="navi" action="contact">
 			<input type="submit" value="Contacts">
 		</form>  
-	<!-- 	<form class="navi" action="comment" method="PUT">
-			<input type="submit" value="Comments">
-		</form> -->
+	 	<form class="navi" action="main" method="PUT">
+			<input type="submit" value="Main">
+		</form>
 		<c:if test="${sessionScope.user != null}">
 			<form class="navi" action="logout" method="GET">
 				<input type="submit" value="Logout">

@@ -36,12 +36,11 @@ public class HandlingEmails {
 			try {
 				allEmails = EmailDAO.getInstance().getAllEmails();
 			} catch (SQLException e) {
-				e.printStackTrace();
+			
 				return "redirect:html/sqlError.html";
 			}
 		}
 		Map<String, UserPojo> users = (Map<String, UserPojo>) application.getAttribute("users");
-		System.out.println(users);
 		String from = "pechorinnd@gmail.com";
 		String subject = request.getParameter("subject");
 		String bodyProvided = request.getParameter("promoContent");
@@ -52,9 +51,6 @@ public class HandlingEmails {
 		boolean isBodyHTML = false;
 		for (String email : allEmails) {
 			try {
-				if (users == null) {
-					return "redirect:html/lostSession.html";
-				}
 				fullName = users.get(email) != null ? users.get(email).getName() : "customer";
 				body = "Dear " + fullName + ",\n\n" + bodyProvided;
 				MailUtilGmail.sendMail(email, from, subject, body, isBodyHTML);
@@ -71,7 +67,7 @@ public class HandlingEmails {
 	}
 
 	@RequestMapping(value = "/addEmail", method = RequestMethod.POST)
-	public String subscribe(HttpServletRequest request, HttpServletResponse response) {
+	public String subscribe( HttpServletRequest request, HttpServletResponse response) {
 
 		String email = request.getParameter("email");
 		boolean isEmailSaved = false;
@@ -81,14 +77,13 @@ public class HandlingEmails {
 			try {
 				isEmailSaved = EmailDAO.getInstance().addEmail(email);
 			} catch (SQLException e) {
-				e.printStackTrace();
+			
 				return "redirect:sqlError.html";
 			}
 			result = "Email saved. Thank you.";
 		}
 
 		if (!isEmailSaved && isValid) {
-			System.out.println("The email was already in our records.");
 			result = "The email was already in our records.";
 		}
 

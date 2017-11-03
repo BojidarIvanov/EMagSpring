@@ -42,8 +42,6 @@ public class UploadImageController {
 			@SuppressWarnings("unchecked")
 			TreeMap<Integer, ProductPojo> products = (TreeMap<Integer, ProductPojo>) application
 					.getAttribute("products");
-			System.out.println(products);
-			System.out.println("Product id: " + productId);
 			ProductPojo product = products.get(productId);
 			if (product.getImageURL() != null) {
 				File productImage = new File(product.getImageURL());
@@ -83,22 +81,24 @@ public class UploadImageController {
 		if (url != null) {
 			file = new File(url);
 		} else {
-			file = new File("C:\\EmagSpring\\images\\emag.jpg");
+			file = new File("img/emag.jpg");
 		}
-		System.out.println(url);
 		try {
 			Files.copy(file.toPath(), res.getOutputStream());
 		} catch (IOException e) {
-			e.printStackTrace();
+			try {
+				res.sendRedirect("html/sqlError.html");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 		}
-
 	}
 
 	@RequestMapping(value = "/image/{fileName}", method = RequestMethod.GET)
 	@ResponseBody
 	public void prepareForUpload(@PathVariable("fileName") String fileName, HttpServletResponse resp, Model model)
 			throws IOException {
-		File file = new File(FILE_LOCATION + "emag.jpg");
+		File file = new File(FILE_LOCATION + fileName);
 		Files.copy(file.toPath(), resp.getOutputStream());
 	}
 }

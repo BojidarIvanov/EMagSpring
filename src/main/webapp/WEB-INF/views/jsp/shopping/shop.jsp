@@ -17,7 +17,6 @@
 	type="text/css"></link>
 </head>
 <body>
-
 	<c:if test="${ sessionScope.user == null }">
 		<c:redirect url="../categories"></c:redirect>
 	</c:if>

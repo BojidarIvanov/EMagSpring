@@ -216,7 +216,7 @@ public class ShoppingController {
 			order.getCollection().clear();
 			// remove info about cart from session scope
 			session.removeAttribute("items");
-			// making steps to provide email functionality the needed list of
+			// making steps to provide send email functionality the needed list of
 			// items
 			session.setAttribute("itemsForEmail", lineItems);
 			// adding latest order to order history

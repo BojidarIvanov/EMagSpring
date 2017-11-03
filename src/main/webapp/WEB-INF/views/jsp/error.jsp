@@ -1,15 +1,16 @@
-<%@ page isErrorPage="true" import="java.io.*" contentType="text/plain"%>
-<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html>
+<head>
+<title>Emag</title>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/css/styless.css"
+	type="text/css"></link>
+</head>
+<body>
+	<jsp:include page="header.jsp"></jsp:include>
 
-Message:
-<%=exception.getMessage()%>
-
-StackTrace:
-<%
-	StringWriter stringWriter = new StringWriter();
-	PrintWriter printWriter = new PrintWriter(stringWriter);
-	exception.printStackTrace(printWriter);
-	out.println(stringWriter);
-	printWriter.close();
-	stringWriter.close();
-%>
+	<div class="goodResult">
+		<center>${result}</center>
+	</div>
+</body>
+</html>

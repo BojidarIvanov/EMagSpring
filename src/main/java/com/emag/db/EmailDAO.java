@@ -31,7 +31,9 @@ public class EmailDAO {
 			PreparedStatement ps = this.connection.prepareStatement("INSERT INTO subscribers (emails) VALUES (?);");
 			ps.setString(1, email);
 			ps.executeUpdate();
-			allEmails.add(email);
+			synchronized (allEmails) {
+				allEmails.add(email);
+			}
 			emailAdded = true;
 			ps.close();
 		}
@@ -42,14 +44,16 @@ public class EmailDAO {
 
 		int result = 0;
 		if (emailExists(email)) {
-					this.connection = DBManager.CON1.getConnection();
+			this.connection = DBManager.CON1.getConnection();
 			PreparedStatement ps = this.connection.prepareStatement("DELETE FROM subscribers WHERE emails = ?");
 			ps.setString(1, email);
 			result = ps.executeUpdate();
+			synchronized (allEmails) {
 			allEmails.remove(email);
+			}
 			ps.close();
 		}
-		
+
 		return result > 0;
 	}
 
@@ -60,15 +64,14 @@ public class EmailDAO {
 
 	public HashSet<String> getAllEmails() throws SQLException {
 
-			Connection conn = DBManager.CON1.getConnection();
-			PreparedStatement ps = conn.prepareStatement("SELECT * FROM subscribers");
-			ResultSet rs = ps.executeQuery();
-			while (rs.next()) {
-				allEmails.add(rs.getString("emails"));
-			}
-			rs.close();
-			ps.close();
-			return allEmails;
+		Connection conn = DBManager.CON1.getConnection();
+		PreparedStatement ps = conn.prepareStatement("SELECT * FROM subscribers");
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()) {
+			allEmails.add(rs.getString("emails"));
 		}
+		rs.close();
+		ps.close();
+		return allEmails;
 	}
-
+}

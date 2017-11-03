@@ -5,12 +5,16 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <title>Create new product</title>
+
 <link rel="stylesheet"
+
 	href="${pageContext.request.contextPath}/css/css/styless.css"
 	type="text/css"></link>
 </head>
 <body>
+
 	<c:if
 		test="${ sessionScope.user == null || sessionScope.user.isAdmin == false}">
 		<c:redirect url="loginPage"></c:redirect>
@@ -54,8 +58,8 @@
 						</tr>
 						<tr style="background: white;">
 							<td><label for="imageUrl">Image URL:</label></td>
-							<td><input id="imageUrl" name="imageUrl" type="text" value = "someUrl"
-								minlength="5" required /></td>
+							<td><input id="imageUrl" name="imageUrl" type="text"
+								value="someUrl" minlength="5" required /></td>
 						</tr>
 						</form>
 					</tbody>
