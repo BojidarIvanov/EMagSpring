@@ -10,9 +10,6 @@
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
 
-	<br>
-	<font face="Britannic Bold" size="4" style="color: red;">${errorMsg}</font>
-	<br>
 	<div class="container">
 		<div class="row">
 			<c:if test="${sessionScope.user == null }">
@@ -20,7 +17,7 @@
 					Please enter your Email <br>
 				</h1>
 
-				<form action="forgotPassword" method="POST">
+				<form action="${pageContext.request.contextPath}/forgotPassword" method="POST">
 					<div>
 						<h4 style="color: black;">
 							Email: <input id="input2" type="text"

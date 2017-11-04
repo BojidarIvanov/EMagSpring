@@ -1,19 +1,15 @@
 package com.emag.controller;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.Comparator;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.TreeSet;
 import java.util.UUID;
 
 import javax.mail.MessagingException;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -30,7 +26,6 @@ import com.emag.db.ProductDAO;
 import com.emag.db.UserDAO;
 import com.emag.model.BrandPojo;
 import com.emag.model.CategoryPojo;
-import com.emag.model.OrderPojo;
 import com.emag.model.ProductPojo;
 import com.emag.model.UserPojo;
 import com.emag.util.MailUtilGmail;
@@ -48,8 +43,19 @@ public class MyController {
 		return "register";
 	}
 
+	@RequestMapping(value = "/updateUserInfo", method = RequestMethod.POST)
+	public String updateUserInfo() {
+		return "updateUserInfo";
+	}
+
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String registerIndeed(HttpServletRequest request, HttpServletResponse response) {
+	public String registerIndeed(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+		String error = "";
+
+		Object userInSession = session.getAttribute("user");
+		Object oldEmail = request.getParameter("oldEmail");
+		System.out.println("User: " + userInSession);
+		System.out.println("OldEmail: " + oldEmail);
 
 		String name = request.getParameter("name".trim());
 		String email = request.getParameter("email".trim());
@@ -61,39 +67,75 @@ public class MyController {
 		System.out.println(password);
 		System.out.println(password2);
 
-		String error = "";
-		if (!password.equals(password2)) {
-			error = "passwords missmatch";
-			request.setAttribute("error", error);
-			return "forward:loginPage";
-		}
-		error = PasswordUtil.checkPasswordStrength(password2);
-		if (!error.equals("Password is ok")) {
-			request.setAttribute("error", error);
-			return "forward:loginPage";
-		}
-
-		if (Integer.parseInt(dob) < 1900 || Integer.parseInt(dob) > 2018) {
-			error = "Please provide adequate date of birth";
+		name = name.replaceAll("[^A-Za-z0-9]+", " ");
+		if (name == null || name.length() < 1) {
+			error = "Name is too short. Please be serious.";
+			if (checkIfRegistered(userInSession, oldEmail)) {
+				request.setAttribute("error", error);
+				return "forward:updateUserInfo";
+			}
 			request.setAttribute("error", error);
 			return "forward:loginPage";
 		}
 
-		if (!HandlingEmails.validate(email)) {
+		if (oldEmail == null) {
+			if (password == null || !password.equals(password2)) {
+				error = "passwords missmatch";
+				request.setAttribute("error", error);
+				return "forward:loginPage";
+			}
+			error = PasswordUtil.checkPasswordStrength(password2);
+			if (!error.equals("Password is ok")) {
+				request.setAttribute("error", error);
+				return "forward:loginPage";
+			}
+		}
+
+		dob = specialCharacterRemoverOnlyDigits(dob);
+		try {
+			if (dob == null || Integer.parseInt(dob) < 1900 || Integer.parseInt(dob) > 2017) {
+				error = "Please provide adequate date of birth";
+				if (checkIfRegistered(userInSession, oldEmail)) {
+					request.setAttribute("error", error);
+					return "forward:updateUserInfo";
+				}
+				request.setAttribute("error", error);
+				return "forward:loginPage";
+			}
+		} catch (NumberFormatException nfe) {
+			error = "Please provide year of birth: only four digits without special characters.";
+			request.setAttribute("error", error);
+			return "forward:loginPage";
+		}
+
+		if (email == null || !HandlingEmails.validate(email)) {
 			error = "The email provided is invalid.";
+			if (checkIfRegistered(userInSession, oldEmail)) {
+				request.setAttribute("error", error);
+				return "forward:updateUserInfo";
+			}
 			request.setAttribute("error", error);
 			return "forward:loginPage";
 		}
-
-		if (address.length() < 3) {
+		address = specialCharacterRemover(address);
+		if (address == null || address.length() < 3) {
 			error = "Address cannot be so short.";
+			if (checkIfRegistered(userInSession, oldEmail)) {
+				return "forward:updateUserInfo";
+			}
 			request.setAttribute("error", error);
 			return "forward:loginPage";
 		}
 
-		if (phone.length() < 5) {
+		if (phone == null || phone.length() < 5) {
 			error = "Phone number cannot be less than 5 digits.";
 			request.setAttribute("error", error);
+			if (checkIfRegistered(userInSession, oldEmail)) {
+				return "forward:updateUserInfo";
+			}
+			if (oldEmail == null) {
+				return "forward:updateUserInfo";
+			}
 			return "forward:loginPage";
 		}
 
@@ -105,6 +147,24 @@ public class MyController {
 			return "forward:loginPage";
 		}
 
+		// update details rather than create new user
+		if ((oldEmail != null && userInSession != null)) {
+			UserPojo updatedUser = ((Map<String, UserPojo>) application.getAttribute("users")).get((String) oldEmail);
+			updatedUser.setEmail(email);
+			updatedUser.setPhone(phone);
+			updatedUser.setDateOfBirth(LocalDate.of(Integer.parseInt(dob), 1, 1));
+			updatedUser.setAddress(address);
+			try {
+				boolean updated = UserDAO.getInstance().updateUserDetails(updatedUser);
+			} catch (SQLException e) {
+				error = "Some issues with database. Details were not updated.";
+				request.setAttribute("error", error + e);
+				return "forward:updateUserInfo";
+			}
+			error = "Details were updated.";
+			request.setAttribute("error", error);
+			return "forward:updateUserInfo";
+		}
 		try {
 			UserPojo customer = null;
 			try {
@@ -114,7 +174,7 @@ public class MyController {
 						false);
 			} catch (NumberFormatException e1) {
 				request.setAttribute("error", "Please provide only year of birth. Four digits without spaces.");
-				return "index";
+				return "forward:loginPage";
 			} catch (NoSuchAlgorithmException e1) {
 				request.setAttribute("error", "Sorry, there are some unresolved issues on our side. Please try later.");
 				return "index";
@@ -122,8 +182,9 @@ public class MyController {
 			if (!UserDAO.getInstance().userExists(customer)) {
 				try {
 					UserDAO.getInstance().addUser(customer);
-				} catch (SQLException | NoSuchAlgorithmException e ) {
-					request.setAttribute("error", "Sorry, there are some unresolved issues on our side. Please try later.");
+				} catch (SQLException | NoSuchAlgorithmException e) {
+					request.setAttribute("error",
+							"Sorry, there are some unresolved issues on our side. Please try later.");
 					return "index";
 				}
 				request.getSession().setAttribute("user", customer);
@@ -138,6 +199,18 @@ public class MyController {
 			request.setAttribute("error", "database problem : " + e.getMessage());
 			return "forward:loginPage";
 		}
+	}
+
+	private static String specialCharacterRemover(String str) {
+		return str.replaceAll("[^A-Za-z0-9]+", " ");
+	}
+	
+	private static String specialCharacterRemoverOnlyDigits(String str) {
+		return str.replaceAll("[^0-9]+", "");
+	}
+
+	private static boolean checkIfRegistered(Object userInSession, Object oldEmail) {
+		return (oldEmail == null && userInSession != null);
 	}
 
 	@RequestMapping(value = "/about", method = RequestMethod.GET)
@@ -222,7 +295,8 @@ public class MyController {
 			user = new UserPojo(email, hashedPassword);
 			System.out.println(hashedPassword);
 		} catch (NoSuchAlgorithmException e1) {
-			e1.printStackTrace();
+			request.setAttribute("error", "Sorry, we have some issues. Please try again later.");
+			return "forward:loginPage";
 		}
 
 		try {
@@ -258,7 +332,7 @@ public class MyController {
 
 				return "redirect:index";
 			} else {
-				request.setAttribute("error", "user does not exist");
+				request.setAttribute("error", "Email or password are wrong.");
 				return "forward:loginPage";
 			}
 		} catch (SQLException e) {
@@ -315,6 +389,7 @@ public class MyController {
 
 	@RequestMapping(value = "/forgotPassword", method = RequestMethod.POST)
 	public String forgotPass(Model model, HttpServletRequest request, HttpServletResponse response) {
+		url = "forgotPassword";
 		try {
 			request.setCharacterEncoding("utf-8");
 		} catch (UnsupportedEncodingException e) {
@@ -323,20 +398,30 @@ public class MyController {
 			url = "forgotPassword";
 		}
 		String email = request.getParameter("email").trim();
+		
 		Map<String, UserPojo> users = (Map<String, UserPojo>) application.getAttribute("users");
 
 		if (email == null) {
 			errorMsg = "No such user";
-			url = "forgotPassword";
+			model.addAttribute("errorMsg", errorMsg);
+			errorMsg = null;
+			return "forgotPassword";
 		} else {
 			UserPojo u = users.get(email);
-			url = "forgotPassword";
+			if(u == null) {
+				errorMsg = "No such user";
+				model.addAttribute("errorMsg", errorMsg);
+				errorMsg = null;
+				return "forgotPassword";
+			}
+			
 			String password = UUID.randomUUID().toString().substring(8);
 			String hashedPassword = "";
 			try {
 				hashedPassword = PasswordUtil.hashPassword(password);
 			} catch (NoSuchAlgorithmException e1) {
-				e1.printStackTrace();
+				model.addAttribute("errorMsg", errorMsg);
+				errorMsg = null;
 				return "forgotPassword";
 			}
 			u.setPassword(hashedPassword);
@@ -361,7 +446,6 @@ public class MyController {
 				errorMsg = "Something went wrong, please try again later" + e;
 				url = "forgotPassword";
 			}
-
 		}
 		model.addAttribute("errorMsg", errorMsg);
 		errorMsg = null;

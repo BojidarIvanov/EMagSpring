@@ -150,4 +150,21 @@ public class UserPojo {
 				+ ", dateOfBirth=" + dateOfBirth + ", password=" + password + ", address=" + address + ", isAdmin="
 				+ isAdmin + "]";
 	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public void setDateOfBirth(LocalDate dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;		
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	
 }

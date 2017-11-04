@@ -44,7 +44,7 @@ label input, label textarea, label select {
 			<label><span>Full name </span> <input type="text" name="name"
 				required></label> <br> <label><span>Email</span> <input
 				type="text" name="email" required> </label><br> <label><span>Year
-					of birth</span> <input type="text" name="DOB"> <br></label> <br>
+					of birth</span> <input type="number" name="DOB" min= "1900" max= "2017"> <br></label> <br>
 			<label><span>Phone</span><input type="text" name="phone">
 			</label><br> <label><span>Address</span><input type="text"
 				name="address"> </label><br> <label><span>Password</span><input

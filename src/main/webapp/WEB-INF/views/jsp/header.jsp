@@ -5,8 +5,6 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-
-
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
@@ -83,6 +81,12 @@ label input, label textarea, label select {
 
 	<div class="child">
 		<h3 class="welcome">Welcome ${sessionScope.user.name }</h3>
+			<c:if test="${sessionScope.user != null}">
+			<form class="navi"
+				action="${pageContext.request.contextPath}/updateUserInfo" method="POST">
+				<input type="submit" value="User's details">
+			</form>
+		</c:if>
 	</div>
 </div>
 <link rel="stylesheet" type="text/css"
@@ -160,7 +164,7 @@ label input, label textarea, label select {
 		</c:if>
 		<h3 style="color: lime;"center";">${requestScope.SubscrMsg }</h3>
 		<h3 style="color: lime;"center";">${requestScope.errorMsg }</h3>
-		<h3 style="color: lime;"center";">${requestScope.error}</h3>
+	<!--	<h3 style="color: lime;"center";">${requestScope.error}</h3> -->
 		<br>
 
 	</div>

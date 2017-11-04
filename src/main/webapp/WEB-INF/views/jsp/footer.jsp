@@ -17,7 +17,7 @@
 				<div class="login-page">
 					<div class="dreamcrub">
 						<ul class="breadcrumbs">
-						
+
 
 							<li class="women"><a
 								href="${pageContext.request.contextPath}/loginPage"
@@ -60,23 +60,26 @@ label input, label textarea, label select {
 	margin-left: 150px;
 }
 </style>
+							<c:if test="${sessionScope.user == null }">
 
-							<h2>Password Recovery</h2>
+								<h2>Password Recovery</h2>
 
-							<p>Please Enter the email address associated to your account.</p>
-							<div class="container">
-								<form action="${pageContext.request.contextPath}/forgotPassword"
-									method="post">
-									<div>
-										<span><strong>Email Address for password
-												recovery:</strong></span> <input type="text" name="email"
-											placeholder="Enter email" size="35" style="width: 193px">
-										<input type="submit" value="Send"
-											style="height: 35px; width: 150px" />
-									</div>
-								</form>
-							</div>
-
+								<p>Please Enter the email address associated to your
+									account.</p>
+								<div class="container">
+									<form
+										action="${pageContext.request.contextPath}/forgotPassword"
+										method="post">
+										<div>
+											<span><strong>Email Address for password
+													recovery:</strong></span> <input type="text" name="email"
+												placeholder="Enter email" size="35" style="width: 193px">
+											<input type="submit" value="Send"
+												style="height: 35px; width: 150px" />
+										</div>
+									</form>
+								</div>
+							</c:if>
 							<h4>JOIN OUR MAILING LIST</h4>
 							<div class="container">
 								<form action="${pageContext.request.contextPath}/addEmail"

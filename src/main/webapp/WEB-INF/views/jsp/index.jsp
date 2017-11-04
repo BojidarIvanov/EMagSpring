@@ -19,8 +19,50 @@
 	href='https://fonts.googleapis.com/css?family=Signika:700,400'
 	rel='stylesheet' type='text/css'>
 
-<link rel="stylesheet" href="css/css/style.css">
+  <link rel="stylesheet" href="css/css/style.css">   
+<style media="screen" type="text/css">
+h3 {
+	color: white;
+}
 
+label {
+	display: block;
+	position: relative;
+}
+
+label span {
+	font-weight: bold;
+	position: absolute;
+	left: 3px;
+}
+
+label input, label textarea, label select {
+	margin-left: 150px;
+	background-color: white;
+}
+
+.mom {
+	width: 100%; /* Try setting this to 400px or something */
+	display: table;
+	border: 1px solid #444444;
+	background-color: red;
+}
+
+.child {
+	display: table-cell;
+}
+
+.childinner {
+	margin-left: 25px;
+	/* Decorative .. */
+	background-color: #cccccc;
+	min-height: 40px;
+}
+
+.child:first-child .childinner {
+	margin-left: 0;
+}
+</style>
 
 </head>
 
@@ -28,10 +70,10 @@
 	<jsp:include page="header.jsp"></jsp:include>
 	
 
-</style>
+
 	<h3 align="center"; >Take advantage of hot offers, the prices were
 		never so attractive !</h3>
-	</style>
+
 
 	<div class="wrap">
 		<ul class="grid grid-sm-2 grid-lg-4">

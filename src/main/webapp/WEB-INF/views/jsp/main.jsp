@@ -24,13 +24,14 @@
 
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
-
 	<c:if test="${ sessionScope.newUser != null }">
 		<tr>
 			<td>You have successfully registered an account ${ sessionScope.newUser.name}
 				. It is time to enjoy our services!</td>
 		</tr>
 	</c:if>
+	<h1 style="color: red">${error}</h1>
+	
 
 	<div class="wrapper">
 		<c:forEach items="${applicationScope.products.values()}" var="product">

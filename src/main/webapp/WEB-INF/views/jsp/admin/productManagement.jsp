@@ -31,6 +31,7 @@
 		<p>
 			<a href="${pageContext.request.contextPath}/index">Back</a>
 		</p>
+	
 		<table class="products" border="1" cellpadding="5">
 			<tr>
 				<th>Id</th>
@@ -62,6 +63,7 @@
 				</c:if>
 			</c:forEach>
 		</table>
+	
 		<p>
 			<a href="${pageContext.request.contextPath}/admin/create">Create
 				a new product</a>

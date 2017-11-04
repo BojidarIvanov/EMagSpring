@@ -36,6 +36,27 @@ public class UserDAO {
 		return instance;
 	}
 
+	public boolean updateUserDetails(UserPojo user) throws SQLException {
+
+		this.connection = DBManager.CON1.getConnection();
+		PreparedStatement ps = this.connection.prepareStatement(
+				"UPDATE users SET name = ?, email = ?, phone = ?, date_of_birth = ?, password = ? , address = ?, is_admin = ?  WHERE customer_id = ? ",
+				Statement.RETURN_GENERATED_KEYS);
+		ps.setString(1, user.getName());
+		ps.setString(2, user.getEmail());
+		ps.setString(3, user.getPhone());
+		java.sql.Date date = convertToDatabaseColumn(user.getDateOfBirth());
+		ps.setDate(4, date);
+		ps.setString(5, user.getPassword());
+		ps.setString(6, user.getAddress());
+		ps.setBoolean(7, user.getIsAdmin());
+		ps.setInt(8, user.getCustomerID());
+		ps.executeUpdate();
+
+		ps.close();
+		return true;
+	}
+
 	public boolean addUser(UserPojo user) throws SQLException, NoSuchAlgorithmException {
 		if (!userExists(user)) {
 			this.connection = DBManager.CON1.getConnection();
@@ -74,18 +95,19 @@ public class UserDAO {
 		theUser.setOrders(orders);
 		return theUser;
 	}
-	
+
 	public UserPojo getUser(String email) throws SQLException {
 		Map<String, UserPojo> users = getAllUsers();
 		UserPojo user = null;
-		for(Entry<String, UserPojo> u : users.entrySet()) {
-			if(u.getValue().getEmail().equalsIgnoreCase(email)) {
+		for (Entry<String, UserPojo> u : users.entrySet()) {
+			if (u.getValue().getEmail().equalsIgnoreCase(email)) {
 				user = u.getValue();
 				break;
 			}
 		}
 		return user;
 	}
+
 	public Map<String, UserPojo> getAllUsers() throws SQLException {
 		System.out.println("UserDAO------------------");
 		if (!users.isEmpty()) {

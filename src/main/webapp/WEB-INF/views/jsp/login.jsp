@@ -19,7 +19,7 @@
 	<br>
 </c:if>
 <c:if test="${ requestScope.error != null }">
-	<h1 style="color: red">Sorry, username or password missmatch.
+	<h1 style="color: red">Sorry, there are some issues.
 		Reason: ${requestScope.error }</h1>
 </c:if>
 
