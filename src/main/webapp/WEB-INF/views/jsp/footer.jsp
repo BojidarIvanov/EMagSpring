@@ -17,13 +17,15 @@
 				<div class="login-page">
 					<div class="dreamcrub">
 						<ul class="breadcrumbs">
-							<li class="home"><a href="index" title="Go to Home Page">Home</a>&nbsp;
-								<span>&gt;</span></li>
-							<li class="women"><a href="loginPage" title="Why not login?">Login</a>&nbsp;
-								</form></li>
+						
+
+							<li class="women"><a
+								href="${pageContext.request.contextPath}/loginPage"
+								title="Why not login?">Login</a>&nbsp;</li>
 						</ul>
 						<ul class="previous">
-							<li><a href="index">Back to Home Page</a></li>
+							<li><a href="${pageContext.request.contextPath}/index">Back
+									to Home Page</a></li>
 						</ul>
 						<div class="clearfix"></div>
 					</div>
@@ -36,7 +38,9 @@
 								through the checkout process faster, <br> view and track
 								your orders in your account and more.
 							</p>
-							<a class="acount-btn" href="registerPage">Create an Account</a>
+							<a class="acount-btn"
+								href="${pageContext.request.contextPath}/registerPage">Create
+								an Account</a>
 						</div>
 						<div class="col-md-6 login-right wow fadeInRight"
 							data-wow-delay="0.4s">
@@ -88,7 +92,8 @@ label input, label textarea, label select {
 									<form action="${pageContext.request.contextPath}/changePass"
 										method="post">
 										<h1 class="lead">Change Password</h1>
-									<label><span>Current Password:</span> <input class="input" type="password"
+										<label><span>Current Password:</span> <input
+											class="input" type="password"
 											placeholder="enter current password" name="oldPassword"
 											size="35" style="width: 193px" required="required"></label></br> <label><span>New
 												Password:</span> <input class="input" type="password"
@@ -105,5 +110,7 @@ label input, label textarea, label select {
 					</div>
 				</div>
 			</div>
+		</div>
+	</div>
 </body>
 </html>

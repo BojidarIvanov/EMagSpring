@@ -9,12 +9,11 @@
 <title>Create new product</title>
 
 <link rel="stylesheet"
-
 	href="${pageContext.request.contextPath}/css/css/styless.css"
 	type="text/css"></link>
 </head>
 <body>
-
+	<jsp:include page="../header.jsp"></jsp:include>
 	<c:if
 		test="${ sessionScope.user == null || sessionScope.user.isAdmin == false}">
 		<c:redirect url="loginPage"></c:redirect>

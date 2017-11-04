@@ -54,34 +54,55 @@ public class MyController {
 		String name = request.getParameter("name".trim());
 		String email = request.getParameter("email".trim());
 		String dob = request.getParameter("DOB".trim());
-		String password = request.getParameter("pass"    );
+		String password = request.getParameter("pass");
 		String password2 = request.getParameter("pass2");
 		String phone = request.getParameter("phone");
-		String address = request.getParameter("address");
+		String address = request.getParameter("address").trim();
 		System.out.println(password);
 		System.out.println(password2);
 
+		String error = "";
 		if (!password.equals(password2)) {
-			request.setAttribute("error", "passwords missmatch");
-			return "index";
+			error = "passwords missmatch";
+			request.setAttribute("error", error);
+			return "forward:loginPage";
+		}
+		error = PasswordUtil.checkPasswordStrength(password2);
+		if (!error.equals("Password is ok")) {
+			request.setAttribute("error", error);
+			return "forward:loginPage";
+		}
+
+		if (Integer.parseInt(dob) < 1900 || Integer.parseInt(dob) > 2018) {
+			error = "Please provide adequate date of birth";
+			request.setAttribute("error", error);
+			return "forward:loginPage";
+		}
+
+		if (!HandlingEmails.validate(email)) {
+			error = "The email provided is invalid.";
+			request.setAttribute("error", error);
+			return "forward:loginPage";
+		}
+
+		if (address.length() < 3) {
+			error = "Address cannot be so short.";
+			request.setAttribute("error", error);
+			return "forward:loginPage";
+		}
+
+		if (phone.length() < 5) {
+			error = "Phone number cannot be less than 5 digits.";
+			request.setAttribute("error", error);
+			return "forward:loginPage";
 		}
 
 		try {
-			PasswordUtil.checkPasswordStrength(password2);
-		} catch (Exception e2) {
-			request.setAttribute("error", "password is too short");
-			return "index";
-		}
-
-		try {
-
-			if (Integer.parseInt(dob) < 1900 || Integer.parseInt(dob) > 2018) {
-				request.setAttribute("error", "Please provide adequate date of birth");
-				return "index";
-			}
-		} catch (NumberFormatException e) {
-			request.setAttribute("error", " Please enter correct year of birth.");
-			return "index";
+			int phoneNumber = Integer.parseInt(phone);
+		} catch (NumberFormatException nfe) {
+			error = "Phone should contain only digits without spaces.";
+			request.setAttribute("error", error);
+			return "forward:loginPage";
 		}
 
 		try {
@@ -92,27 +113,30 @@ public class MyController {
 				customer = new UserPojo(name, email, phone, LocalDate.of(Integer.parseInt(dob), 1, 1), pass, address,
 						false);
 			} catch (NumberFormatException e1) {
-				e1.printStackTrace();
+				request.setAttribute("error", "Please provide only year of birth. Four digits without spaces.");
+				return "index";
 			} catch (NoSuchAlgorithmException e1) {
-				e1.printStackTrace();
+				request.setAttribute("error", "Sorry, there are some unresolved issues on our side. Please try later.");
+				return "index";
 			}
 			if (!UserDAO.getInstance().userExists(customer)) {
 				try {
 					UserDAO.getInstance().addUser(customer);
-				} catch (NoSuchAlgorithmException e) {
-					e.printStackTrace();
+				} catch (SQLException | NoSuchAlgorithmException e ) {
+					request.setAttribute("error", "Sorry, there are some unresolved issues on our side. Please try later.");
+					return "index";
 				}
 				request.getSession().setAttribute("user", customer);
 				request.getSession().setAttribute("newUser", customer);
 				return "index";
 			} else {
 				request.setAttribute("error", "user already registered");
-				return "index";
+				return "forward:loginPage";
 
 			}
 		} catch (SQLException e) {
 			request.setAttribute("error", "database problem : " + e.getMessage());
-			return "index";
+			return "forward:loginPage";
 		}
 	}
 
@@ -243,44 +267,6 @@ public class MyController {
 		}
 	}
 
-	@RequestMapping(value = "/sortOrders", method = RequestMethod.GET)
-	public String sortOrders(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
-		String sort = request.getParameter("sort");
-		Object o = request.getSession().getAttribute("user");
-		if (o == null) {
-			return "login";
-		}
-		UserPojo u = (UserPojo) o;
-		TreeSet<com.emag.model.OrderPojo> set = new TreeSet<>(new Comparator<OrderPojo>() {
-			@Override
-			public int compare(OrderPojo o1, OrderPojo o2) {
-
-				if (sort.equals("asc")) {
-					if (o1.getDate().isBefore(o2.getDate())) {
-						return -1;
-					} else if (o2.getDate().isBefore(o1.getDate())) {
-						return 1;
-					}
-				} else {
-					if (sort.equals("desc")) {
-						if (o1.getDate().isBefore(o2.getDate())) {
-							return 1;
-						} else if (o2.getDate().isBefore(o1.getDate())) {
-							return -1;
-						}
-					}
-				}
-				return 0;
-			}
-		});
-
-		set.addAll(u.getOrders());
-		u.setOrders(set);
-		return "orders";
-	}
-
 	private String url = "";
 	private String errorMsg = "";
 
@@ -338,7 +324,7 @@ public class MyController {
 		}
 		String email = request.getParameter("email").trim();
 		Map<String, UserPojo> users = (Map<String, UserPojo>) application.getAttribute("users");
-	
+
 		if (email == null) {
 			errorMsg = "No such user";
 			url = "forgotPassword";

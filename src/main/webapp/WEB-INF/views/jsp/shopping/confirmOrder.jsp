@@ -12,6 +12,8 @@
 	type="text/css"></link>
 </head>
 <body>
+	<jsp:include page="../header.jsp"></jsp:include>
+
 	<h3 style="color: lime;"center";">${requestScope.result }</h3>
 
 	<center>
@@ -19,7 +21,7 @@
 	</center>
 	<div align="center">
 		<center>
-			<button type="button" name="back" onclick="history.back()">back</button>
+		<!--		<button type="button" name="back" onclick="history.back()">back</button> -->
 
 			<!--  	<a href="${pageContext.request.contextPath}/shopping/shop">Back</a> -->
 		</center>
@@ -68,8 +70,8 @@
 				</p>
 			</c:if>
 			<c:if test="${sessionScope.user == null }">
-				
-				<h3>Please login to be able to make an order.</h3> 
+
+				<h3>Please login to be able to make an order.</h3>
 			</c:if>
 			<c:if test="${totalSum.unscaledValue() == 0 }">
 				<p>
@@ -79,7 +81,7 @@
 		</form>
 		<center>
 			<!--	<a href="${pageContext.request.contextPath}/index">Back</a> -->
-			<button type="button" name="back" onclick="history.back()">back</button>
+		<!--		<button type="button" name="back" onclick="history.back()">back</button>  -->
 
 			<a href="${pageContext.request.contextPath}/shopping/cancelOrder">Cancel
 				order</a>

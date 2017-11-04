@@ -38,19 +38,19 @@ public class PasswordUtil {
 	 * hashPassword(password + salt); }
 	 */
 
-	public static void checkPasswordStrength(String password) throws Exception {
+	public static String checkPasswordStrength(String password) {
 		if (password == null || password.trim().isEmpty()) {
-			throw new Exception("Password cannot be empty.");
+			return "Password cannot be an empty string.";
 		} else if (password.length() < 8) {
-			throw new Exception("Password is to short. " + "Must be at least 8 characters long.");
+			return "Password is to short. Must be at least 8 characters long.";
 		}
+		return "Password is ok";
 	}
 
 	public static boolean validatePassword(String password) {
-		try {
-			checkPasswordStrength(password);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+
+		String error = checkPasswordStrength(password);
+		if (!error.equals("Password is ok")) {
 			return false;
 		}
 		return true;
@@ -71,11 +71,11 @@ public class PasswordUtil {
 			System.out.println(ex);
 		}
 
-		try {
-			checkPasswordStrength("sesame1776");
+		if (checkPasswordStrength("sesame1776").equals("Password is ok")) {
 			System.out.println("Password is valid.");
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+		} else {
+			System.out.println("Password is not valid.");
 		}
+
 	}
 }

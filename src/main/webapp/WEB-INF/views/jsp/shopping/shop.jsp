@@ -20,14 +20,8 @@
 	<c:if test="${ sessionScope.user == null }">
 		<c:redirect url="../categories"></c:redirect>
 	</c:if>
+	<jsp:include page="../header.jsp"></jsp:include>
 
-	<form action="${pageContext.request.contextPath}/searchProduct"
-		method="get">
-		<input class="navi" type="text" name="productName"
-			placeholder="Serch for product..." style="height: 45px; width: 300px">
-		<input class="navi" type="submit" name="submit" value="Search"
-			style="height: 45px; width: 150px">
-	</form>
 
 	<sql:setDataSource var="myDS" driver="com.mysql.jdbc.Driver"
 		url="jdbc:mysql://localhost:3306/emag_final_project" user="Ivan"
@@ -42,9 +36,9 @@
 	</center>
 
 	<div align="center">
-		<p>
+	<!--  	<p>
 			<a href="${pageContext.request.contextPath}/index">Back</a>
-		</p>
+		</p> -->
 		<form action="${pageContext.request.contextPath}/shopping/handleOrder"
 			method="post">
 			<table class="products" border="1" cellpadding="5">

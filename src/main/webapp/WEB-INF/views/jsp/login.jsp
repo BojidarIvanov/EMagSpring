@@ -42,7 +42,7 @@
 Don`t have an account yet? Please register
 <a href="registerPage">here</a>
 <br>
-<a href="index" title="Go to Home Page">Home</a>
+
 <jsp:include page="footer.jsp"></jsp:include>
 
 </body>

@@ -1,5 +1,6 @@
 package com.emag.controller;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Map.Entry;
 import java.util.Comparator;
@@ -8,6 +9,7 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 
 import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -20,7 +22,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.emag.db.ProductDAO;
 import com.emag.model.CategoryPojo;
+import com.emag.model.OrderPojo;
 import com.emag.model.ProductPojo;
+import com.emag.model.UserPojo;
 
 @Controller
 public class SortingController {
@@ -94,4 +98,43 @@ public class SortingController {
 		return "sortPrices";
 	}
 
+	
+
+	@RequestMapping(value = "/sortOrders", method = RequestMethod.GET)
+	public String sortOrders(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		String sort = request.getParameter("sort");
+		Object o = request.getSession().getAttribute("user");
+		if (o == null) {
+			return "login";
+		}
+		UserPojo u = (UserPojo) o;
+		TreeSet<com.emag.model.OrderPojo> set = new TreeSet<>(new Comparator<OrderPojo>() {
+			@Override
+			public int compare(OrderPojo o1, OrderPojo o2) {
+
+				if (sort.equals("asc")) {
+					if (o1.getDate().isBefore(o2.getDate())) {
+						return -1;
+					} else if (o2.getDate().isBefore(o1.getDate())) {
+						return 1;
+					}
+				} else {
+					if (sort.equals("desc")) {
+						if (o1.getDate().isBefore(o2.getDate())) {
+							return 1;
+						} else if (o2.getDate().isBefore(o1.getDate())) {
+							return -1;
+						}
+					}
+				}
+				return 0;
+			}
+		});
+
+		set.addAll(u.getOrders());
+		u.setOrders(set);
+		return "orders";
+}
 }

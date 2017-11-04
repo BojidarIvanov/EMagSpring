@@ -17,6 +17,9 @@
 		<c:redirect url="loginPage"></c:redirect>
 	</c:if>
 
+	<jsp:include page="../header.jsp"></jsp:include>
+
+
 	<center>
 		<h3>Products in store</h3>
 	</center>

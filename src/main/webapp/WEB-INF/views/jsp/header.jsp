@@ -18,7 +18,10 @@
 	href='https://fonts.googleapis.com/css?family=Signika:700,400'
 	rel='stylesheet' type='text/css'>
 <style media="screen" type="text/css">
-h3 { color: white; } 
+h3 {
+	color: white;
+}
+
 label {
 	display: block;
 	position: relative;
@@ -63,11 +66,13 @@ label input, label textarea, label select {
 
 <div class="mom">
 	<div class="child">
-		<a href="index"> <img src="img/emag.jpg" alt="Logo">
+		<a href="${pageContext.request.contextPath}/index"> <img
+			src="${pageContext.request.contextPath}/img/emag.jpg" alt="Logo">
 		</a>
 	</div>
 	<div class="child">
-		<form action="searchProduct" method="get">
+		<form action="${pageContext.request.contextPath}/searchProduct"
+			method="get">
 			<input class="navi" type="text" name="productName"
 				placeholder="Serch for product..."
 				style="height: 45px; width: 300px"> <input class="navi"
@@ -77,67 +82,49 @@ label input, label textarea, label select {
 	</div>
 
 	<div class="child">
-		<h3 class="welcome">Welcome  ${sessionScope.user.name }</h3>
+		<h3 class="welcome">Welcome ${sessionScope.user.name }</h3>
 	</div>
 </div>
-<link rel="stylesheet" type="text/css" href="css/styles.css">
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/css/styles.css">
 </head>
 
 <body>
 	<div class="header">
 
-		<script>
-			window.fbAsyncInit = function() {
-				FB.init({
-					appId : '{EMagProject}',
-					cookie : true,
-					xfbml : true,
-					version : '{latest-api-version}'
-				});
 
-				FB.AppEvents.logPageView();
-
-			};
-
-			(function(d, s, id) {
-				var js, fjs = d.getElementsByTagName(s)[0];
-				if (d.getElementById(id)) {
-					return;
-				}
-				js = d.createElement(s);
-				js.id = id;
-				js.src = "https://connect.facebook.net/en_US/sdk.js";
-				fjs.parentNode.insertBefore(js, fjs);
-			}(document, 'script', 'facebook-jssdk'));
-		</script>
-		<form class="navi" action="about">
+		<form class="navi" action="${pageContext.request.contextPath}/about">
 			<input type="submit" value="About Us">
 		</form>
-		<form class="navi" action="index">
+		<form class="navi" action="${pageContext.request.contextPath}/index">
 			<input type="submit" value="Products on sale">
 		</form>
 		<c:if test="${sessionScope.user != null}">
-			<form class="navi" action="orders">
+			<form class="navi" action="${pageContext.request.contextPath}/orders">
 				<input type="submit" value="View My orders">
 			</form>
 		</c:if>
-		<form class="navi" action="categories" method="GET">
+		<form class="navi"
+			action="${pageContext.request.contextPath}/categories" method="GET">
 			<input type="submit" value="View Categories">
 		</form>
 		<c:if test="${sessionScope.user == null}">
-			<form class="navi" action="loginPage" method="GET">
+			<form class="navi"
+				action="${pageContext.request.contextPath}/loginPage" method="GET">
 				<input type="submit" value="Go To Login Page">
 			</form>
 		</c:if>
 
-		<form class="navi" action="contact">
+		<form class="navi" action="${pageContext.request.contextPath}/contact">
 			<input type="submit" value="Contacts">
-		</form>  
-	 	<form class="navi" action="main" method="GET">
+		</form>
+		<form class="navi" action="${pageContext.request.contextPath}/main"
+			method="GET">
 			<input type="submit" value="Main">
 		</form>
 		<c:if test="${sessionScope.user != null}">
-			<form class="navi" action="logout" method="GET">
+			<form class="navi" action="${pageContext.request.contextPath}/logout"
+				method="GET">
 				<input type="submit" value="Logout">
 			</form>
 		</c:if>
@@ -156,22 +143,21 @@ label input, label textarea, label select {
 				<input type="submit" value="Let's go shopping!!!">
 			</form>
 		</c:if>
-		
-	<!--  	<c:if test="${sessionScope.user != null}"> -->
-			<form class="navi"
-				action="${pageContext.request.contextPath}/shopping/confirmOrder"
-				method="GET">
-				<input type="submit" value="My cart">
-			</form>
-<!-- 		</c:if> -->
-		
-		
-		
+
+		<!--  	<c:if test="${sessionScope.user != null}"> -->
+		<form class="navi"
+			action="${pageContext.request.contextPath}/shopping/confirmOrder"
+			method="GET">
+			<input type="submit" value="My cart">
+		</form>
+		<!-- 		</c:if> -->
+
 		<br> <br> <br>
 		<c:if test="${ sessionScope.newUser != null }">
-	<h5 style="color: lime;"center";">New account registered ${ sessionScope.newUser.name} . Congratulations!</h5>
+			<h5 style="color: lime;"center";">New account registered ${ sessionScope.newUser.name}
+				. Congratulations!</h5>
 
-</c:if>
+		</c:if>
 		<h3 style="color: lime;"center";">${requestScope.SubscrMsg }</h3>
 		<h3 style="color: lime;"center";">${requestScope.errorMsg }</h3>
 		<h3 style="color: lime;"center";">${requestScope.error}</h3>
