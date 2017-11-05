@@ -75,7 +75,7 @@ label input, label textarea, label select {
 										<div>
 											<span><strong>Email Address for password
 													recovery:</strong></span> <input type="text" name="email"
-												placeholder="Enter email" size="35" style="width: 193px">
+												placeholder="Enter email" size="35" style="width: 193px" minlength = "4" maxlength = "50">
 											<input type="submit" value="Send"
 												style="height: 35px; width: 150px" />
 										</div>
@@ -86,7 +86,7 @@ label input, label textarea, label select {
 							<div class="container">
 								<form action="${pageContext.request.contextPath}/addEmail"
 									method="post">
-									<input type="text" name="email" placeholder="Enter email"
+									<input type="text" name="email" placeholder="Enter email" minlength = "4"
 										size="35" style="width: 193px" /> <input type="submit"
 										style="height: 35px; width: 150px" value=" SUBSCRIBE" />
 								</form>
@@ -100,10 +100,10 @@ label input, label textarea, label select {
 										<label><span>Current Password:</span> <input
 											class="input" type="password"
 											placeholder="enter current password" name="oldPassword"
-											size="35" style="width: 193px" required="required" min="8"></label></br> <label><span>New
+											size="35" style="width: 193px" required="required" minlength="8"></label></br> <label><span>New
 												Password:</span> <input class="input" type="password"
 											placeholder="enter new password" name="newPassword" size="35"
-											style="width: 193px" required="required" min="8"></label></br> <input
+											style="width: 193px" required="required" minlength="8"></label></br> <input
 											class="btn" type="submit" style="height: 35px; width: 300px"
 											value="Change Password"></br>
 									</form>

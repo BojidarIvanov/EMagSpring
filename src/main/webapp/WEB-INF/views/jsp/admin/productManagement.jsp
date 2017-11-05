@@ -28,9 +28,9 @@
 			<a href="${pageContext.request.contextPath}/admin/create">Create
 				a new product</a>
 		</p>
-		<p>
+	<!--	<p>
 			<a href="${pageContext.request.contextPath}/index">Back</a>
-		</p>
+		</p>  -->
 	
 		<table class="products" border="1" cellpadding="5">
 			<tr>
@@ -68,9 +68,9 @@
 			<a href="${pageContext.request.contextPath}/admin/create">Create
 				a new product</a>
 		</p>
-		<p>
+		<!-- <p>
 			<a href="${pageContext.request.contextPath}/index">Back</a>
-		</p>
+		</p>  -->
 	</div>
 </body>
 </html>

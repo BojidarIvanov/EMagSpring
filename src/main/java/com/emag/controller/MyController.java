@@ -39,7 +39,7 @@ public class MyController {
 	@Autowired
 	ServletContext application;
 
-	@RequestMapping(value = "/registerPage", method = RequestMethod.GET)
+	@RequestMapping(value = "/registerPage")
 	public String register() {
 		return "register";
 	}
@@ -68,21 +68,21 @@ public class MyController {
 		System.out.println(password);
 		System.out.println(password2);
 
-		name = name.replaceAll("[^A-Za-z0-9]+", " ");
+		
 		if (name == null || name.length() < 1) {
-			error = "Name is too short. Please be serious.";
+			error = "Name is too short or too many spaces used. Please be serious.";
 			request.setAttribute("error", error);
 			if (checkIfRegistered(userInSession, oldEmail)) {
 				return "forward:updateUserInfo";
 			}
-			return "forward:loginPage";
+			return "forward:registerPage";
 		}
 
 		if (oldEmail == null) {
 			if (password == null || !password.equals(password2)) {
 				error = "passwords missmatch";
 				request.setAttribute("error", error);
-				return "forward:loginPage";
+				return "forward:registerPage";
 			}
 			error = PasswordUtil.checkPasswordStrength(password2);
 			if (!error.equals("Password is ok")) {
@@ -98,21 +98,23 @@ public class MyController {
 				if (checkIfRegistered(userInSession, oldEmail)) {
 					return "forward:updateUserInfo";
 				}
-				return "forward:loginPage";
+				return "forward:registerPage";
 			}
 		} catch (NumberFormatException nfe) {
 			error = "Please provide year of birth: only four digits without special characters.";
 			request.setAttribute("error", error);
-			return "forward:loginPage";
+			return "forward:registerPage";
 		}
 
 		if (email == null || !HandlingEmails.validate(email)) {
 			error = "The email provided is invalid.";
 			request.setAttribute("error", error);
 			if (checkIfRegistered(userInSession, oldEmail)) {
+				error = "The email provided is invalid. Details were not updated.";
+				request.setAttribute("error", error);
 				return "forward:updateUserInfo";
 			}
-			return "forward:loginPage";
+			return "forward:registerPage";
 		}
 		address = specialCharacterRemover(address);
 		if (address == null || address.length() < 3) {
@@ -121,7 +123,7 @@ public class MyController {
 			if (checkIfRegistered(userInSession, oldEmail)) {
 				return "forward:updateUserInfo";
 			}
-			return "forward:loginPage";
+			return "forward:registerPage";
 		}
 
 		if (phone == null || phone.length() < 5) {
@@ -133,22 +135,28 @@ public class MyController {
 			if (oldEmail == null) {
 				return "forward:updateUserInfo";
 			}
-			return "forward:loginPage";
+			return "forward:registerPage";
 		}
 
 		try {
 			int phoneNumber = Integer.parseInt(phone);
 		} catch (NumberFormatException nfe) {
-			error = "Phone should contain only digits without spaces.";
+			error = "Phone number should contain only digits without spaces.";
 			request.setAttribute("error", error);
-			return "forward:loginPage";
+			return "forward:registerPage";
 		}
 
 		// update details rather than create new user
 		if ((oldEmail != null && userInSession != null)) {
             String oldEmailCasted  = (String) oldEmail;
 			Map<String, UserPojo> users = (Map<String, UserPojo>) application.getAttribute("users");
+			if(users.keySet().contains(email) && !email.equals(oldEmailCasted)) {
+				error = "The email is already in use. Please spicify another e-mail. Details are not updated.";
+				request.setAttribute("error", error);
+				return "forward:updateUserInfo";
+			}
 			UserPojo updatedUser = users.get(oldEmailCasted);
+	
 			updatedUser.setEmail(email);
 			updatedUser.setPhone(phone);
 			updatedUser.setDateOfBirth(LocalDate.of(Integer.parseInt(dob), 1, 1));
@@ -180,7 +188,7 @@ public class MyController {
 						false);
 			} catch (NumberFormatException e1) {
 				request.setAttribute("error", "Please provide only year of birth. Four digits without spaces.");
-				return "forward:loginPage";
+				return "forward:registerPage";
 			} catch (NoSuchAlgorithmException e1) {
 				request.setAttribute("error", "Sorry, there are some unresolved issues on our side. Please try later.");
 				return "index";
@@ -198,12 +206,12 @@ public class MyController {
 				return "index";
 			} else {
 				request.setAttribute("error", "user already registered");
-				return "forward:loginPage";
+				return "forward:registerPage";
 
 			}
 		} catch (SQLException e) {
 			request.setAttribute("error", "database problem : " + e.getMessage());
-			return "forward:loginPage";
+			return "forward:registerPage";
 		}
 	}
 
@@ -216,7 +224,7 @@ public class MyController {
 	}
 
 	private static boolean checkIfRegistered(Object userInSession, Object oldEmail) {
-		return (oldEmail == null && userInSession != null);
+		return (oldEmail != null && userInSession != null);
 	}
 
 	@RequestMapping(value = "/about", method = RequestMethod.GET)
@@ -294,7 +302,7 @@ public class MyController {
 		String password = request.getParameter("pass");
 		System.out.println(email);
 		System.out.println(password);
-		// check if user exists in db
+		
 		UserPojo user = null;
 		try {
 			String hashedPassword = PasswordUtil.hashPassword(password);
@@ -327,7 +335,7 @@ public class MyController {
 					users = UserDAO.getInstance().getAllUsers();
 				}
 			}
-
+			// check if user exists in db
 			boolean exists = UserDAO.getInstance().userExistsEmailAndPassword(user);
 
 			if (exists) {

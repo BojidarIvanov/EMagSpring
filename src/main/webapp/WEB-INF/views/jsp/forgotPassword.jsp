@@ -5,6 +5,8 @@
 <html>
 <head>
 <link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/styles.css">
+<link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/css/styless.css"
 	type="text/css"></link>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -25,7 +27,7 @@
 						<h4 style="color: black;">
 							Email: <input id="input2" type="text"
 								placeholder="enter your email" name="email"
-								style="height: 30px; width: 300px" required="required">
+								style="height: 30px; width: 300px" required="required" minlength = "4" maxlength = "50">
 						</h4>
 					</div>
 					<input class="btn" type="submit" value="Submit"></br>

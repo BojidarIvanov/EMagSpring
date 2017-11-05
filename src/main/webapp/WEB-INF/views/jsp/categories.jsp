@@ -5,7 +5,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/styles.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/css/styless.css"
 	type="text/css"></link>
@@ -13,15 +14,17 @@
 <title>Insert title here</title>
 
 <style>
-
-
 .wrapper {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
 	grid-gap: 10px;
 	grid-auto-rows: minmax(100px, auto);
+	padding-left:0cm;
 }
+
 </style>
+
+
 
 </head>
 
@@ -48,8 +51,8 @@
 				<div class="child">
 					<c:if
 						test="${ category.value.parentCategory.categoryID == requestScope.specificCategory.categoryID }">
-						<a href="sortCategories?sort=${category.key}"><button
-								size="35" style="width: 150px">${(category.value).name}</button></a>
+						<div class="image"><a href="sortCategories?sort=${category.key}"><button 
+								size="35" style="width: 150px">${(category.value).name}</button></a></div>
 					</c:if>
 				</div>
 			</c:forEach>
@@ -65,61 +68,59 @@
 		}
 	%>
 	<center>
-	<a href="sortProducts?sort=desc&cat=<%=catId%>"><button size="35"
-			style="width: 150px">Price high to low</button></a>
-	<a href="sortProducts?sort=asc&cat=<%=catId%>"><button size="35"
-			style="width: 150px">Price low to high</button></a>
-	<table class="products" border="1" cellpadding="5">
-	</center>
+		<a href="sortProducts?sort=desc&cat=<%=catId%>"><button size="35"
+				style="width: 150px">Price high to low</button></a> <a
+			href="sortProducts?sort=asc&cat=<%=catId%>"><button size="35"
+				style="width: 150px">Price low to high</button></a>
+		<table class="products" border="1" cellpadding="5">
+			</center>
 
-		<div class="wrapper">
-			<c:forEach items="${applicationScope.products.values()}"
-				var="product">
-				<c:if
-					test="${ requestScope.specificCategory == null && product.quantity > 0}">
-		
-					<div>
-						<a
-							href="${pageContext.request.contextPath}/admin/show?id=${product.productID}">
-							<img
-							src="${pageContext.request.contextPath}/admin/getImage/${product.productID}"
-							height="180" width="180" alt="" />
-							<p>
-								<span> "${product.name}"</span>
-								<span> ${product.price} лв</span>
-							</p>
+			<div class="wrapper">
+				<c:forEach items="${applicationScope.products.values()}"
+					var="product">
+					<c:if
+						test="${ requestScope.specificCategory == null && product.quantity > 0}">
 
-						</a>
-					</div>
-				</c:if>
-			</c:forEach>
-		</div>
+						<div>
+							<a
+								href="${pageContext.request.contextPath}/admin/show?id=${product.productID}">
+								<img
+								src="${pageContext.request.contextPath}/admin/getImage/${product.productID}"
+								height="180" width="180" alt="" />
+								<p>
+									<span> "${product.name}"</span> <span> ${product.price}
+										лв</span>
+								</p>
 
-		<div class="wrapper">
-			<c:forEach items="${applicationScope.products.values()}"
-				var="product">
-				<c:if
-					test="${ requestScope.specificCategory != null && product.category.categoryID == requestScope.specificCategory.categoryID && product.quantity > 0 }">
+							</a>
+						</div>
+					</c:if>
+				</c:forEach>
+			</div>
 
-					<div>
-						<a
-							href="${pageContext.request.contextPath}/admin/show?id=${product.productID}">
-							<img
-							src="${pageContext.request.contextPath}/admin/getImage/${product.productID}"
-							height="180" width="180" alt="" />
-							<p>
-								<span> "${product.name}"</span>
-								<span> ${product.price} лв</span>
-							</p>
+			<div class="wrapper">
+				<c:forEach items="${applicationScope.products.values()}"
+					var="product">
+					<c:if
+						test="${ requestScope.specificCategory != null && product.category.categoryID == requestScope.specificCategory.categoryID && product.quantity > 0 }">
 
-						</a>
-					</div>
-				</c:if>
-			</c:forEach>
-		</div>
+						<div>
+							<a
+								href="${pageContext.request.contextPath}/admin/show?id=${product.productID}">
+								<img
+								src="${pageContext.request.contextPath}/admin/getImage/${product.productID}"
+								height="180" width="180" alt="" />
+						<span>		<p>
+									<span> "${product.name}"</span> <span> ${product.price}
+										лв</span>
+								</p></span>
 
-	</table>
+							</a>
+						</div>
+					</c:if>
+				</c:forEach>
+			</div>
 
-
+		</table>
 </body>
 </html>

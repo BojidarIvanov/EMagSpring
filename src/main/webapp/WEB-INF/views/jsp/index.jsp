@@ -36,7 +36,7 @@
 			<li>
 				<div class="cat-item">
 					<div class="item-header">
-						<a href="${pageContext.request.contextPath}/admin/show?id=1"
+						<a href="${pageContext.request.contextPath}/admin/show?id=3"
 							class="item-img"> <img src="img/Cisco.jpg" alt="" />
 						</a>
 						<!-- <a href="" class="item-img-zoom btn btn-secondary btn-circle"
@@ -58,15 +58,13 @@
 						</div>
 						<div class="item-price h4">30 лв.</div>
 					</div>
-					<a href=${pageContext.request.contextPath}/loginPage
-						" class="btn btn-primary btn-expanded">Добави в количка</a>
 				</div>
 			</li>
 			<li>
 				<div class="cat-item">
 					<div class="item-header">
 						<a
-							href="${pageContext.request.contextPath}/admin/show?id=2"
+							href="${pageContext.request.contextPath}/admin/show?id=4"
 							class="item-img"> <img src="img/Dell.jpg" alt="" />
 						</a>
 						<!-- <a href="" class="item-img-zoom btn btn-secondary btn-circle"
@@ -88,15 +86,13 @@
 						</div>
 						<div class="item-price h4">$900 лв.</div>
 					</div>
-						<a href=${pageContext.request.contextPath}/loginPage
-						" class="btn btn-primary btn-expanded">Добави в количка</a>
 				</div>
 			</li>
 			<li>
 				<div class="cat-item">
 					<div class="item-header">
 						<a
-							href="${pageContext.request.contextPath}/admin/show?id=3"
+							href="${pageContext.request.contextPath}/admin/show?id=5"
 							class="item-img"> <img src="img/Logitech1.jpg" alt="" />
 						</a>
 						<!--	<a href="" class="item-img-zoom btn btn-secondary btn-circle"
@@ -118,15 +114,13 @@
 						</div>
 						<div class="item-price h4">20 лв.</div>
 					</div>
-					<a href=${pageContext.request.contextPath}/loginPage
-						" class="btn btn-primary btn-expanded">Добави в количка</a>
 				</div>
 			</li>
 			<li>
 				<div class="cat-item">
 					<div class="item-header">
 						<a
-							href="${pageContext.request.contextPath}/admin/show?id=4"
+							href="${pageContext.request.contextPath}/admin/show?id=6"
 							class="item-img"> <img src="img/Elysee.jpg" alt="" />
 						</a>
 						<!-- <a href="" class="item-img-zoom btn btn-secondary btn-circle"
@@ -148,15 +142,13 @@
 						</div>
 						<div class="item-price h4">100 лв.</div>
 					</div>
-					<a href=${pageContext.request.contextPath}/loginPage
-						" class="btn btn-primary btn-expanded">Добави в количка</a>
-				</div>
+			</div>
 			</li>
 			<li>
 				<div class="cat-item">
 					<div class="item-header">
 						<a
-							href="${pageContext.request.contextPath}/admin/show?id=5"
+							href="${pageContext.request.contextPath}/admin/show?id=38"
 							class="item-img"> <img src="img/Hermes.jpg" alt="" />
 						</a>
 						<!-- <a href="" class="item-img-zoom btn btn-secondary btn-circle"
@@ -178,15 +170,13 @@
 						</div>
 						<div class="item-price h4">890 лв.</div>
 					</div>
-					<a href=${pageContext.request.contextPath}/loginPage
-						" class="btn btn-primary btn-expanded">Добави в количка</a>
 				</div>
 			</li>
 			<li>
 				<div class="cat-item">
 					<div class="item-header">
 						<a
-							href="${pageContext.request.contextPath}/admin/show?id=6"
+							href="${pageContext.request.contextPath}/admin/show?id=8"
 							class="item-img"> <img src="img/Swatch.jpg" alt="" />
 						</a>
 						<!-- <a href="" class="item-img-zoom btn btn-secondary btn-circle"
@@ -208,20 +198,16 @@
 						</div>
 						<div class="item-price h4">500 лвю</div>
 					</div>
-					<a href=${pageContext.request.contextPath}/loginPage
-						" class="btn btn-primary btn-expanded">Добави в количка</a>
 				</div>
 			</li>
 			<li>
 				<div class="cat-item">
 					<div class="item-header">
 						<a
-							href="${pageContext.request.contextPath}/admin/show?id=7"
+							href="${pageContext.request.contextPath}/admin/show?id=9"
 							class="item-img"> <img src="img/Casio.jpg" alt="" />
 						</a>
-						<!-- <a href="" class="item-img-zoom btn btn-secondary btn-circle"
-										title="Zoom In"> <span class="fa fa-search-plus"></span>
-									</a> -->
+
 					</div>
 					<div class="item-body">
 						<h4 class="item-title">Casio Watch</h4>
@@ -238,16 +224,14 @@
 						</div>
 						<div class="item-price h4">250 лв.</div>
 					</div>
-					<a href=${pageContext.request.contextPath}/loginPage
-						" class="btn btn-primary btn-expanded">Добави в количка</a>
-				</div>
+									</div>
 			</li>
 
 			<li>
 				<div class="cat-item">
 					<div class="item-header">
 						<a
-							href="${pageContext.request.contextPath}/admin/show?id=8"
+							href="${pageContext.request.contextPath}/admin/show?id=10"
 							class="item-img"> <img src="img/Citizen.jpg" alt="" />
 						</a>
 						<!-- <a href="" class="item-img-zoom btn btn-secondary btn-circle"
@@ -268,10 +252,7 @@
 							<span class="item-rating-no rating-no small">300</span>
 						</div>
 						<div class="item-price h4">200 лв.</div>
-					</div>
-					<a href="${pageContext.request.contextPath}/loginPage"
-						 class="btn btn-primary btn-expanded">Добави в количка</a>
-				</div>
+				
 			</li>
 		</ul>
 

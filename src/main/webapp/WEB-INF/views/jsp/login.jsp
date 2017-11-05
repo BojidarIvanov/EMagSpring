@@ -35,9 +35,9 @@
 
 	<form action="login" method="post">
 		<label><span>Email:</span> <input type="text" name="user"
-			placeholder="Enter email" size="35" style="width: 193px"></label> <br>
+			placeholder="Enter email" size="35" style="width: 193px" minlength = "4"></label> <br>
 		<label><span>Password:</span><input type="password"
-			placeholder="Enter Password" name="pass" style="width: 193px"></label>
+			placeholder="Enter Password" name="pass" style="width: 193px" minlength = "8"></label>
 		<br> <br> <label><input type="submit" value="Login">
 		</label>
 	</form>
