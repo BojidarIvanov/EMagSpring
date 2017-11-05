@@ -12,6 +12,7 @@
 <html>
 <head>
 <title>Emag shop ordering process</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/css/styless.css"
 	type="text/css"></link>

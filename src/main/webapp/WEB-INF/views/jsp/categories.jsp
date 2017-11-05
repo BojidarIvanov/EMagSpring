@@ -4,15 +4,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-
-
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/css/styless.css"
 	type="text/css"></link>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+
 <style>
+
+
 .wrapper {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
@@ -69,31 +71,13 @@
 			style="width: 150px">Price low to high</button></a>
 	<table class="products" border="1" cellpadding="5">
 	</center>
-		<!-- 		<tr>
-				<th>Id</th>
-				<th>Name</th>
-				<th>Category</th>
-				<th>Quantity</th>
-				<th>Price</th>
-			</tr>  -->
+
 		<div class="wrapper">
 			<c:forEach items="${applicationScope.products.values()}"
 				var="product">
 				<c:if
 					test="${ requestScope.specificCategory == null && product.quantity > 0}">
-					<!-- 		<tr>
-						<td class="cent">${ product.productID }</td>
-						<td class="cent">${ product.name }</td>
-						<td class="cent">${ product.category.name}</td>
-						<td class="cent">${ product.quantity }</td>
-						<td class="cent">${ product.price }</td>
-						<td><img
-							src="${pageContext.request.contextPath}/admin/getImage/${product.productID}"
-							height="80" width="80"></td>
-						<td><a
-							href="${pageContext.request.contextPath}/admin/show?id=${product.productID}">Show</a></td>
-
-					</tr>   -->
+		
 					<div>
 						<a
 							href="${pageContext.request.contextPath}/admin/show?id=${product.productID}">
@@ -101,7 +85,8 @@
 							src="${pageContext.request.contextPath}/admin/getImage/${product.productID}"
 							height="180" width="180" alt="" />
 							<p>
-								<span> "${product.name}" </span>
+								<span> "${product.name}"</span>
+								<span> ${product.price} лв</span>
 							</p>
 
 						</a>
@@ -116,19 +101,6 @@
 				<c:if
 					test="${ requestScope.specificCategory != null && product.category.categoryID == requestScope.specificCategory.categoryID && product.quantity > 0 }">
 
-					<!--  		<tr>
-						<td class="cent"><c:out value="${ product.productID }"></c:out></td>
-						<td class="cent"><c:out value="${ product.name }"></c:out></td>
-						<td class="cent"><c:out value="${ product.category.name}"></c:out></td>
-						<td class="cent"><c:out value="${ product.quantity }"></c:out></td>
-						<td class="cent"><c:out value="${ product.price }"></c:out></td>
-						<td><img
-							src="${pageContext.request.contextPath}/admin/getImage/${product.productID}"
-							height="80" width="80"></td>
-						<td><a
-							href="${pageContext.request.contextPath}/admin/show?id=${product.productID}">Show</a></td>
-
-					</tr> -->
 					<div>
 						<a
 							href="${pageContext.request.contextPath}/admin/show?id=${product.productID}">
@@ -136,7 +108,8 @@
 							src="${pageContext.request.contextPath}/admin/getImage/${product.productID}"
 							height="180" width="180" alt="" />
 							<p>
-								<span> "${product.name}" </span>
+								<span> "${product.name}"</span>
+								<span> ${product.price} лв</span>
 							</p>
 
 						</a>
@@ -147,6 +120,6 @@
 
 	</table>
 
-	<!--  	<jsp:include page="footer.jsp"></jsp:include> -->
+
 </body>
 </html>

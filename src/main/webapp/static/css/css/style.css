@@ -198,7 +198,7 @@ textarea:active {
 }
 /* ==========================================================================
    $Buttons
-   ========================================================================== */
+   
 .btn {
   border-radius: 0.3em;
   border: none;
@@ -214,6 +214,9 @@ textarea:active {
   transition: all 0.3s;
   z-index: 1;
 }
+   ========================================================================== */
+
+
 
 .btn-expanded {
   width: 100%;
@@ -731,3 +734,82 @@ ul.women_pagenation li a:hover{
 	padding: 60px 0;
 }
 
+
+label {
+	display: block;
+	position: relative;
+}
+
+label span {
+	font-weight: bold;
+	position: absolute;
+	left: 3px;
+}
+
+label input, label textarea, label select {
+	margin-left: 150px;
+	background-color: white;
+}
+
+.mom {
+	width: 100%; /* Try setting this to 400px or something */
+	display: table;
+	border: 1px solid #444444;
+	background-color: red;
+}
+
+.child {
+	display: table-cell;
+}
+
+.childinner {
+	margin-left: 25px;
+	/* Decorative .. */
+	background-color: #cccccc;
+	min-height: 40px;
+}
+
+.child:first-child .childinner {
+	margin-left: 0;
+}
+
+
+
+
+.navi {
+	float: left;
+	margin-top: 40px;
+	margin-left: 10px
+	display: inline;
+}
+
+.left {
+	background-color: #ff0000;
+	float: left;
+	margin-top: 50px;
+	margin-left: 13px
+	display: auto;
+}
+
+
+.header {
+	background-color: #ff0000;
+	height: 100px;
+	border-radius: 10px;
+}
+
+
+.welcome {
+	
+    color: yellow;
+	background-color: #ff0000;
+	float: right;
+	margin-right: 10px
+}
+
+#avatar {
+	float: right;
+	width: 100px;
+	height: 100px;
+	border-radius: 50px;
+}

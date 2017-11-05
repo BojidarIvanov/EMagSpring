@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
 <title>The products in stock</title>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/css/styless.css"

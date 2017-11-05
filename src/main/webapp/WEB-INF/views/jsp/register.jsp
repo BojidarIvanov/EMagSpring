@@ -21,8 +21,12 @@ label input, label textarea, label select {
 	margin-left: 150px;
 }
 </style>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/css/styless.css"
+	type="text/css"></link>
 
 <head>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>

@@ -9,59 +9,15 @@
 <head>
 <meta charset="UTF-8">
 <title>Emag Final Project</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
 <link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-
-<link rel='stylesheet prefetch'
-	href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css'>
-<link rel='stylesheet prefetch'
-	href='https://fonts.googleapis.com/css?family=Signika:700,400'
-	rel='stylesheet' type='text/css'>
+	href="${pageContext.request.contextPath}/css/css/styless.css"
+	type="text/css"></link>
 
   <link rel="stylesheet" href="css/css/style.css">   
 <style media="screen" type="text/css">
-h3 {
-	color: white;
-}
 
-label {
-	display: block;
-	position: relative;
-}
 
-label span {
-	font-weight: bold;
-	position: absolute;
-	left: 3px;
-}
-
-label input, label textarea, label select {
-	margin-left: 150px;
-	background-color: white;
-}
-
-.mom {
-	width: 100%; /* Try setting this to 400px or something */
-	display: table;
-	border: 1px solid #444444;
-	background-color: red;
-}
-
-.child {
-	display: table-cell;
-}
-
-.childinner {
-	margin-left: 25px;
-	/* Decorative .. */
-	background-color: #cccccc;
-	min-height: 40px;
-}
-
-.child:first-child .childinner {
-	margin-left: 0;
-}
 </style>
 
 </head>
@@ -71,7 +27,7 @@ label input, label textarea, label select {
 	
 
 
-	<h3 align="center"; >Take advantage of hot offers, the prices were
+	<h3 align="center"; style="color: white";>Take advantage of hot offers, the prices were
 		never so attractive !</h3>
 
 

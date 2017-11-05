@@ -7,6 +7,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <style media="screen" type="text/css">
+
 label {
 	display: block;
 	position: relative;
@@ -24,6 +25,7 @@ label input, label textarea, label select {
 </style>
 
 <head>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
@@ -43,7 +45,7 @@ label input, label textarea, label select {
 			<legend>Personal information:</legend>
 			<label><span>Full name </span> <input type="text" name="name"
 				value="${user.name}" required readonly></label> <br> <label>
-				<span>Email</span> <input type="text" name="email" required
+				<span>Email</span> <input type="text" name="email" required minlength = "4"
 				value="${user.email}">
 			</label><br> <label><span>Year of birth</span>
 			
@@ -52,11 +54,11 @@ label input, label textarea, label select {
       <c:set var = "string2" value = "${fn:substring(string1, 0, 4)}" />
 			
 			 <input
-				type="text" name="DOB" min="1900" max="2017" value = "${string2}" required>
+				type="number" name="DOB" min="1900" max="2017" value = "${string2}" required minlength = "4">
 				<br></label> <br> <label><span>Phone</span><input
-				type="text" name="phone" required value="${user.phone}"> </label><br>
+				type="number" name="phone" required value="${user.phone}" minlength = "5"> </label><br>
 			<label><span>Address</span> <input type="text" name="address"
-				required value="${user.address}"> </label><br> <label><input
+				required value="${user.address}" minlength = "3"> </label><br> <label><input
 				type="hidden" value="${user.email}" name="oldEmail" /></label> <br> <input
 				type="submit" value="Update info"><br>
 		</fieldset>

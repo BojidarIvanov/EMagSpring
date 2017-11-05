@@ -10,14 +10,16 @@
 <html>
 <head>
 <title>Create new user</title>
+
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/styles.css">
+		<jsp:include page="../header.jsp"></jsp:include>
+	
+</head>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/css/styless.css"
 	type="text/css"></link>
-
-</head>
-
 <body>
-	<jsp:include page="../header.jsp"></jsp:include>
 
 	<%
 		ProductPojo p = null;
@@ -146,7 +148,13 @@
 			</fieldset>
 		</div>
 	</center>
-
+	<c:if test="${ sessionScope.user.isAdmin == true }">
+		<!--  	<a href="${pageContext.request.contextPath}/admin/productManagement">Back</a>&nbsp;&nbsp;|&nbsp;&nbsp; -->
+		<center>
+			<a
+				href="${pageContext.request.contextPath}/admin/edit?id=${param.id}">Edit</a>
+		</center>
+	</c:if>
 	<%--BOZHIDAR ADDING RAVIEW--%>
 	<br>
 	<jsp:include page="../comment2.jsp"></jsp:include>
@@ -157,13 +165,7 @@
 
 	<p>
 		<!-- 	<button type="button" name="back" onclick="history.back()">back</button> -->
-		<c:if test="${ sessionScope.user.isAdmin == true }">
-			<!--  	<a href="${pageContext.request.contextPath}/admin/productManagement">Back</a>&nbsp;&nbsp;|&nbsp;&nbsp; -->
-			<center>
-				<a
-					href="${pageContext.request.contextPath}/admin/edit?id=${param.id}">Edit</a>
-			</center>
-		</c:if>
+
 
 		<c:if
 			test="${ sessionScope.user == null || sessionScope.user.isAdmin == false}">

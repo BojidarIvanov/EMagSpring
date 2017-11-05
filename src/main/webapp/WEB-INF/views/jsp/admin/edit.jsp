@@ -8,11 +8,14 @@
 <html>
 <head>
 <title>Create new user</title>
+
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/css/styless.css"
 	type="text/css"></link>
 </head>
 <body>
+	<jsp:include page="../header.jsp"></jsp:include>
 
 	<c:if
 		test="${sessionScope.user == null || sessionScope.user.isAdmin == false}">
@@ -27,7 +30,7 @@
 		productName = p.getName();
 	%>
 	
-
+<center>
 
 	<div>
 		<form action="uploadPicture" method="post"
@@ -115,7 +118,7 @@
 			</form>
 		</fieldset>
 	</div>
-
+</center>
 	<form action="${pageContext.request.contextPath}/sendMail"
 		method="POST">
 		<div class="contact-left">

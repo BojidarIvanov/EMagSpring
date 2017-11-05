@@ -15,9 +15,18 @@
 <link rel='stylesheet prefetch'
 	href='https://fonts.googleapis.com/css?family=Signika:700,400'
 	rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/css/css/styles.css">
 <style media="screen" type="text/css">
 h3 {
 	color: white;
+}
+
+.navi {
+	float: left;
+	margin-top: 40px;
+	margin-left: 10px
+	display: inline;
 }
 
 label {
@@ -89,20 +98,19 @@ label input, label textarea, label select {
 		</c:if>
 	</div>
 </div>
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/css/styles.css">
+
 </head>
 
 <body>
 	<div class="header">
-
+<span style="display: inline;">
 
 		<form class="navi" action="${pageContext.request.contextPath}/about">
 			<input type="submit" value="About Us">
 		</form>
-		<form class="navi" action="${pageContext.request.contextPath}/index">
+	<!-- 	<form class="navi" action="${pageContext.request.contextPath}/index">
 			<input type="submit" value="Products on sale">
-		</form>
+		</form> -->
 		<c:if test="${sessionScope.user != null}">
 			<form class="navi" action="${pageContext.request.contextPath}/orders">
 				<input type="submit" value="View My orders">
@@ -147,7 +155,7 @@ label input, label textarea, label select {
 				<input type="submit" value="Let's go shopping!!!">
 			</form>
 		</c:if>
-
+</span>
 		<!--  	<c:if test="${sessionScope.user != null}"> -->
 		<form class="navi"
 			action="${pageContext.request.contextPath}/shopping/confirmOrder"

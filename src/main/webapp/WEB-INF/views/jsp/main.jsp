@@ -11,15 +11,16 @@
 	grid-template-columns: repeat(3, 1fr);
 	grid-gap: 10px;
 	grid-auto-rows: minmax(100px, auto);
-	padding-left: 5cm;
+	padding-left:0cm;
 }
-
-
 </style>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/css/styless.css"
+	type="text/css"></link>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
 </head>
 
 <body>
@@ -31,22 +32,22 @@
 		</tr>
 	</c:if>
 	<h1 style="color: red">${error}</h1>
-	
+
 
 	<div class="wrapper">
 		<c:forEach items="${applicationScope.products.values()}" var="product">
-
-
-			<div class = "padding">
-				<a
+			<div class="padding">
+		<center>		<a
 					href="${pageContext.request.contextPath}/admin/show?id=${product.productID}">
 					<img
 					src="${pageContext.request.contextPath}/admin/getImage/${product.productID}"
 					height="180" width="200" alt="" />
-				<p>	 <span> "${product.name}" </span> </p>
-				
-				</a>
-			</div>
+					<p>
+						<span> "${product.name}" </span></p>
+
+					 <span> ${product.price} лв </span> 
+				</a></center>
+			</div> 
 
 		</c:forEach>
 	</div>

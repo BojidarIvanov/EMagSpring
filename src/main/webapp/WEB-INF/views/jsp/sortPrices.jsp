@@ -53,18 +53,15 @@
 				<table class="products" border="1" cellpadding="5">
 
 					<tr>
-						<th>Id</th>
 						<th>Name</th>
 						<th>Category</th>
-						<th>Quantity</th>
 						<th>Price</th>
 					</tr>
 					<c:forEach items="${ products }" var="product">
 						<tr>
-							<td class="cent">${product.productID}</td>
+				
 							<td class="cent">${product.name}</td>
 							<td class="cent">${product.category.name}</td>
-							<td class="cent">${product.quantity}</td>
 							<td class="cent">${product.price}</td>
 							<td><img
 								src="${pageContext.request.contextPath}/admin/getImage/${product.productID}"

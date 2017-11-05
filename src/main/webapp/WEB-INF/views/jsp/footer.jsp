@@ -5,7 +5,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/css/styless.css"
+	type="text/css"></link>
 
 <title>Insert title here</title>
 
@@ -98,10 +100,10 @@ label input, label textarea, label select {
 										<label><span>Current Password:</span> <input
 											class="input" type="password"
 											placeholder="enter current password" name="oldPassword"
-											size="35" style="width: 193px" required="required"></label></br> <label><span>New
+											size="35" style="width: 193px" required="required" min="8"></label></br> <label><span>New
 												Password:</span> <input class="input" type="password"
 											placeholder="enter new password" name="newPassword" size="35"
-											style="width: 193px" required="required"></label></br> <input
+											style="width: 193px" required="required" min="8"></label></br> <input
 											class="btn" type="submit" style="height: 35px; width: 300px"
 											value="Change Password"></br>
 									</form>

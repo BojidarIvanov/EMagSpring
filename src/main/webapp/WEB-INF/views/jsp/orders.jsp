@@ -7,7 +7,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <!--  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/css/styless.css" type="text/css"></link>  -->
-
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/css/styless.css"
+	type="text/css"></link>
 </head>
 	<body>
 		<c:if test="${ sessionScope.user == null }">

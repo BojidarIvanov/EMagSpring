@@ -30,6 +30,7 @@ import com.emag.model.ProductPojo;
 import com.emag.model.UserPojo;
 import com.emag.util.MailUtilGmail;
 import com.emag.util.PasswordUtil;
+import com.sun.swing.internal.plaf.synth.resources.synth;
 
 @Controller
 
@@ -57,9 +58,9 @@ public class MyController {
 		System.out.println("User: " + userInSession);
 		System.out.println("OldEmail: " + oldEmail);
 
-		String name = request.getParameter("name".trim());
-		String email = request.getParameter("email".trim());
-		String dob = request.getParameter("DOB".trim());
+		String name = request.getParameter("name").trim();
+		String email = request.getParameter("email").trim();
+		String dob = request.getParameter("DOB").trim();
 		String password = request.getParameter("pass");
 		String password2 = request.getParameter("pass2");
 		String phone = request.getParameter("phone");
@@ -70,11 +71,10 @@ public class MyController {
 		name = name.replaceAll("[^A-Za-z0-9]+", " ");
 		if (name == null || name.length() < 1) {
 			error = "Name is too short. Please be serious.";
+			request.setAttribute("error", error);
 			if (checkIfRegistered(userInSession, oldEmail)) {
-				request.setAttribute("error", error);
 				return "forward:updateUserInfo";
 			}
-			request.setAttribute("error", error);
 			return "forward:loginPage";
 		}
 
@@ -86,8 +86,7 @@ public class MyController {
 			}
 			error = PasswordUtil.checkPasswordStrength(password2);
 			if (!error.equals("Password is ok")) {
-				request.setAttribute("error", error);
-				return "forward:loginPage";
+				return "forward:updateUserInfo";
 			}
 		}
 
@@ -95,11 +94,10 @@ public class MyController {
 		try {
 			if (dob == null || Integer.parseInt(dob) < 1900 || Integer.parseInt(dob) > 2017) {
 				error = "Please provide adequate date of birth";
+				request.setAttribute("error", error);
 				if (checkIfRegistered(userInSession, oldEmail)) {
-					request.setAttribute("error", error);
 					return "forward:updateUserInfo";
 				}
-				request.setAttribute("error", error);
 				return "forward:loginPage";
 			}
 		} catch (NumberFormatException nfe) {
@@ -110,20 +108,19 @@ public class MyController {
 
 		if (email == null || !HandlingEmails.validate(email)) {
 			error = "The email provided is invalid.";
+			request.setAttribute("error", error);
 			if (checkIfRegistered(userInSession, oldEmail)) {
-				request.setAttribute("error", error);
 				return "forward:updateUserInfo";
 			}
-			request.setAttribute("error", error);
 			return "forward:loginPage";
 		}
 		address = specialCharacterRemover(address);
 		if (address == null || address.length() < 3) {
 			error = "Address cannot be so short.";
+			request.setAttribute("error", error);
 			if (checkIfRegistered(userInSession, oldEmail)) {
 				return "forward:updateUserInfo";
 			}
-			request.setAttribute("error", error);
 			return "forward:loginPage";
 		}
 
@@ -149,14 +146,23 @@ public class MyController {
 
 		// update details rather than create new user
 		if ((oldEmail != null && userInSession != null)) {
-			UserPojo updatedUser = ((Map<String, UserPojo>) application.getAttribute("users")).get((String) oldEmail);
+            String oldEmailCasted  = (String) oldEmail;
+			Map<String, UserPojo> users = (Map<String, UserPojo>) application.getAttribute("users");
+			UserPojo updatedUser = users.get(oldEmailCasted);
 			updatedUser.setEmail(email);
 			updatedUser.setPhone(phone);
 			updatedUser.setDateOfBirth(LocalDate.of(Integer.parseInt(dob), 1, 1));
 			updatedUser.setAddress(address);
 			try {
 				boolean updated = UserDAO.getInstance().updateUserDetails(updatedUser);
+				// updating application scope users
+				synchronized(users) {
+                users.remove(oldEmailCasted);
+                users.put(email, updatedUser);
+				}
 			} catch (SQLException e) {
+				// if something went wrong the email should be set back
+				updatedUser.setEmail(oldEmailCasted);
 				error = "Some issues with database. Details were not updated.";
 				request.setAttribute("error", error + e);
 				return "forward:updateUserInfo";
@@ -204,7 +210,7 @@ public class MyController {
 	private static String specialCharacterRemover(String str) {
 		return str.replaceAll("[^A-Za-z0-9]+", " ");
 	}
-	
+
 	private static String specialCharacterRemoverOnlyDigits(String str) {
 		return str.replaceAll("[^0-9]+", "");
 	}
@@ -398,7 +404,7 @@ public class MyController {
 			url = "forgotPassword";
 		}
 		String email = request.getParameter("email").trim();
-		
+
 		Map<String, UserPojo> users = (Map<String, UserPojo>) application.getAttribute("users");
 
 		if (email == null) {
@@ -408,13 +414,13 @@ public class MyController {
 			return "forgotPassword";
 		} else {
 			UserPojo u = users.get(email);
-			if(u == null) {
+			if (u == null) {
 				errorMsg = "No such user";
 				model.addAttribute("errorMsg", errorMsg);
 				errorMsg = null;
 				return "forgotPassword";
 			}
-			
+
 			String password = UUID.randomUUID().toString().substring(8);
 			String hashedPassword = "";
 			try {

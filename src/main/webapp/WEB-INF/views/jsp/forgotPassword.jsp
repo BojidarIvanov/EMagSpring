@@ -4,6 +4,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/css/styless.css"
+	type="text/css"></link>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Forgot password</title>
 </head>
