@@ -42,8 +42,8 @@
 					<img
 					src="${pageContext.request.contextPath}/admin/getImage/${product.productID}"
 					height="180" width="200" alt="" />
-					<p>
-						<span> "${product.name}" </span></p>
+					<p></p>
+						<span> "${product.name}" </span>
 
 					 <span> ${product.price} лв </span> 
 				</a></center>

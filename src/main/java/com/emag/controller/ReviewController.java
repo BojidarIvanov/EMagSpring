@@ -42,10 +42,16 @@ public class ReviewController {
 			reviewId = r.addReview(
 					new ReviewPojo(ratingParsed, reviewBody, user.getCustomerID(), Integer.parseInt(productId)));
 			synchronized (reviews) {
+				if (!reviews.containsKey(productId)) {
+					reviews.put(productId, new TreeSet<ReviewPojo>());
+				}
 				reviews.get(productId).add(new ReviewPojo(reviewId, ratingParsed, reviewBody, user.getCustomerID(),
 						Integer.parseInt(productId)));
 			}
-		} catch (NumberFormatException | SQLException e) {
+
+		} catch (NumberFormatException |
+
+				SQLException e) {
 			error = "Sory mate. There were some issues with database.";
 		}
 		m.addAttribute("error", error);

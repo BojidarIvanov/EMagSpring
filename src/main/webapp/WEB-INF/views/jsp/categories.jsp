@@ -19,9 +19,16 @@
 	grid-template-columns: repeat(3, 1fr);
 	grid-gap: 10px;
 	grid-auto-rows: minmax(100px, auto);
-	padding-left:0cm;
+	padding-left: 0cm;
 }
 
+img.button:hover p.text {
+	color: rgb(0, 255, 200);
+}
+
+p {
+	font-weight: 300;
+}
 </style>
 
 
@@ -51,8 +58,10 @@
 				<div class="child">
 					<c:if
 						test="${ category.value.parentCategory.categoryID == requestScope.specificCategory.categoryID }">
-						<div class="image"><a href="sortCategories?sort=${category.key}"><button 
-								size="35" style="width: 150px">${(category.value).name}</button></a></div>
+						<div class="image">
+							<a href="sortCategories?sort=${category.key}"><button
+									size="35" style="width: 150px">${(category.value).name}</button></a>
+						</div>
 					</c:if>
 				</div>
 			</c:forEach>
@@ -80,19 +89,16 @@
 					var="product">
 					<c:if
 						test="${ requestScope.specificCategory == null && product.quantity > 0}">
-
 						<div>
 							<a
 								href="${pageContext.request.contextPath}/admin/show?id=${product.productID}">
-								<img
+								<img class='button'
 								src="${pageContext.request.contextPath}/admin/getImage/${product.productID}"
 								height="180" width="180" alt="" />
-								<p>
-									<span> "${product.name}"</span> <span> ${product.price}
-										лв</span>
-								</p>
-
-							</a>
+								<p class='text'><p>
+							
+									<span> "${product.name}" </span> <span> ${product.price}
+										лв </span></a>
 						</div>
 					</c:if>
 				</c:forEach>
@@ -107,14 +113,13 @@
 						<div>
 							<a
 								href="${pageContext.request.contextPath}/admin/show?id=${product.productID}">
-								<img
+								<img class='button'
 								src="${pageContext.request.contextPath}/admin/getImage/${product.productID}"
 								height="180" width="180" alt="" />
-						<span>		<p>
-									<span> "${product.name}"</span> <span> ${product.price}
-										лв</span>
-								</p></span>
-
+								<p class='text'>
+								<p>
+									<span> "${product.name}" </span> <span> ${product.price}
+										лв </span>
 							</a>
 						</div>
 					</c:if>
