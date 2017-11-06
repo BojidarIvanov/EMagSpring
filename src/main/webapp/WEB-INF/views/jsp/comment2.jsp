@@ -49,14 +49,14 @@
 					product.</h3>
 			</c:if>
 		<tr>
-			<th>User</th>
+			<th>User id</th>
 			<th>Review body</th>
 			<th>Rating</th>
 		</tr>
 		<c:forEach items="${reviews[param.id]}" var="review">
 			
 			<tr>
-				<td><c:out value="${user.name}" /></td>
+				<td align="center" ><c:out value="${review.reviewerID}" /></td>
 				<td><c:out value="${review.reviewText}" /></td>
 				<td align="center"><c:out value="${review.reviewingRating}" /></td>
 				<c:if test="${ user.customerID == review.reviewerID || user.isAdmin }">
