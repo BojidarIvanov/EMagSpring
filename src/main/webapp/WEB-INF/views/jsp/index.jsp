@@ -9,26 +9,25 @@
 <head>
 <meta charset="UTF-8">
 <title>Emag Final Project</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/styles.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/css/styless.css"
 	type="text/css"></link>
 
-  <link rel="stylesheet" href="css/css/style.css">   
+<link rel="stylesheet" href="css/css/style.css">
 <style media="screen" type="text/css">
-
-
 </style>
 
 </head>
 
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
-	
 
 
-	<h3 align="center"; style="color: white";>Take advantage of hot offers, the prices were
-		never so attractive !</h3>
+
+	<h3 align="center" ; style="color: white";>Take advantage of hot
+		offers, the prices were never so attractive !</h3>
 
 
 	<div class="wrap">
@@ -39,9 +38,6 @@
 						<a href="${pageContext.request.contextPath}/admin/show?id=3"
 							class="item-img"> <img src="img/Cisco.jpg" alt="" />
 						</a>
-						<!-- <a href="" class="item-img-zoom btn btn-secondary btn-circle"
-								title="Zoom In"> <span class="fa fa-search-plus"></span>
-							</a> -->
 					</div>
 					<div class="item-body">
 						<h4 class="item-title">Sony Headphones</h4>
@@ -59,17 +55,15 @@
 						<div class="item-price h4">30 лв.</div>
 					</div>
 				</div>
+
 			</li>
 			<li>
 				<div class="cat-item">
 					<div class="item-header">
-						<a
-							href="${pageContext.request.contextPath}/admin/show?id=4"
+						<a href="${pageContext.request.contextPath}/admin/show?id=4"
 							class="item-img"> <img src="img/Dell.jpg" alt="" />
 						</a>
-						<!-- <a href="" class="item-img-zoom btn btn-secondary btn-circle"
-								title="Zoom In"> <span class="fa fa-search-plus"></span> 
-							</a> -->
+
 					</div>
 					<div class="item-body">
 						<h4 class="item-title">Dell laptop</h4>
@@ -91,8 +85,7 @@
 			<li>
 				<div class="cat-item">
 					<div class="item-header">
-						<a
-							href="${pageContext.request.contextPath}/admin/show?id=5"
+						<a href="${pageContext.request.contextPath}/admin/show?id=5"
 							class="item-img"> <img src="img/Logitech1.jpg" alt="" />
 						</a>
 						<!--	<a href="" class="item-img-zoom btn btn-secondary btn-circle"
@@ -119,13 +112,10 @@
 			<li>
 				<div class="cat-item">
 					<div class="item-header">
-						<a
-							href="${pageContext.request.contextPath}/admin/show?id=6"
+						<a href="${pageContext.request.contextPath}/admin/show?id=6"
 							class="item-img"> <img src="img/Elysee.jpg" alt="" />
 						</a>
-						<!-- <a href="" class="item-img-zoom btn btn-secondary btn-circle"
-								title="Zoom In"> <span class="fa fa-search-plus"></span>
-							</a> -->
+
 					</div>
 					<div class="item-body">
 						<h4 class="item-title">Original Casio Watch</h4>
@@ -142,18 +132,15 @@
 						</div>
 						<div class="item-price h4">100 лв.</div>
 					</div>
-			</div>
+				</div>
 			</li>
 			<li>
 				<div class="cat-item">
 					<div class="item-header">
-						<a
-							href="${pageContext.request.contextPath}/admin/show?id=38"
+						<a href="${pageContext.request.contextPath}/admin/show?id=38"
 							class="item-img"> <img src="img/Hermes.jpg" alt="" />
 						</a>
-						<!-- <a href="" class="item-img-zoom btn btn-secondary btn-circle"
-								title="Zoom In"> <span class="fa fa-search-plus"></span>
-							</a> -->
+
 					</div>
 					<div class="item-body">
 						<h4 class="item-title">Hermes Watch</h4>
@@ -175,8 +162,7 @@
 			<li>
 				<div class="cat-item">
 					<div class="item-header">
-						<a
-							href="${pageContext.request.contextPath}/admin/show?id=8"
+						<a href="${pageContext.request.contextPath}/admin/show?id=8"
 							class="item-img"> <img src="img/Swatch.jpg" alt="" />
 						</a>
 						<!-- <a href="" class="item-img-zoom btn btn-secondary btn-circle"
@@ -203,8 +189,7 @@
 			<li>
 				<div class="cat-item">
 					<div class="item-header">
-						<a
-							href="${pageContext.request.contextPath}/admin/show?id=9"
+						<a href="${pageContext.request.contextPath}/admin/show?id=9"
 							class="item-img"> <img src="img/Casio.jpg" alt="" />
 						</a>
 
@@ -224,19 +209,16 @@
 						</div>
 						<div class="item-price h4">250 лв.</div>
 					</div>
-									</div>
+				</div>
 			</li>
 
 			<li>
 				<div class="cat-item">
 					<div class="item-header">
-						<a
-							href="${pageContext.request.contextPath}/admin/show?id=10"
+						<a href="${pageContext.request.contextPath}/admin/show?id=10"
 							class="item-img"> <img src="img/Citizen.jpg" alt="" />
 						</a>
-						<!-- <a href="" class="item-img-zoom btn btn-secondary btn-circle"
-										title="Zoom In"> <span class="fa fa-search-plus"></span>
-									</a> -->
+
 					</div>
 					<div class="item-body">
 						<h4 class="item-title">Citizen Watch</h4>
@@ -252,7 +234,6 @@
 							<span class="item-rating-no rating-no small">300</span>
 						</div>
 						<div class="item-price h4">200 лв.</div>
-				
 			</li>
 		</ul>
 

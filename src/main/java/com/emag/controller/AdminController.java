@@ -29,13 +29,13 @@ public class AdminController {
 		return "admin/productManagement";
 	}
 
-	@RequestMapping(value = "/admin/show?id=${item.productID}", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/show?id=${item.productID}")
 	public String getShow(Model m, @PathVariable("productID") Integer id) {
 		m.addAttribute("productID", id);
 		return "admin/show";
 	}
 
-	@RequestMapping(value = "/admin/show", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/show")
 	public String getShowIndeed() {
 		return "admin/show";
 	}

@@ -26,7 +26,7 @@
 					<th>Product Price</th>
 
 				</tr>
-				<c:forEach items="${ requestScope.matchingProducts }"var="productEntry">
+				<c:forEach items="${ requestScope.matchingProducts }" 	var="productEntry">
 					<tr>
 						<center>
 						<td>${productEntry.value.getName()}</td>

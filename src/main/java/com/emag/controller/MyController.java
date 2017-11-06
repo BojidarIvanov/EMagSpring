@@ -4,8 +4,10 @@ import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.TreeSet;
 import java.util.UUID;
 
 import javax.mail.MessagingException;
@@ -23,14 +25,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.emag.db.BrandDAO;
 import com.emag.db.CategoryDAO;
 import com.emag.db.ProductDAO;
+import com.emag.db.ReviewDAO;
 import com.emag.db.UserDAO;
 import com.emag.model.BrandPojo;
 import com.emag.model.CategoryPojo;
 import com.emag.model.ProductPojo;
+import com.emag.model.ReviewPojo;
 import com.emag.model.UserPojo;
 import com.emag.util.MailUtilGmail;
 import com.emag.util.PasswordUtil;
-import com.sun.swing.internal.plaf.synth.resources.synth;
 
 @Controller
 
@@ -256,6 +259,13 @@ public class MyController {
 					System.out.println(users);
 					application.setAttribute("users", users);
 				}
+				
+				if (application.getAttribute("reviews") == null) {
+					Map<String, TreeSet<ReviewPojo>> reviews;
+					reviews = ReviewDAO.getInstance().getAllReviews();
+					System.out.println(reviews);
+					application.setAttribute("reviews", reviews);
+				}
 			}
 		} catch (SQLException e) {
 			request.setAttribute("error", "database problem : " + e.getMessage() + e.getErrorCode());
@@ -333,6 +343,13 @@ public class MyController {
 				if (application.getAttribute("users") == null) {
 					Map<String, UserPojo> users;
 					users = UserDAO.getInstance().getAllUsers();
+				}
+				
+				if (application.getAttribute("reviews") == null) {
+					Map<String, TreeSet<ReviewPojo>> reviews;
+					reviews = ReviewDAO.getInstance().getAllReviews();
+					System.out.println(reviews);
+					application.setAttribute("reviews", reviews);
 				}
 			}
 			// check if user exists in db

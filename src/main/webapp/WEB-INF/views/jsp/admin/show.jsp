@@ -13,8 +13,8 @@
 
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/styles.css">
-		<jsp:include page="../header.jsp"></jsp:include>
-	
+<jsp:include page="../header.jsp"></jsp:include>
+
 </head>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/css/styless.css"
@@ -138,9 +138,9 @@
 								</p>
 								<c:if test="sessionScope.user == null }">
 									<h3>Please login to be able to order goods.</h3>
-
 								</c:if>
 							</form>
+
 						</div>
 
 					</tbody>
@@ -151,18 +151,15 @@
 	<c:if test="${ sessionScope.user.isAdmin == true }">
 		<!--  	<a href="${pageContext.request.contextPath}/admin/productManagement">Back</a>&nbsp;&nbsp;|&nbsp;&nbsp; -->
 		<center>
+		<p>
 			<a
-				href="${pageContext.request.contextPath}/admin/edit?id=${param.id}">Edit</a>
+				href="${pageContext.request.contextPath}/admin/edit?id=${param.id}">Edit</a> </p>
 		</center>
 	</c:if>
-	<%--BOZHIDAR ADDING RAVIEW--%>
-	<br>
+
 	<jsp:include page="../comment2.jsp"></jsp:include>
-	<c:if test="${ sessionScope.user == null}">
-		<h3>Please log in to be able to buy goods.</h3>
-	</c:if>
 
-
+	<br>
 	<p>
 		<!-- 	<button type="button" name="back" onclick="history.back()">back</button> -->
 
